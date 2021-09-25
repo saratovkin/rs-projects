@@ -156,6 +156,13 @@ h2 {
 
 
 /*  */
+/*  */
+
+
+/* section WELCOME */
+
+
+/*  */
 
 .welcome {
   min-height: 810px;
@@ -190,7 +197,7 @@ h2 {
 .welcome-subtitle {
   padding-top: 25px;
   padding-bottom: 75px;
-  font-family: 'Roboto';
+  font-family: Roboto;
   font-style: normal;
   font-weight: 300;
   font-size: 28px;
@@ -208,7 +215,7 @@ h2 {
   position: absolute;
   background-color: #710707;
   color: #fff;
-  font-family: 'Roboto';
+  font-family: Roboto;
   font-weight: 300;
   font-size: 22px;
   line-height: 26px;
@@ -238,8 +245,57 @@ h2 {
 
 .welcome-slider-item {
   position: relative;
+  display: none;
   margin: 0 auto;
   z-index: 3;
+  animation: .5s ease-in-out;
+}
+
+.welcome-slider-item.active,
+.welcome-slider-item.next {
+  display: block;
+}
+
+.welcome-slider-item.next {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.to-left {
+  animation-name: left;
+}
+
+.to-right {
+  animation-name: right;
+  animation-direction: reverse;
+}
+
+.from-left {
+  animation-name: left;
+  animation-direction: reverse;
+}
+
+.from-right {
+  animation-name: right;
+}
+
+@keyframes left {
+  from {
+    left: 0;
+  }
+  to {
+    left: -100%
+  }
+}
+
+@keyframes right {
+  from {
+    left: 100%;
+  }
+  to {
+    left: 0;
+  }
 }
 
 .welcome-slider-shadow {
@@ -251,6 +307,7 @@ h2 {
   height: 750px;
   z-index: 50;
 }
+
 
 .welcome-slider-buttons {
   display: flex;
@@ -323,7 +380,6 @@ h2 {
 .welcome-arrows img {
   margin: 0 10px;
 }
-
 
 /*  */
 
