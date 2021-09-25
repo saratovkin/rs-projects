@@ -446,3 +446,53 @@ h2 {
 }
 
 
+/*  */
+
+
+/* Section VIDEO */
+
+
+/*  */
+
+.video-title-grid {
+  display: flex;
+  justify-content: space-between;
+}
+
+.video-subtitle {
+  margin: 0;
+  margin-left: 100px;
+  padding-top: 10px;
+  width: 720px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 38px;
+  color: #000;
+}
+
+.video-slider {
+  margin-top: 42px;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.video-slider-pagination {
+  text-align: center;
+}
+
+.video-slider-pagination ul {
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+
+.video-slider-pagination li {
+  margin-top: 0;
+  display: inline;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+
