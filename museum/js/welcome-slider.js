@@ -52,16 +52,21 @@ let items = document.querySelectorAll('.welcome-slider-item');
 let currentIndex = document.getElementById('current');
 let indicators = document.querySelectorAll('.welcome-indicator');
 let temp;
+let delay = 5000;
 
 document.querySelector('.welcome-arrow.right').addEventListener('click', function () {
     if (isEnabled) {
+        clearInterval(timer);
         nextItem(currentItem);
+        timer = setInterval(function () { nextItem(currentItem); }, 3000);
     }
 });
 
 document.querySelector('.welcome-arrow.left').addEventListener('click', function () {
     if (isEnabled) {
+        clearInterval(timer);
         previousItem(currentItem);
+        timer = setInterval(function () { nextItem(currentItem); }, 3000);
     }
 });
 
@@ -71,3 +76,41 @@ for (let i = 0; i < items.length; i++) {
     });
 }
 
+const swipeDetect = (el) => {
+
+    let surface = el;
+    let startX = 0;
+    let startY = 0;
+    let distX = 0;
+    let distY = 0;
+
+    let threshold = 150;
+    let restraint = 100;
+
+    surface.addEventListener('mousedown', function (e) {
+        startX = e.pageX;
+        startY = e.pageY;
+        e.preventDefault();
+    });
+
+    surface.addEventListener('mouseup', function (e) {
+        distX = e.pageX - startX;
+        distY = e.pageY - startY;
+        if (Math.abs(distX) > threshold && Math.abs(distY) <= restraint) {
+            if (distX > 0) {
+                if (isEnabled) {
+                    previousItem(currentItem);
+                }
+            } else {
+                if (isEnabled) {
+                    nextItem(currentItem);
+                }
+            }
+        }
+        e.preventDefault();
+    });
+}
+let el = document.querySelector('.welcome');
+swipeDetect(el);
+
+let timer = setInterval(function () { nextItem(currentItem); }, 3000);
