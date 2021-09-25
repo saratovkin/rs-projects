@@ -229,12 +229,89 @@
                             <img class="gallery-element" src="assets/img/gallery/gallery15.jpeg" alt="" width="456">
                         </div>
                         <div class="gallery-shadow">
+                        </div>
 
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="tickets section light" id="tickets">
+            <div class="container tickets">
+                <h2 class="section-title">Buy tickets</h2>
+                <div class="tickets-grid">
+                    <img src="assets/img/tickets-img.jpeg" alt="" width="720" height="550">
+                    <div class="tickets-buy">
+                        <div class="tickets-caption">
+                            <h3>Ticket type</h3>
+                            <h3 class="right-caption">Amount</h3>
+                        </div>
+                        <div class="tickets-forms">
+                            <div class="radio-inputs">
+                                <input type="radio" class="custom-radio" id="permanent" name="radio" checked="checked">
+                                <label class="radio-text" for="permanent">Permanent exhibition</label>
+                                <input type="radio" class="custom-radio" id="temporary" name="radio">
+                                <label class="radio-text" for="temporary">Temporary exhibition</label>
+                                <input type="radio" class="custom-radio" id="combined" name="radio">
+                                <label class="radio-text" for="combined">Combined Admission</label>
+                            </div>
+                            <div class="tickets-counter">
+                                <p>Basic 18+</p>
+                                <div class="tickets-button">
+                                    <button onclick="this.nextElementSibling.stepDown()">&#8722;</button>
+                                    <input class="tickets-amount" id="number" type="number" min="0" max="10" value="1">
+                                    <button onclick="this.previousElementSibling.stepUp()">+</button>
+                                </div>
+                                <p>Senior 65+</p>
+                                <div class="tickets-button">
+                                    <button onclick="this.nextElementSibling.stepDown()">&#8722;</button>
+                                    <input class="tickets-amount" id="number" type="number" min="0" max="10" value="1">
+                                    <button onclick="this.previousElementSibling.stepUp()">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tickets-checkout">
+                            <div class="tickets-sum">
+                                <h3>Total €</h3>
+                                <h3 class="sum">220</h3>
+                            </div>
+                            <button class="buy-now">Buy now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tickets-purchase">
+                    <div class="purchase-inner">
+                        <div class="tickets-info">
+                            <h2 class="section-title">Booking tickets</h2>
+                            <p>Tour to Louvre</p>
+                            <div class="tickets-inputs">
+                                <form class="ticlets-inputs" action="">
+                                    <input type="date" placeholder="Date">
+                                    <input type="time" placeholder="Time" min="09:00" max="18:00" step="1800">
+                                    <input type="text" placeholder="Name">
+                                    <input type="email" placeholder="E-mail">
+                                    <input type="tel" placeholder="Phone">
+                                    <div class="custom-select">
+                                        <select id="ticket-type" name="ticket-type">
+                                            <option value="permanent">Permanent exhibition</option>
+                                            <option value="temporary">Temporary exhibition</option>
+                                            <option value="combined">Combined Admission</option>
+                                        </select>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                        </div>
+                        <div class="tickets-payment">
+                            <input type="number">
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <div class="parallax"></div>
+
     </main>
 </body>
 
