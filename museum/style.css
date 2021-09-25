@@ -5,8 +5,9 @@ body {
   font-family: 'Forum';
   font-weight: 300;
   color: #fff;
-  background-color: #000;
+  background-color: #030303;
   scroll-behavior: smooth;
+  width: 100%;
 }
 
 li {
@@ -43,7 +44,7 @@ h2 {
 }
 
 .dark {
-  background-color: #000;
+  background-color: #030303;
 }
 
 .light {
@@ -51,7 +52,7 @@ h2 {
 }
 
 .light a {
-  color: #000;
+  color: #030303;
 }
 
 .light .section-title {
@@ -97,7 +98,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
   height: 150px;
-  background-color: #000;
+  background-color: #030303;
   font-weight: 100;
 }
 
@@ -205,6 +206,7 @@ h2 {
   height: 75px;
   display: block;
   position: absolute;
+  border-radius: 10px;
   background-color: #710707;
   color: #fff;
   font-family: 'Roboto';
@@ -236,6 +238,7 @@ h2 {
 }
 
 .welcome-slider-item {
+  height: 100%;
   position: relative;
   display: none;
   margin: 0 auto;
@@ -291,7 +294,7 @@ h2 {
 }
 
 .welcome-slider-shadow {
-  background: linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0.5) 16.19%, rgba(0, 0, 0, 0) 30.73%);
+  background: linear-gradient(90deg, #030303 0%, rgba(0, 0, 0, 0.5) 16.19%, rgba(0, 0, 0, 0) 30.73%);
   position: absolute;
   top: 0;
   left: 0;
@@ -304,7 +307,7 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #000;
+  background-color: #030303;
   width: 600px;
   height: 120px;
   position: absolute;
@@ -314,8 +317,8 @@ h2 {
 }
 
 .status-bar {
-  margin-left: 60px;
-  margin-right: 10px;
+  margin-left: 74px;
+  margin-right: 15px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -338,10 +341,10 @@ h2 {
 .welcome-indicators {
   display: flex;
   justify-content: space-between;
+  width: 180px;
 }
 
 .welcome-indicator {
-  margin: 0 15px;
   height: 15px;
   width: 15px;
   background-color: #fff;
@@ -356,19 +359,27 @@ h2 {
 }
 
 .welcome-arrows button {
-  background-color: #000;
+  padding: 10px 0;
+  background-color: #030303;
   box-shadow: none;
   border: none;
   cursor: pointer;
 }
 
 .welcome-arrows {
-  margin-right: 15px;
-  padding: 10px;
+  margin-right: 65px;
   padding-left: 0;
 }
 
-.welcome-arrows img {
+.welcome-arrow path{
+  transition: .5s;
+}
+
+.welcome-arrow:hover path{
+  fill: #9d8665;
+} 
+
+.welcome-arrow svg {
   margin: 0 10px;
 }
 
@@ -541,7 +552,7 @@ h2 {
   font-weight: 300;
   font-size: 22px;
   line-height: 38px;
-  color: #000;
+  color: #030303;
 }
 
 .video-slider {
@@ -610,7 +621,7 @@ h2 {
   width: 100%;
   height: 50%;
   position: absolute;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #030303 100%);
   bottom: 0;
 }
 
@@ -642,6 +653,10 @@ h2 {
 
 /*  */
 
+.buy-now {
+  border-radius: 2px;
+}
+
 .tickets-grid {
   margin-top: 100px;
   display: grid;
@@ -649,7 +664,7 @@ h2 {
 }
 
 .tickets-buy {
-  color: #000;
+  color: #030303;
 }
 
 .tickets-caption {
@@ -819,7 +834,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .tickets-checkout button:hover {
   background-color: #9d8665;
-  color: #000;
+  color: #030303;
 }
 
 .tickets-sum {
@@ -851,14 +866,14 @@ input[type="number"]::-webkit-inner-spin-button {
   top: 0;
   left: 0;
   background-color: #fff;
-  border: 5px solid #000;
+  border: 5px solid #030303;
   width: 1440px;
   height: 845px;
   display: none;
 }
 
 .purchase-inner {
-  border: 5px solid #000;
+  border: 5px solid #030303;
   margin: 5% auto;
   display: flex;
   justify-content: space-between;
@@ -977,7 +992,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .contacts-text {
-  color: #000;
+  color: #030303;
 }
 
 .contacts-text h3 {
