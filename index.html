@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Forum&family=Roboto:wght@100;300;400;500;700&display=swap"
         rel="stylesheet">
     <title>museum</title>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
 </head>
 
 
@@ -312,7 +314,38 @@
 
         <div class="parallax"></div>
 
+        <section class="contacts section light" id="contacts">
+            <div class="container">
+                <h2 class="section-title">Contacts</h2>
+                <div class="contacts-grid">
+                    <div class="contacts-text">
+                        <h3>Palais Royal</h3>
+                        <h3>Musee du Louvre</h3>
+                        <ul>
+                            <li> address: 75001 Paris, France</li>
+                            <li> <a href="tel:+330140205050">phone: +33(0) 1 40 20 50 50</a> </li>
+                            <li> <a href="mailto:info@louvre.fr">mail: info@louvre.fr</a> </li>
+                        </ul>
+                    </div>
+                    <div class="contacts-map" id="map">
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
     </main>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic2FyYXRvdmtpbiIsImEiOiJja3R5N3VnODAwNnVvMnBwYzNscmdkZ2lxIn0.5cLoaV00_oRJm_pRZJEp4A';
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/saratovkin/ckty7xozu0qq117mpbxr6pnbx', // style URL
+            center: [2.3364, 48.86091], // starting position [lng, lat]
+            zoom: 16 // starting zoom
+        });
+    </script>
 </body>
 
 </html>
