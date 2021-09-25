@@ -384,4 +384,65 @@ h2 {
   font-weight: 200;
 }
 
+/*  */
+
+
+/* Section EXPLORE */
+
+
+/*  */
+
+.explore-grid {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.explore-left {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 38px;
+  padding-bottom: 25px;
+}
+
+.explore-text {
+  margin-top: 100px;
+}
+
+.explore-text span {
+  color: #9d8665;
+}
+
+.explore-text p {
+  width: 90%;
+  margin: 0;
+  margin-bottom: 25px;
+  padding: 0;
+}
+
+.explore-grid .section-title::after {
+  width: 660px;
+}
+
+.explore-picture {
+  position: relative;
+}
+
+.explore-background {
+  background-image: url(../saratovkin-JSFE2021Q3/assets/img/explore-slider/after.jpeg);
+  width: 720px;
+  height: 700px;
+}
+
+.explore-foreground {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 454px;
+  height: 700px;
+  background-image: url(assets/img/explore-slider/before.jpeg);
+}
+
 
