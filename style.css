@@ -37,7 +37,6 @@ h2 {
   position: relative;
 }
 
-
 .section {
   padding-top: 75px;
   padding-bottom: 75px;
@@ -156,13 +155,6 @@ h2 {
 
 
 /*  */
-/*  */
-
-
-/* section WELCOME */
-
-
-/*  */
 
 .welcome {
   min-height: 810px;
@@ -197,7 +189,7 @@ h2 {
 .welcome-subtitle {
   padding-top: 25px;
   padding-bottom: 75px;
-  font-family: Roboto;
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 300;
   font-size: 28px;
@@ -215,7 +207,7 @@ h2 {
   position: absolute;
   background-color: #710707;
   color: #fff;
-  font-family: Roboto;
+  font-family: 'Roboto';
   font-weight: 300;
   font-size: 22px;
   line-height: 26px;
@@ -308,7 +300,6 @@ h2 {
   z-index: 50;
 }
 
-
 .welcome-slider-buttons {
   display: flex;
   justify-content: space-between;
@@ -381,6 +372,7 @@ h2 {
   margin: 0 10px;
 }
 
+
 /*  */
 
 
@@ -440,6 +432,7 @@ h2 {
   font-weight: 200;
 }
 
+
 /*  */
 
 
@@ -455,7 +448,7 @@ h2 {
 }
 
 .explore-left {
-  font-family: Roboto;
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 300;
   font-size: 22px;
@@ -470,7 +463,6 @@ h2 {
 .explore-text span {
   color: #9d8665;
 }
-
 
 .explore-text p {
   width: 90%;
@@ -559,6 +551,26 @@ h2 {
   overflow: hidden;
 }
 
+.video-slider-item {
+  position: relative;
+  width: 452px;
+  height: 254px;
+  display: none;
+  animation: .5s ease-in-out;
+  z-index: 3;
+}
+
+.video-slider-item.active,
+.video-slider-item.next {
+  display: block;
+}
+
+.video-slider-item.next {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
 .video-slider-pagination {
   text-align: center;
 }
@@ -585,7 +597,7 @@ h2 {
 /*  */
 
 .gallery-container {
-  height: 1960px; 
+  height: 1960px;
   overflow-y: hidden;
 }
 
@@ -611,12 +623,13 @@ h2 {
   max-height: 2996px;
 }
 
-
-.gallery-element:nth-child(1), .gallery-element:nth-child(11) {
+.gallery-element:nth-child(1),
+.gallery-element:nth-child(11) {
   margin-top: 50px;
 }
 
-.gallery-element:nth-child(5),.gallery-element:nth-child(10) {
+.gallery-element:nth-child(5),
+.gallery-element:nth-child(10) {
   height: 570px;
 }
 
@@ -700,7 +713,7 @@ h2 {
 }
 
 .custom-radio:checked+label::before {
-  background-image: url(assets/svg/custom-radio/checked.svg);
+  background-image: url(assets/svg/custom-radio/svg.svg);
   width: 17px;
   height: 17px;
   background-repeat: no-repeat;
@@ -880,8 +893,8 @@ input[type="number"]::-webkit-inner-spin-button {
   gap: 20px;
 }
 
-
-.tickets-inputs input, .tickets-inputs select{
+.tickets-inputs input,
+.tickets-inputs select {
   box-sizing: border-box;
   padding: 0;
   border-radius: 0;
@@ -897,34 +910,34 @@ input[type="number"]::-webkit-inner-spin-button {
 ::-webkit-datetime-edit-year-field:not([aria-valuenow]),
 ::-webkit-datetime-edit-month-field:not([aria-valuenow]),
 ::-webkit-datetime-edit-day-field:not([aria-valuenow]) {
-    color: transparent;
+  color: transparent;
 }
 
-.tickets-inputs input[type="date"]{
+.tickets-inputs input[type="date"] {
   width: 190px;
   background: url(assets/svg/input-icons/date.svg) no-repeat 10px 50%;
-  padding-left:40px;
+  padding-left: 40px;
 }
 
-.tickets-inputs input[type="time"]{
+.tickets-inputs input[type="time"] {
   width: 190px;
   background: url(assets/svg/input-icons/time.svg) no-repeat 10px 50%;
-  padding-left:40px;
+  padding-left: 40px;
 }
 
-.tickets-inputs input[type="text"]{
+.tickets-inputs input[type="text"] {
   background: url(assets/svg/input-icons/name.svg) no-repeat 10px 50%;
-  padding-left:40px;
+  padding-left: 40px;
 }
 
-.tickets-inputs input[type="email"]{
+.tickets-inputs input[type="email"] {
   background: url(assets/svg/input-icons/email.svg) no-repeat 10px 50%;
-  padding-left:40px;
+  padding-left: 40px;
 }
 
-.tickets-inputs input[type="tel"]{
+.tickets-inputs input[type="tel"] {
   background: url(assets/svg/input-icons/tel.svg) no-repeat 10px 50%;
-  padding-left:40px;
+  padding-left: 40px;
 }
 
 .tickets-payment {
@@ -1096,7 +1109,7 @@ input[type="number"]::-webkit-inner-spin-button {
   font-weight: 200;
   font-size: 22px;
   line-height: 26px;
-  letter-spacing: 2px;  
+  letter-spacing: 2px;
 }
 
 .social-links {
@@ -1108,7 +1121,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .social-links a {
- padding: 10px;
+  padding: 10px;
 }
 
 .social-icon {
