@@ -713,7 +713,7 @@ h2 {
 }
 
 .custom-radio:checked+label::before {
-  background-image: url(assets/svg/custom-radio/svg.svg);
+  background-image: url(assets/svg/custom-radio/checked.svg);
   width: 17px;
   height: 17px;
   background-repeat: no-repeat;
