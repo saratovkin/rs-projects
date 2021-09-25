@@ -480,7 +480,7 @@ h2 {
 }
 
 .explore-background {
-  background-image: url(../saratovkin-JSFE2021Q3/assets/img/explore-slider/after.jpeg);
+  background-image: url(assets/img/explore-slider/after.jpeg);
   width: 720px;
   height: 700px;
 }
@@ -491,7 +491,7 @@ h2 {
   position: absolute;
   width: 454px;
   height: 700px;
-  background-image: url(../saratovkin-JSFE2021Q3/assets/img/explore-slider/before.jpeg);
+  background-image: url(assets/img/explore-slider/before.jpeg);
 }
 
 .explore-slider {
@@ -956,7 +956,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .parallax {
   height: 400px;
-  background-image: url(../saratovkin-JSFE2021Q3/assets/img/parallax.jpeg);
+  background-image: url(assets/img/parallax.jpeg);
   background-size: cover;
   background-attachment: fixed;
 }
