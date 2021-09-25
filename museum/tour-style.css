@@ -1,0 +1,13 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #fff;
+	scroll-behavior: smooth;
+}
+
+.google-street-view iframe {
+	width: 100vw;
+	height: 100vh;
+	border: none;
+}
