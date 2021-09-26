@@ -16,7 +16,7 @@
 
 
 <body>
-    <header class="header">
+    <header>
         <div class="container">
             <div class="header-container">
                 <div class="logo">
@@ -207,7 +207,6 @@
 
                 <div class="video-slider">
                     <div class="video-slider-item active">
-                        <!-- TODO: add video slider -->
                     </div>
                 </div>
                 <div class="video-slider-pagination">
@@ -259,7 +258,7 @@
             <div class="container tickets">
                 <h2 class="section-title">Buy tickets</h2>
                 <div class="tickets-grid">
-                    <img src="assets/img/tickets-img.jpeg" alt="" width="720" height="550">
+                    <img src="assets/img/tickets1.jpeg" alt="" width="720" height="550">
                     <div class="tickets-buy">
                         <div class="tickets-caption">
                             <h3>Ticket type</h3>
@@ -294,39 +293,102 @@
                                 <h3>Total €</h3>
                                 <h3 class="sum">220</h3>
                             </div>
-                            <button class="buy-now">Buy now</button>
+                            <button class="buy-now" onclick="showForm()">Buy now</button>
                         </div>
                     </div>
                 </div>
-                <div class="tickets-purchase">
-                    <div class="purchase-inner">
-                        <div class="tickets-info">
-                            <h2 class="section-title">Booking tickets</h2>
-                            <p>Tour to Louvre</p>
-                            <div class="tickets-inputs">
-                                <form class="ticlets-inputs" action="url">
-                                    <input type="date">
-                                    <input type="time" min="09:00" max="18:00" step="1800">
-                                    <input type="text" placeholder="Name">
-                                    <input type="email" placeholder="E-mail">
-                                    <input type="tel" placeholder="Phone">
-                                    <div class="custom-select">
-                                        <select id="ticket-type" name="ticket-type">
-                                            <option value="permanent">Permanent exhibition</option>
-                                            <option value="temporary">Temporary exhibition</option>
-                                            <option value="combined">Combined Admission</option>
-                                        </select>
+                <div class="tickets-purchase-overlay">
+                    <div class="tickets-purchase">
+                        <div class="purchase-inner">
+                            <div class="tickets-info">
+                                <div class="tickets-logo">
+                                    <svg width="85" height="41" viewBox="0 0 49 26" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M49 26H0L24.5 0L49 26ZM13.3075 13.1309L16.6442 16.6702L19.981 13.1309L16.6442 9.58115L13.3075 13.1309ZM16.6442 25.0052L19.981 21.466L16.6442 17.9162L13.3075 21.466L16.6442 25.0052ZM32.4083 25.0052L35.745 21.466L32.4083 17.9162L29.019 21.466L32.4083 25.0052ZM28.4673 5.40314C28.4473 5.43762 28.4207 5.46941 28.3885 5.49738C27.3507 6.6178 26.2997 7.73822 25.2357 8.84817C25.1437 8.94241 25.2357 9.00524 25.2357 9.08901L28.3097 12.356L28.4542 12.4921L31.7909 8.96335L28.4673 5.40314ZM8.78847 25.0052L8.91984 24.8691L11.9938 21.6126C12.0428 21.5717 12.0702 21.5173 12.0702 21.4607C12.0702 21.4042 12.0428 21.3498 11.9938 21.3089C11.0611 20.3456 10.1547 19.3613 9.23512 18.3874L8.78847 17.9162L5.45174 21.466L8.78847 25.0052ZM17.2354 8.95288L20.5721 12.4921L20.6772 12.3979L23.8169 9.06806C23.922 8.95288 23.8169 8.89005 23.8169 8.80628L20.7429 5.56021L20.6115 5.42408L17.2354 8.95288ZM17.2354 17.3298L20.5721 20.8691L20.7429 20.7016C21.7413 19.6545 22.7528 18.6073 23.7643 17.4869C23.7926 17.4663 23.8152 17.4412 23.8307 17.4133C23.8461 17.3853 23.8541 17.3551 23.8541 17.3246C23.8541 17.2941 23.8461 17.2639 23.8307 17.2359C23.8152 17.208 23.7926 17.1829 23.7643 17.1623C22.8185 16.1675 21.8727 15.1728 20.9399 14.1675L20.5721 13.7906L17.2354 17.3298ZM32.9995 17.3298L36.3362 20.8691L39.6729 17.3298L36.3362 13.7906L32.9995 17.3298ZM28.4673 13.7801V13.8534L25.3013 17.2147C25.1962 17.3089 25.2357 17.3717 25.3013 17.4555L28.244 20.5969C28.3228 20.6911 28.4147 20.7853 28.5198 20.8901L31.8566 17.3508L28.4673 13.7801ZM12.7295 20.8482C12.7453 20.8175 12.7675 20.7892 12.7952 20.7644L15.9611 17.4031C16.0531 17.2984 15.9611 17.2461 15.9611 17.1623L12.8477 13.8953C12.8069 13.8484 12.7583 13.8061 12.7032 13.7696L9.37962 17.2984L12.7295 20.8482ZM32.3558 16.6597L35.6925 13.1204L32.3558 9.59162L29.019 13.1309L32.3558 16.6597ZM24.4737 8.28272L27.8105 4.74346L24.5263 1.27749H24.4606L21.2552 4.71204C21.2354 4.73712 21.2249 4.76616 21.2249 4.79581C21.2249 4.82546 21.2354 4.8545 21.2552 4.87958L24.4737 8.28272ZM24.4737 16.6597L27.8105 13.1204L24.5 9.58115L21.1633 13.1309L24.4737 16.6597ZM24.4737 25.0366L27.8105 21.4974L24.4737 17.9476L21.1633 21.466L24.4737 25.0366ZM40.2378 25.0366L43.5745 21.4974L40.2509 17.9791H40.1853L36.9668 21.3613C36.8617 21.4764 36.9668 21.5288 36.9668 21.6021L39.5941 24.4398L40.2378 25.0366ZM1.89169 25.2356H7.88204L4.91314 22.0942L1.89169 25.2356ZM41.1705 25.2356H47.1083L44.1394 22.0942L41.1705 25.2356ZM23.5542 25.2356L20.5721 22.0942L17.5901 25.2356H23.5542ZM33.3147 25.2356H39.2525L36.2836 22.0942L33.3147 25.2356ZM31.3968 25.2356L28.4279 22.0942L25.459 25.2356H31.3968ZM15.6327 25.2356L12.6638 22.0942L9.69491 25.2356H15.6327Z"
+                                            fill="#9d8665" />
+                                    </svg>
+                                </div>
+                                <h2 class="section-title">Booking tickets</h2>
+                                <p>Tour to Louvre</p>
+                                <div class="tickets-forms">
+                                    <form class="tickets-inputs" action="url">
+                                        <input type="date">
+                                        <input type="time" min="09:00" max="18:00" step="1800">
+                                        <input type="text" placeholder="Name">
+                                        <input type="email" placeholder="E-mail">
+                                        <input type="tel" placeholder="Phone">
+                                        <div class="custom-select">
+                                            <select id="ticket-type" name="ticket-type">
+                                                <option value="permanent">Permanent exhibition</option>
+                                                <option value="temporary">Temporary exhibition</option>
+                                                <option value="combined">Combined Admission</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                    <div class="entry-ticket">
+                                        <h3>Entry ticket</h3>
+                                        <div class="entry-ticket-line">
+                                            <p>Basic 18+ (20 €)</p>
+                                            <div class="tickets-button">
+                                                <button onclick="this.nextElementSibling.stepDown()">&#8722;</button>
+                                                <input class="tickets-amount" type="number" min="0" max="10" value="1">
+                                                <button onclick="this.previousElementSibling.stepUp()">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="crossline"></div>
+                                        <div class="entry-ticket-line">
+                                            <p>Senior 65+ (10 €)</p>
+                                            <div class="tickets-button">
+                                                <button onclick="this.nextElementSibling.stepDown()">&#8722;</button>
+                                                <input class="tickets-amount" type="number" min="0" max="10" value="1">
+                                                <button onclick="this.previousElementSibling.stepUp()">+</button>
+                                            </div>
+                                        </div>
                                     </div>
-
-                                </form>
+                                </div>
                             </div>
-
-                        </div>
-                        <div class="tickets-payment">
-                            <input type="number">
+                            <div class="tickets-payment">
+                                <div class="tickets-close-icon" onclick="hideForm()">
+                                    <svg width="27" height="27" viewBox="0 0 27 27" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 1L26 26" stroke="#030303" />
+                                        <path d="M26 1L1 26" stroke="#030303" />
+                                    </svg>
+                                </div>
+                                <div class="payment-info">
+                                    <img src="assets/img/tickets2.jpeg" alt="" width="150" height="120">
+                                    <h3>Overview</h3>
+                                    <h4>Tour to Louvre</h4>
+                                    <p class=payment-date>Friday, August 19</p>
+                                    <p class="payment-time">16 : 30</p>
+                                    <p class="payment-type">Temporary exhibition</p>
+                                </div>
+                                <div class="payment-subtotal">
+                                    <div class="counter basic">
+                                        <p id="basic-counter">2</p>
+                                    </div>
+                                    <p>Basic (20 €)</p>
+                                    <p class="basic-sum">40 €</p>
+                                </div>
+                                <div class="payment-subtotal">
+                                    <div class="counter senior">
+                                        <p id="senior-counter">2</p>
+                                    </div>
+                                    <p>Senior (10 €)</p>
+                                    <p class="basic-sum">20 €</p>
+                                </div>
+                                <div class="crossline"></div>
+                                <div class="payment-total">
+                                    <h3>Total:</h3>
+                                    <h3 class="final-sum">60 €</h3>
+                                </div>
+                                <!-- <input type="number"> -->
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </section>
 
@@ -438,7 +500,6 @@
         </div>
     </footer>
 
-
     <script>
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2FyYXRvdmtpbiIsImEiOiJja3R5N3VnODAwNnVvMnBwYzNscmdkZ2lxIn0.5cLoaV00_oRJm_pRZJEp4A';
         const map = new mapboxgl.Map({
@@ -451,6 +512,7 @@
     <script src="js/welcome-slider.js"></script>
     <script src="js/explore-slider.js"></script>
     <script src="js/gallery-randomizer.js"></script>
+    <script src="js/tickets-purchase.js"></script>
 </body>
 
 </html>

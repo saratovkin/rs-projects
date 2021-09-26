@@ -115,6 +115,7 @@ h2 {
 
 .logo-pic {
   background-image: url(assets/svg/logo.svg);
+  background-repeat: no-repeat;
   background-size: contain;
   width: 49px;
   height: 27px;
@@ -861,31 +862,115 @@ input[type="number"]::-webkit-inner-spin-button {
   position: relative;
 }
 
-.tickets-purchase {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #fff;
-  border: 5px solid #030303;
-  width: 1440px;
-  height: 845px;
-  display: none;
+@keyframes slideIn {
+  100% { left: 15%; }
 }
 
+@keyframes slideOut {
+  0%   { left: 15%;}
+  100% { left: -200%; }
+}
+
+.show-form {
+  animation: slideIn 0.5s forwards;
+}
+
+.hide-form {
+  animation: slideOut 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  0%   { opacity: 0;}
+  100% { opacity: 100%; }
+}
+
+@keyframes fadeOut {
+  0%   { opacity: 100%;}
+  100% { opacity: 0; }
+}
+
+.show-overlay {
+  animation: fadeIn .5s forwards;
+}
+
+.hide-overlay {
+  animation: fadeOut .5s forwards;
+}
+
+.tickets-purchase-overlay{
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  background-color: rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  backdrop-filter: blur(10px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 55;
+}
+
+.tickets-purchase {
+  display: none;
+  position: absolute;
+  top: 15%;
+  left: -150%;
+  background-color: #fff;
+  width: 1440px;
+  height: 845px;
+
+}
+
+.tickets-close-icon{
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
+
+.tickets-close-icon path {
+  transition: .5s;
+}
+
+.tickets-close-icon:hover path {
+  stroke: #9d8665;
+}
+
+/* .background-overlay {
+  content: "";
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 1vw;
+  height: 1vh;
+  z-index: 50;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  display: none;
+} */
+
 .purchase-inner {
-  border: 5px solid #030303;
-  margin: 5% auto;
+  margin: 91px auto;
   display: flex;
   justify-content: space-between;
   width: 970px;
   height: 663px;
 }
 
+.tickets-logo{
+  position: absolute;
+}
+
+
 .tickets-info .section-title {
   font-size: 50px;
   letter-spacing: 0mm;
   margin: 0;
+  margin-top: 20px;
   padding: 0;
+}
+
+.tickets-info .section-title::after {
+  bottom: -30px;
 }
 
 .tickets-info {
@@ -899,13 +984,21 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #710707;
 }
 
-.tickets-inputs {
-  margin-top: 60px;
+.tickets-forms {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 20px;
+  gap: 20px 20px;
+}
+
+.tickets-inputs {
+  margin-top: 72px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px 20px;
 }
 
 .tickets-inputs input,
@@ -955,12 +1048,227 @@ input[type="number"]::-webkit-inner-spin-button {
   padding-left: 40px;
 }
 
+.entry-ticket {
+  display: flex;
+  position: relative;
+  width: 400px;
+  height: 135px;
+  border: 1px solid #030303;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.entry-ticket-line {
+  margin-top: 15px;
+  width: 370px;
+  margin: 0 auto;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+.entry-ticket h3 {
+  margin: 0;
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-bottom: 15px;
+  font-family: Forum;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 20px;
+  height: 20px;
+  text-transform: capitalize;
+  color: #9D8665;
+  flex-basis: 400px;
+}
+
+.entry-ticket p {  
+  margin: 0;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  color: #030303;
+}
+
+.entry-ticket .crossline {
+  position: absolute;
+  margin: 0;
+  top: 35px;
+  left: 15px;
+  width: 370px;
+}
+
+.entry-ticket .tickets-button {
+  width: 105px;
+  height: 25px;
+  flex-wrap: nowrap;
+}
+
+.entry-ticket input[type="number"] {
+  font-size: 18px;
+  margin: 0;
+  margin-top: 2px;
+  color: #030303;
+}
+
+.entry-ticket button {
+  margin: 0;
+  height: 100%;
+  width: 35px;
+  background-color: #030303;
+  font-size: 15px;
+  line-height: 10px;
+  color: #fff;
+}
+
+.entry-ticket .tickets-amount {
+  margin: 0;
+  height: 100%;
+}
 .tickets-payment {
   width: 530px;
   height: 663px;
+  border: 1px solid #030303;
+  box-sizing: border-box;
 }
 
+.payment-info {
+  width: 470px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  position: relative;
+}
 
+.tickets-payment img {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.tickets-payment h3{
+  margin-top: 25px;
+  margin-bottom: 0;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 37px;
+  color: #272727;
+}
+
+.tickets-payment h4 {
+  margin: 0;
+  margin-top: 5px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 26px;
+  color: #740C11;
+  opacity: 0.9;
+}
+
+.tickets-payment p{
+  margin-top: 8px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100;
+  font-size: 18px;
+  line-height: 21px;
+  color: #030303;
+}
+
+.payment-date {
+  background: url(assets/svg/input-icons/date.svg) no-repeat 0 50%; 
+  padding-left: 30px;
+}
+
+.payment-time {
+  background: url(assets/svg/input-icons/time.svg) no-repeat 0 50%;
+  padding-left: 30px;
+}
+
+.payment-type {
+  background: url(assets/svg/input-icons/type.svg) no-repeat 0 50%;
+  padding-left: 30px;
+}
+
+.payment-subtotal {
+  width: 470px;
+  height: 117px;
+}
+
+.counter {
+  width: 32px;
+  height: 20px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  background-color: #030303;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 5px;
+}
+
+.payment-subtotal {
+  margin: 0 auto;
+  display: flex;
+  height: 30px;
+  margin-bottom: 5px;
+}
+
+.payment-subtotal p {
+  margin: 0;
+  margin-left: 10px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 26px;
+  color: #030303;
+}
+
+.counter p {
+  font-size: 18px;
+  color: #A4A4A3;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.basic-sum{
+  text-align: right;
+  flex-grow: 1;
+}
+
+.crossline {
+  content:"";
+  align-self: center;
+  margin-left: 5%;
+  width: 90%;
+  height: 2px;
+  background-color: #710707;
+}
+
+.payment-total {
+  margin: 0 auto;
+  width: 470px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.payment-total h3{
+  margin-top: 5px;
+  font-size: 32px;
+  line-height: 37px;
+  color: #030303;
+  font-weight: normal;
+}
 /*  */
 
 
