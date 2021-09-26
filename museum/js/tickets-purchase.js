@@ -12,7 +12,7 @@ function hideForm() {
     ticketsForm.classList.remove('show-form');
     overlay.classList.remove('show-overlay');
     overlay.classList.add('hide-overlay');
-    setTimeout(function () { overlay.style.display = 'none'; ticketsForm.style.display = 'none'; }, 1000);
+    setTimeout(function () { overlay.style.display = 'none'; ticketsForm.style.display = 'none'; }, 500);
 }
 
 window.onload = function () {
@@ -23,6 +23,7 @@ window.onload = function () {
     };
 };
 
+let isPossible = true;
 let ticketsForm = document.querySelector('.tickets-purchase');
 let overlay = document.querySelector('.tickets-purchase-overlay');
 

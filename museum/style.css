@@ -901,8 +901,7 @@ input[type="number"]::-webkit-inner-spin-button {
   width: 100vw;
   height: 100vh;
   display: none;
-  background-color: rgba(255, 255, 255, 0.3);
-  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   position: fixed;
   top: 0;
@@ -960,7 +959,6 @@ input[type="number"]::-webkit-inner-spin-button {
   position: absolute;
 }
 
-
 .tickets-info .section-title {
   font-size: 50px;
   letter-spacing: 0mm;
@@ -993,6 +991,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .tickets-inputs {
+  position: relative;
   margin-top: 72px;
   display: flex;
   flex-direction: row;
@@ -1021,16 +1020,49 @@ input[type="number"]::-webkit-inner-spin-button {
   color: transparent;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: url(assets/svg/input-icons/input-list.svg) no-repeat 0 50%;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  background: url(assets/svg/input-icons/input-list.svg) no-repeat 0 50%;
+}
+
+.tickets-inputs input[type="date"] {
+  width: 190px;
+}
+
+.date-placeholder, .time-placeholder {
+  position: absolute;
+  background-color: transparent;
+  color: #030303;
+  top: 13px;
+}
+
+.date-placeholder {
+  left: 40px;
+}
+
+.time-placeholder {
+  right: 115px;
+}
+
+::placeholder {
+  color:#030303;
+}
+
 .tickets-inputs input[type="date"] {
   width: 190px;
   background: url(assets/svg/input-icons/date.svg) no-repeat 10px 50%;
   padding-left: 40px;
+  color: #fff;
 }
 
 .tickets-inputs input[type="time"] {
   width: 190px;
   background: url(assets/svg/input-icons/time.svg) no-repeat 10px 50%;
   padding-left: 40px;
+  color: #fff;
 }
 
 .tickets-inputs input[type="text"] {
@@ -1047,6 +1079,74 @@ input[type="number"]::-webkit-inner-spin-button {
   background: url(assets/svg/input-icons/tel.svg) no-repeat 10px 50%;
   padding-left: 40px;
 }
+
+.custom-select {
+  width: 400px;
+  height: 45px;
+  border: 1px solid #030303;
+  box-sizing: border-box;
+  vertical-align: middle;
+  display: flex;
+  justify-content: space-between;
+  align-content: flex-start;
+  cursor: pointer;
+}
+
+.select-logo {
+  padding: 15px 15px 0 10px;
+}
+
+.select-list {
+  padding: 15px 10px;
+}
+
+.custom-select p {
+  margin: 0;
+  padding-top: 11px;
+  color: #030303;
+  flex-basis: 330px;
+}
+
+.select-drop-down {
+  display: none;
+  border: 1px solid #030303;
+  box-sizing: border-box;
+  width: 400px;
+  height: 136px;
+  background-color: #fff;
+  position: absolute;
+  left: 0;
+  bottom: -134px;
+  z-index: 20;
+}
+
+.option {
+  width: 100%;
+  height: 45px;
+  transition: .5s;
+  cursor: pointer;
+}
+
+.option p {
+  color: #030303;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 21px;
+  margin-left: 42px;
+  padding-top: 10px;
+  text-transform: capitalize;
+}
+
+.option:hover {
+  background-color: #e7e7e7;
+}
+.select-list path {
+  width: 17px;
+  height: 17px;
+}
+
 
 .entry-ticket {
   display: flex;
@@ -1133,6 +1233,7 @@ input[type="number"]::-webkit-inner-spin-button {
   height: 663px;
   border: 1px solid #030303;
   box-sizing: border-box;
+  position: relative;
 }
 
 .payment-info {
@@ -1192,7 +1293,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .payment-type {
-  background: url(assets/svg/input-icons/type.svg) no-repeat 0 50%;
+  background: url(assets/svg/input-icons/check.svg) no-repeat 0 50%;
   padding-left: 30px;
 }
 
@@ -1235,7 +1336,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .counter p {
   font-size: 18px;
-  color: #A4A4A3;
+  color: #a4a4a3;
   height: 20px;
   margin: 0;
   padding: 0;
@@ -1269,6 +1370,126 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #030303;
   font-weight: normal;
 }
+
+.credit-card-main {
+  width: 360px;
+  height: 211px;
+  background-color: #bcbcbc;
+  border-radius: 2px;
+  position: absolute;
+  bottom: 127px;
+  left: 30px;
+  z-index: 10;
+}
+
+.credit-card-main * {
+  margin-left: 10px;
+}
+
+.credit-card-sub {
+  width: 360px;
+  height: 211px;
+  background-color: #939393;
+  border-radius: 2px;
+  position: absolute;
+  z-index: 5;
+  bottom: 97px;
+  right: 30px;
+}
+
+.card-field {
+  color: #030303;
+}
+
+.card-field.inner {
+  position: absolute;
+  bottom: 30px;
+  right: 20px;
+  width: 70px;
+  height: 100px;
+}
+
+.card-field p {
+  margin-top: 15px;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.card-field input {
+  height: 35px;
+  background-color: #fff;
+  border: 1px solid #a4a4a3;
+  box-sizing: border-box;
+}
+
+.card-field input[type="number"] {
+  width: 100px;
+}
+
+.card-number{
+  width: 215px;
+}
+
+.card-name {
+  width: 320px;
+}
+
+.visa-icon {
+  position: absolute;
+  right: 20px;
+  top: 35px;
+}
+
+.mastercard-icon {
+  position: absolute;
+  top: 66px;
+  right: 20px;
+}
+
+.credit-black-line {
+  position: absolute;
+  right: 0;
+  top: 25px;
+  width: 100%;
+  height: 45px;
+  background-color: #030303;
+}
+
+.card-field.inner p{
+  margin: 0;
+  margin-left: 10px;
+  margin-bottom: 8px;
+}
+
+.card-field.inner .cvv-info{
+  font-size: 10px;
+  line-height: 12px;
+  margin: 0;
+  margin-top: 10px;
+  margin-left: 10px;
+  font-size: 10px;
+}
+
+.card-cvv {
+  width: 75px;
+}
+
+.checkout {
+  position: absolute;
+  bottom: 26px;
+  right: 30px;
+  width:220px;
+  height: 45px;
+  background-color: #710707;
+  border: none;
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: normal;
+  color: #fff;
+
+}
+
+
 /*  */
 
 
