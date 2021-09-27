@@ -1264,7 +1264,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .time-placeholder {
-	right: 115px;
+	right: 105px;
 }
 
 ::placeholder {
