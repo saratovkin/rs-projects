@@ -986,7 +986,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 }
 
 .tickets-button input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
+.tickets-button input[type="number"]::-webkit-inner-spin-button {
 	display: none;
 }
 
@@ -1167,7 +1167,8 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .purchase-inner {
-	margin: 91px auto;
+	margin: 0 auto;
+  margin-top: 93px;
 	display: flex;
 	justify-content: space-between;
 	width: 970px;
@@ -1213,7 +1214,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .tickets-inputs {
 	position: relative;
-	margin-top: 72px;
+	margin-top: 70px;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -1259,7 +1260,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .date-placeholder {
-	left: 40px;
+	left: 43px;
 }
 
 .time-placeholder {
@@ -1272,30 +1273,30 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .tickets-inputs input[type="date"] {
 	width: 190px;
-	background: url(assets/svg/input-icons/date.svg) no-repeat 10px 50%;
+	background: url(assets/svg/input-icons/date.svg) no-repeat 15px 50%;
 	padding-left: 40px;
 	color: var(--white);
 }
 
 .tickets-inputs input[type="time"] {
 	width: 190px;
-	background: url(assets/svg/input-icons/time.svg) no-repeat 10px 50%;
+	background: url(assets/svg/input-icons/time.svg) no-repeat 15px 50%;
 	padding-left: 40px;
 	color: var(--white);
 }
 
 .tickets-inputs input[type="text"] {
-	background: url(assets/svg/input-icons/name.svg) no-repeat 10px 50%;
+	background: url(assets/svg/input-icons/name.svg) no-repeat 15px 50%;
 	padding-left: 40px;
 }
 
 .tickets-inputs input[type="email"] {
-	background: url(assets/svg/input-icons/email.svg) no-repeat 10px 50%;
+	background: url(assets/svg/input-icons/email.svg) no-repeat 15px 50%;
 	padding-left: 40px;
 }
 
 .tickets-inputs input[type="tel"] {
-	background: url(assets/svg/input-icons/tel.svg) no-repeat 10px 50%;
+	background: url(assets/svg/input-icons/tel.svg) no-repeat 15px 50%;
 	padding-left: 40px;
 }
 
@@ -1379,17 +1380,22 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .entry-ticket-line {
-	margin-top: 15px;
+
 	width: 370px;
 	margin: 0 auto;
+  margin-top: 10px;
 	height: 40px;
 	display: flex;
 	justify-content: space-between;
 }
 
+.entry-ticket-line:last-child {
+  margin-top: 0;
+}
+
 .entry-ticket h3 {
 	margin: 0;
-	margin-top: 10px;
+	margin-top: 7px;
 	margin-left: 15px;
 	margin-bottom: 15px;
 	font-family: 'Forum';
@@ -1404,7 +1410,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .entry-ticket p {
 	margin: 0;
-	margin-top: 10px;
 	font-weight: normal;
 	font-size: 18px;
 	line-height: 21px;
@@ -1505,11 +1510,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 	padding-left: 30px;
 }
 
-.payment-subtotal {
-	width: 470px;
-	height: 117px;
-}
-
 .counter {
 	width: 32px;
 	height: 20px;
@@ -1523,6 +1523,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .payment-subtotal {
+  width: 470px;
 	margin: 0 auto;
 	display: flex;
 	height: 30px;
@@ -1534,6 +1535,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 	margin-left: 10px;
 	font-weight: normal;
 	line-height: 26px;
+  font-size: var(--font-regular);
 }
 
 .counter p {
@@ -1598,6 +1600,12 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 	right: 30px;
 }
 
+.card-field input[type="number"]::-webkit-outer-spin-button,
+.card-field input[type="number"]::-webkit-inner-spin-button {
+	display: block;
+  opacity: 1;
+}
+
 .card-field.inner {
 	position: absolute;
 	bottom: 30px;
@@ -1621,6 +1629,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .card-field input[type="number"] {
 	width: 100px;
+  height: 35px;
+  font-size: 12px;
 }
 
 .card-number {
@@ -1676,6 +1686,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 	right: 30px;
 	width: 220px;
 	height: 45px;
+  font-size: var(--font-regular);
 	background-color: var(--burgundy);
 	border: none;
 	line-height: 26px;
