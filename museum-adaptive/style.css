@@ -166,7 +166,7 @@ h2 {
 
 .navigation-scaled {
   position: absolute;
-  height: 575px;
+  height: 100%;
   width: 297px;
   left: 0;
   top: 130px;
