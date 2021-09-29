@@ -33,6 +33,21 @@
                         <li><a href="#contacts">Contacts</a></li>
                     </ul>
                 </nav>
+                <div class="navigation-scaled">
+                    <ul>
+                        <li><a href="#virtual-tour">Visiting</a></li>
+                        <li><a href="#explore">Explore</a></li>
+                        <li><a href="#video">Video</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#tickets">Tickets</a></li>
+                        <li><a href="#contacts">Contacts</a></li>
+                    </ul>
+                </div>
+                <div class="header-burger-menu" onclick="showSideNav(this)">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
             </div>
         </div>
     </header>
@@ -49,11 +64,10 @@
                         <p class="welcome-subtitle">From the castle to the museum</p>
                         <a href="tours/tour-main.html" target=" _blank">
                             <div class="welcome-button">
-                                <p>Discover the Louvre</p>
+                                Discover the Louvre
                             </div>
                         </a>
                     </div>
-
                     <div class="welcome-slider">
                         <div class="welcome-slider-item active">
                             <img src="assets/img/welcome-slider/1.jpeg" alt="">
@@ -72,37 +86,37 @@
                         </div>
                         <div class="welcome-slider-shadow">
                         </div>
-                    </div>
-                    <div class="welcome-slider-buttons">
-                        <div class="status-bar">
-                            <p class="current" id="current">01</p>
-                            <div class="vertical-line"></div>
-                            <p>05</p>
-                        </div>
-                        <div class="welcome-indicators">
-                            <div class="welcome-indicator welcome-selected"></div>
-                            <div class="welcome-indicator"></div>
-                            <div class="welcome-indicator"></div>
-                            <div class="welcome-indicator"></div>
-                            <div class="welcome-indicator"></div>
-                        </div>
-                        <div class="welcome-arrows">
-                            <button class="welcome-arrow left">
-                                <svg width="30" height="8" viewBox="0 0 30 8" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M5.72254 8.00024C3.90173 6.31363 1.99422 5.08286 0 4.30794V3.69255C1.99422 2.89483 3.90173 1.66406 5.72254 0.000244141H7.23988C6.37283 1.43614 5.53468 2.53016 4.72543 3.2823H30V4.71819H4.72543C5.53468 5.47033 6.37283 6.56435 7.23988 8.00024H5.72254Z"
-                                        fill="white" />
-                                </svg>
-                            </button>
-                            <button class="welcome-arrow right">
-                                <svg width="30" height="8" viewBox="0 0 30 8" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M24.2775 1.97284e-06C26.0983 1.68661 28.0058 2.91738 30 3.69231L30 4.30769C28.0058 5.10541 26.0983 6.33618 24.2775 8L22.7601 8C23.6272 6.5641 24.4653 5.47009 25.2746 4.71795L1.56078e-05 4.71795L1.57604e-05 3.28205L25.2746 3.28205C24.4653 2.52992 23.6272 1.4359 22.7601 1.86378e-06L24.2775 1.97284e-06Z"
-                                        fill="white" />
-                                </svg>
-                            </button>
+                        <div class="welcome-pagination">
+                            <div class="status-bar">
+                                <p class="current" id="current">01</p>
+                                <div class="vertical-line"></div>
+                                <p>05</p>
+                            </div>
+                            <div class="welcome-indicators">
+                                <div class="welcome-indicator welcome-selected"></div>
+                                <div class="welcome-indicator"></div>
+                                <div class="welcome-indicator"></div>
+                                <div class="welcome-indicator"></div>
+                                <div class="welcome-indicator"></div>
+                            </div>
+                            <div class="welcome-arrows">
+                                <button class="welcome-arrow left">
+                                    <svg width="30" height="8" viewBox="0 0 30 8" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M5.72254 8.00024C3.90173 6.31363 1.99422 5.08286 0 4.30794V3.69255C1.99422 2.89483 3.90173 1.66406 5.72254 0.000244141H7.23988C6.37283 1.43614 5.53468 2.53016 4.72543 3.2823H30V4.71819H4.72543C5.53468 5.47033 6.37283 6.56435 7.23988 8.00024H5.72254Z"
+                                            fill="white" />
+                                    </svg>
+                                </button>
+                                <button class="welcome-arrow right">
+                                    <svg width="30" height="8" viewBox="0 0 30 8" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M24.2775 1.97284e-06C26.0983 1.68661 28.0058 2.91738 30 3.69231L30 4.30769C28.0058 5.10541 26.0983 6.33618 24.2775 8L22.7601 8C23.6272 6.5641 24.4653 5.47009 25.2746 4.71795L1.56078e-05 4.71795L1.57604e-05 3.28205L25.2746 3.28205C24.4653 2.52992 23.6272 1.4359 22.7601 1.86378e-06L24.2775 1.97284e-06Z"
+                                            fill="white" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -152,7 +166,7 @@
                 </div>
             </div>
         </section>
-
+        <!--
         <section class="explore section dark" id="explore">
             <div class="container">
                 <div class="explore-grid">
@@ -285,27 +299,34 @@
                     </div>
                 </div>
                 <div class="video-slider-pagination">
-                    <svg  class="pagination-button" width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="pagination-button" width="10" height="12" viewBox="0 0 10 12" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M5.4777 0.219168C5.87773 0.564178 5.94259 1.19347 5.62256 1.62473L2.37578 6.00004L5.62256 10.3753C5.94259 10.8066 5.87773 11.4359 5.4777 11.7809C5.07766 12.1259 4.49394 12.056 4.17391 11.6247L0 6.00004L4.17391 0.375342C4.49394 -0.0559202 5.07766 -0.125842 5.4777 0.219168ZM9.65184 0.219168C10.0519 0.564178 10.1167 1.19347 9.7967 1.62473L6.54992 6.00004L9.7967 10.3753C10.1167 10.8066 10.0519 11.4359 9.65184 11.7809C9.2518 12.1259 8.66808 12.056 8.34805 11.6247L4.17414 6.00004L8.34805 0.375342C8.66808 -0.0559202 9.2518 -0.125842 9.65184 0.219168Z"
                             fill="#999999" />
                     </svg>
-                    <svg  class="pagination-button" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="pagination-button" width="12" height="12" viewBox="0 0 12 12" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <circle cx="6" cy="6" r="6" fill="#333333" />
                     </svg>
-                    <svg  class="pagination-button" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="pagination-button" width="12" height="12" viewBox="0 0 12 12" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <circle cx="6" cy="6" r="6" fill="#999999" />
                     </svg>
-                    <svg  class="pagination-button" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="pagination-button" width="12" height="12" viewBox="0 0 12 12" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <circle cx="6" cy="6" r="6" fill="#999999" />
                     </svg>
-                    <svg  class="pagination-button" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="pagination-button" width="12" height="12" viewBox="0 0 12 12" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <circle cx="6" cy="6" r="6" fill="#999999" />
                     </svg>
-                    <svg  class="pagination-button" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="pagination-button" width="12" height="12" viewBox="0 0 12 12" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <circle cx="6" cy="6" r="6" fill="#999999" />
                     </svg>
-                    <svg  class="pagination-button" width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="pagination-button" width="10" height="12" viewBox="0 0 10 12" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M0.348163 0.219168C0.748196 -0.125842 1.33192 -0.0559202 1.65195 0.375342L5.82586 6.00004L1.65194 11.6247C1.33192 12.056 0.748195 12.1259 0.348162 11.7809C-0.0518709 11.4359 -0.116729 10.8066 0.203297 10.3753L3.45008 6.00004L0.203298 1.62473C-0.116728 1.19347 -0.05187 0.564177 0.348163 0.219168ZM4.5223 0.219168C4.92234 -0.125841 5.50606 -0.0559197 5.82609 0.375342L10 6.00004L5.82609 11.6247C5.50606 12.056 4.92234 12.1259 4.5223 11.7809C4.12227 11.4359 4.05741 10.8066 4.37744 10.3753L7.62422 6.00004L4.37744 1.62473C4.05741 1.19347 4.12227 0.564178 4.5223 0.219168Z"
                             fill="#999999" />
@@ -320,27 +341,24 @@
             <div class="container">
                 <h2 class="section-title">Art gallery</h2>
                 <div class="gallery-container">
-                    <div class="gallery-inner-container">
-                        <div class="gallery-grid">
-                            <img class="gallery-element top" src="assets/img/gallery/gallery1.jpeg" alt="" width="456">
-                            <img class="gallery-element" src="assets/img/gallery/gallery2.jpeg" alt="" width="456">
-                            <img class="gallery-element" src="assets/img/gallery/gallery3.jpeg" alt="" width="456">
-                            <img class="gallery-element" src="assets/img/gallery/gallery4.jpeg" alt="" width="456">
-                            <img class="gallery-element" src="assets/img/gallery/gallery5.jpeg" alt="" width="456">
-                            <img class="gallery-element" src="assets/img/gallery/gallery6.jpeg" alt="" width="456">
-                            <img class="gallery-element" src="assets/img/gallery/gallery7.jpeg" alt="" width="456">
-                            <img class="gallery-element" src="assets/img/gallery/gallery8.jpeg" alt="" width="456">
-                            <img class="gallery-element" src="assets/img/gallery/gallery9.jpeg" alt="" width="456">
-                            <img class="gallery-element" src="assets/img/gallery/gallery10.jpeg" alt="" width="456">
-                            <img class="gallery-element top" src="assets/img/gallery/gallery11.jpeg" alt="" width="456">
-                            <img class="gallery-element" src="assets/img/gallery/gallery12.jpeg" alt="" width="456">
-                            <img class="gallery-element" src="assets/img/gallery/gallery13.jpeg" alt="" width="456">
-                            <img class="gallery-element" src="assets/img/gallery/gallery14.jpeg" alt="" width="456">
-                            <img class="gallery-element" src="assets/img/gallery/gallery15.jpeg" alt="" width="456">
-                        </div>
-                        <div class="gallery-shadow">
-                        </div>
-
+                    <div class="gallery-grid">
+                        <img class="gallery-element top" src="assets/img/gallery/gallery1.jpeg" alt="" width="456">
+                        <img class="gallery-element" src="assets/img/gallery/gallery2.jpeg" alt="" width="456">
+                        <img class="gallery-element" src="assets/img/gallery/gallery3.jpeg" alt="" width="456">
+                        <img class="gallery-element" src="assets/img/gallery/gallery4.jpeg" alt="" width="456">
+                        <img class="gallery-element" src="assets/img/gallery/gallery5.jpeg" alt="" width="456">
+                        <img class="gallery-element" src="assets/img/gallery/gallery6.jpeg" alt="" width="456">
+                        <img class="gallery-element" src="assets/img/gallery/gallery7.jpeg" alt="" width="456">
+                        <img class="gallery-element" src="assets/img/gallery/gallery8.jpeg" alt="" width="456">
+                        <img class="gallery-element" src="assets/img/gallery/gallery9.jpeg" alt="" width="456">
+                        <img class="gallery-element" src="assets/img/gallery/gallery10.jpeg" alt="" width="456">
+                        <img class="gallery-element top" src="assets/img/gallery/gallery11.jpeg" alt="" width="456">
+                        <img class="gallery-element" src="assets/img/gallery/gallery12.jpeg" alt="" width="456">
+                        <img class="gallery-element" src="assets/img/gallery/gallery13.jpeg" alt="" width="456">
+                        <img class="gallery-element" src="assets/img/gallery/gallery14.jpeg" alt="" width="456">
+                        <img class="gallery-element" src="assets/img/gallery/gallery15.jpeg" alt="" width="456">
+                    </div>
+                    <div class="gallery-shadow">
                     </div>
                 </div>
             </div>
@@ -614,11 +632,11 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
     </main>
-    
-    <footer>
+
+    <!-- <footer>
         <div class="container">
             <div class="footer-container">
                 <div class="footer-main">
@@ -700,11 +718,13 @@
                 </div>
             </div>
         </div>
-    </footer>
+    </footer> -->
+
     <script src="js/gallery-randomizer.js"></script>
     <script src="js/video-range.js"></script>
     <script src="js/tickets-purchase.js"></script>
     <script src="js/tickets-select.js"></script>
+    <script src="js/burger-menu.js"></script>
 </body>
 
 </html>
