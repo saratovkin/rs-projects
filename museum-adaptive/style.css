@@ -115,6 +115,7 @@ h2 {
   background-color: var(--black);
   font-weight: 100;
   position: relative;
+  overflow-x: hidden;
 }
 
 .header-container a {
@@ -165,13 +166,40 @@ h2 {
 }
 
 .navigation-scaled {
+  display: none;
   position: absolute;
-  height: 100%;
+  height: 600px;
   width: 297px;
-  left: 0;
+  left: -200%;
   top: 130px;
   background-color: black;
-  display: none;
+  z-index: 10;
+}
+
+
+@keyframes slideInNav {
+  0% {
+    left: -200%;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+@keyframes slideOutNav {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -200%;
+  }
+}
+.show-nav {
+  animation: slideInNav 0.5s forwards;
+}
+
+.hide-nav {
+  animation: slideOutNav 0.5s forwards;
 }
 
 .navigation-scaled li {
@@ -295,7 +323,7 @@ h2 {
   z-index: 5;
   position: relative;
   overflow: hidden;
-  padding-bottom: 60px;
+  padding-bottom: 55px;
   max-width: 1000px;
   width: 70%;
   height: auto;
@@ -382,7 +410,7 @@ h2 {
   height: 115px;
   position: absolute;
   right: 0;
-  bottom: 0;
+  bottom: 2px;
   z-index: 20;
 }
 
@@ -396,7 +424,11 @@ h2 {
 }
 
 .status-bar p {
-  font-size: 20px;
+  font-size: 22px;
+  margin-right: 5px;
+}
+.status-bar p:last-child {
+  margin-right: 0;
 }
 
 .vertical-line {
@@ -536,12 +568,16 @@ h2 {
   display: flex;
   justify-content: space-between;
   position: relative;
+  height: 100%;
+}
+
+.explore-grid .section-title::after {
+  width: 660px;
 }
 
 .explore-left {
   font-weight: 300;
   line-height: 38px;
-  padding-bottom: 25px;
 }
 
 .explore-text {
@@ -559,31 +595,38 @@ h2 {
   padding: 0;
 }
 
-.explore-grid .section-title::after {
-  width: 660px;
-}
+
 
 .explore-picture {
   position: relative;
   margin-top: 15px;
+  height: auto;
 }
 
 .explore-background {
-  background-image: url(assets/img/explore-slider/temp.jpg);
-  width: 720px;
-  height: 700px;
+  width: 100%;
+  height: auto;
+}
+
+.explore-background img, .explore-foreground img {
+  min-width: 600px;
+  max-width: 720px;
+  width: 37vw;
 }
 
 .explore-foreground {
+  display: block;
   top: 0;
   left: 0;
   position: absolute;
-  width: 454px;
-  height: 700px;
-  background-image: url(assets/img/explore-slider/before.jpeg);
+  height: 100%;
+  overflow-y: hidden;
+  width: 60%;
 }
 
+
 .explore-slider {
+  display: none;
   position: absolute;
   top: 0;
   -webkit-appearance: none;
@@ -598,6 +641,7 @@ h2 {
 }
 
  ::-webkit-slider-thumb {
+   display: none;
   -webkit-appearance: none;
   appearance: none;
   width: 6px;
@@ -774,25 +818,25 @@ h2 {
   background-color: var(--burgundy);
 }
 
-input[type=range] {
+.video input[type=range] {
   height: 21px;
   -webkit-appearance: none;
   margin: 10px 0;
   width: 100%;
 }
 
-input[type=range]:focus {
+.video input[type=range]:focus {
   outline: none;
 }
 
-input[type=range]::-webkit-slider-runnable-track {
+.video input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 8px;
   cursor: pointer;
   background-color: transparent;
 }
 
-input[type=range]::-webkit-slider-thumb {
+.video input[type=range]::-webkit-slider-thumb {
   height: 15px;
   width: 15px;
   border-radius: 15px;
@@ -1978,13 +2022,16 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 
-@media (max-width: 1520px) {
+@media (max-width: 1580px) {
   .container{
     width: 1232px;
     margin: 0 auto;
   }
   .section-title {
     font-size: 60px;
+  }
+  .explore-grid .section-title::after {
+    width: 90%;
   }
   .welcome-text {
     margin-top:100px;
@@ -1994,6 +2041,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   }
   .welcome-pagination {
     width: 100%;
+    bottom: 7px;
   }
   .welcome-pagination *{
    margin-top: 3px;
@@ -2019,6 +2067,9 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     margin-top:50px;
     margin-right: -250px;
   }
+  .welcome-slider {
+    padding-bottom: 65px;
+  }
   .welcome-subtitle {
     font-size: 25px;
     letter-spacing: 1.5px;
@@ -2031,13 +2082,19 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     font-size: 20px;
     line-height: 60px;
   }
+  .welcome-arrow.left svg {
+    margin-left: 20px;
+    margin-right: 0;
+  }
+  .status-bar p {
+    font-size: 20px;
+  }
   header nav {
 	  display: none;
 	}
   .header-burger-menu {
     display: block;
   }
-
   .card-title {
     font-size: 28px;
     line-height: 31px;
@@ -2047,6 +2104,40 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   .visiting-grid {
     column-gap: 30px;
   }
+
+  .explore-grid {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .explore-text {
+    display: none;
+  }
+  
+  .explore-text {
+    margin-top: 77px;
+    margin-bottom: 45px;
+  }
+
+  .explore-text p {
+    margin: 0;
+    width: 100%;
+    line-height: 36px;
+  }
+
+  .explore-text br {
+    display: none;
+  }
+
+ 
+  .explore-background img, .explore-foreground img {
+
+    width: 70vw;
+  }
+
+
+
 }
 
 @media (max-width: 1024px) {
@@ -2055,8 +2146,11 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     --font-regular:20px;
   }
   .section {
-    padding-top: 60px;
+    padding-top: 51px;
     padding-bottom: 60px;
+  }
+  .section.explore {
+    padding-top: 35px;
   }
   .welcome-indicator {
     width: 12px;
@@ -2072,7 +2166,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     margin-right: 0;
   }
   .visiting-grid {
-    padding-top: 30px;
+    padding-top: 32px;
     column-gap: 0;
     row-gap: 60px;
     justify-content: space-evenly;
@@ -2101,14 +2195,17 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   .section-title {
     font-size: 40px;
     line-height: 60px;
-    margin-bottom: 33px;
+    margin-bottom: 31px;
   }
   .section-title::after {
     bottom: -21px;
   }
   .header-container {
-    height: 116px;
-    margin-bottom: -6px;
+    height: 120px;
+    margin-bottom: -10px;
+  }
+  .header-burger-menu {
+    padding: 0;
   }
   .welcome-grid{
     flex-direction: column;
@@ -2120,13 +2217,13 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     margin: 0 auto;
     z-index: 1;
   }
-  .welcome-pagination * {
-    margin-top: 0;
+  .welcome-arrow.left svg{
+    margin: 0;
   }
   .welcome-arrow svg {
     margin: 0;
   }
-  .welcome-arrow svg:last-child {
+  .welcome-arrow:last-child svg {
     margin-left: 13px;
   }
   .welcome-button {
@@ -2148,14 +2245,14 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     padding-bottom: 40px;
   }
   .status-bar {
-    margin-left: 0;
+    margin: 0;
   }
   .welcome-arrows {
     margin-right: 0;
   }
   .visiting-grid {
     padding-top: 30px;
-    column-gap: calc(5% - 20px);
+    column-gap: 0;
     row-gap: 39px;
     justify-content: space-evenly;
   }
@@ -2177,10 +2274,120 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   .card-title::after {
     width: 54%;
   }
+  .explore-grid {
+    align-items: flex-start;
+  }
+  .explore-picture {
+    margin-top: 45px;
+  }
+  .explore-background img, .explore-foreground img {
+    width: 90vw;
+    height: auto;
+  }
+  .explore-text .fully-hidden {
+    display: none;
+  }
+
+  
 }
 
 @media (max-width:768px) {
   .visiting-grid {
     column-gap: 0;
+  }
+
+}
+
+
+@media (max-width:700px) {
+ 
+  .welcome-pagination {
+    width: 60%;
+  }
+  .visiting-grid {
+    column-gap: 150px;
+  }
+  .explore-background img, .explore-foreground img {
+    min-width: 280px;
+  }
+}
+
+@media (max-width:600px) {
+
+  .header-container {
+    height: 90px;
+  }
+ .section-title {
+    font-size: 28px;
+    line-height: 40px;
+    letter-spacing: 5px;
+  }
+  .logo-pic {
+    width: 29px;
+    height: 16px;
+    margin-bottom: 7px;
+  }
+
+  .logo-name {
+    font-size: 16px;
+    line-height: 18px;
+  }
+  .welcome-text .section-title {
+    margin-top: 15px;
+    margin-left: -10px;
+  }
+  .welcome-subtitle {
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 2px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+  .welcome-pagination {
+    height: 80px;
+    min-width: 220px;
+  }
+  .status-bar p{
+    font-size: 16px;
+    line-height: 40px;
+  }
+  .welcome-indicator {
+    width: 7px;
+    height: 7px;
+    margin-right: 10px;
+  }
+  .welcome-arrow svg {
+    width: 20px;
+    height: 8px;
+  }
+  .section.visiting {
+    padding-top: 35px;
+  }
+  .visiting-grid {
+    padding-top: 32px;
+  }
+  .section.visiting {
+    padding-bottom: 45px;
+  }
+  .card-title {
+    margin-top: 21px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 20px;
+    letter-spacing: 5px;
+  }
+  .card-title::after {
+    width: 54%;
+  }
+  .card-subtitle {
+    font-size: 16px;
+    line-height: 19px;
+    padding: 0;
+  }
+  .card-subtitle+p{
+    padding-top: 14px;
+  }
+  .explore-picture {
+    margin-top: 31px;
   }
 }

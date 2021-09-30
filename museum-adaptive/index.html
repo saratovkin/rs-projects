@@ -43,7 +43,7 @@
                         <li><a href="#contacts">Contacts</a></li>
                     </ul>
                 </div>
-                <div class="header-burger-menu" onclick="showSideNav(this)">
+                <div class="header-burger-menu" onclick="burgerClick(this)">
                     <div class="bar1"></div>
                     <div class="bar2"></div>
                     <div class="bar3"></div>
@@ -88,8 +88,8 @@
                         </div>
                         <div class="welcome-pagination">
                             <div class="status-bar">
-                                <p class="current" id="current">01</p>
-                                <div class="vertical-line"></div>
+                                <p>01</p>
+                                <p>|</p>
                                 <p>05</p>
                             </div>
                             <div class="welcome-indicators">
@@ -166,7 +166,7 @@
                 </div>
             </div>
         </section>
-        <!--
+
         <section class="explore section dark" id="explore">
             <div class="container">
                 <div class="explore-grid">
@@ -175,15 +175,13 @@
                         <div class="explore-text">
                             <p>
                                 Las Meninas is a 1656 painting by Diego Velázquez, the leading <br> artist of the
-                                Spanish
-                                Golden
-                                Age.
+                                Spanish Golden Age.
                             </p>
                             <p>
                                 It was cleaned in 1984 to remove a <span>"yellow veil"</span> of dust that had gathered
                                 since the previous restoration in the 19th century.
                             </p>
-                            <p>
+                            <p class="partly-hidden">
                                 The cleaning provoked furious protests, not because the picture had been damaged in any
                                 way,
                                 but because it looked different.
@@ -192,7 +190,13 @@
                     </div>
                     <div class="explore-picture">
                         <div class="explore-background">
+                            <img src="assets/img/explore-slider/after.jpeg" alt="">
                         </div>
+                        <div class="explore-foreground" id="explore-foreground">
+                            <img src="assets/img/explore-slider/before.jpeg" alt="">
+                        </div>
+                        <input type="range" min="1" max="100" value="63" class="explore-slider" id="explore-slider"
+                            oninput="exploreSlide()">
                     </div>
                 </div>
             </div>
@@ -632,11 +636,11 @@
                     </div>
                 </div>
             </div>
-        </section> -->
+        </section>
 
     </main>
 
-    <!-- <footer>
+    <footer>
         <div class="container">
             <div class="footer-container">
                 <div class="footer-main">
@@ -718,13 +722,23 @@
                 </div>
             </div>
         </div>
-    </footer> -->
+    </footer>
 
     <script src="js/gallery-randomizer.js"></script>
     <script src="js/video-range.js"></script>
     <script src="js/tickets-purchase.js"></script>
     <script src="js/tickets-select.js"></script>
     <script src="js/burger-menu.js"></script>
+    <script src="js/explore-slider.js"></script>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic2FyYXRvdmtpbiIsImEiOiJja3R5N3VnODAwNnVvMnBwYzNscmdkZ2lxIn0.5cLoaV00_oRJm_pRZJEp4A';
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/saratovkin/ckty7xozu0qq117mpbxr6pnbx', // style URL
+            center: [2.3364, 48.86091], // starting position [lng, lat]
+            zoom: 15.5 // starting zoom
+        });
+    </script>
 </body>
 
 </html>
