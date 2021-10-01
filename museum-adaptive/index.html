@@ -236,9 +236,8 @@
                                 <div class="progress-bar-sub" id="bar-sub">
 
                                 </div>
-                                <input class="progress-bar" type="range" value="54" id="progress-bar"
+                                <input type="range" value="54" id="progress-bar"
                                     oninput="progressBar()">
-
                             </div>
                             <button class="volume">
                                 <svg width="38" height="31" viewBox="0 0 38 31" fill="none"
@@ -343,7 +342,7 @@
                 <h2 class="section-title">Art gallery</h2>
                 <div class="gallery-container">
                     <div class="gallery-grid">
-                        <img class="gallery-element top" src="assets/img/gallery/gallery1.jpeg" alt="" width="456">
+                        <img class="gallery-element" src="assets/img/gallery/gallery1.jpeg" alt="" width="456">
                         <img class="gallery-element" src="assets/img/gallery/gallery2.jpeg" alt="" width="456">
                         <img class="gallery-element" src="assets/img/gallery/gallery3.jpeg" alt="" width="456">
                         <img class="gallery-element" src="assets/img/gallery/gallery4.jpeg" alt="" width="456">
@@ -353,7 +352,7 @@
                         <img class="gallery-element" src="assets/img/gallery/gallery8.jpeg" alt="" width="456">
                         <img class="gallery-element" src="assets/img/gallery/gallery9.jpeg" alt="" width="456">
                         <img class="gallery-element" src="assets/img/gallery/gallery10.jpeg" alt="" width="456">
-                        <img class="gallery-element top" src="assets/img/gallery/gallery11.jpeg" alt="" width="456">
+                        <img class="gallery-element" src="assets/img/gallery/gallery11.jpeg" alt="" width="456">
                         <img class="gallery-element" src="assets/img/gallery/gallery12.jpeg" alt="" width="456">
                         <img class="gallery-element" src="assets/img/gallery/gallery13.jpeg" alt="" width="456">
                         <img class="gallery-element" src="assets/img/gallery/gallery14.jpeg" alt="" width="456">
@@ -369,10 +368,12 @@
             <div class="container tickets">
                 <h2 class="section-title">Buy tickets</h2>
                 <div class="tickets-grid">
-                    <img src="assets/img/tickets1.jpeg" alt="" width="720" height="550">
+                    <div class="tickets-main-image">
+                        <img src="assets/img/tickets1.jpeg" alt="" width="720" height="550">
+                    </div>
                     <div class="tickets-buy">
                         <div class="tickets-caption">
-                            <h3>Ticket type</h3>
+                            <h3 class="left-caption">Ticket type</h3>
                             <h3 class="right-caption">Amount</h3>
                         </div>
                         <div class="tickets-forms">
@@ -429,7 +430,7 @@
                                 </div>
                                 <h2 class="section-title">Booking tickets</h2>
                                 <p class="tickets-subtitle">Tour to Louvre</p>
-                                <div class="tickets-forms">
+                                <div class="tickets-forms-purchase">
                                     <form class="tickets-inputs" action="url">
                                         <input type="date"
                                             onfocus="this.style.color='#030303';this.nextElementSibling.style.display='none'">
@@ -726,15 +727,15 @@
     <script src="js/tickets-select.js"></script>
     <script src="js/burger-menu.js"></script>
     <script src="js/explore-slider.js"></script>
-    <!-- <script>
+    <script>
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2FyYXRvdmtpbiIsImEiOiJja3R5N3VnODAwNnVvMnBwYzNscmdkZ2lxIn0.5cLoaV00_oRJm_pRZJEp4A';
         const map = new mapboxgl.Map({
             container: 'map', // container ID
             style: 'mapbox://styles/saratovkin/ckty7xozu0qq117mpbxr6pnbx', // style URL
             center: [2.3364, 48.86091], // starting position [lng, lat]
-            zoom: 15.5 // starting zoom
+            zoom: 15.5, // starting zoom
         });
-    </script> -->
+    </script>
 </body>
 
 </html>
