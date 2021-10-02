@@ -1203,7 +1203,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  border: 3px solid black;
+  border: 1px solid black;
   box-sizing: border-box;
 }
 
@@ -1274,13 +1274,13 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 
 @keyframes slideIn {
   100% {
-    left: 15%;
+    left: 50%;
   }
 }
 
 @keyframes slideOut {
   0% {
-    left: 15%;
+    left: 50%;
   }
   100% {
     left: -200%;
@@ -1339,8 +1339,14 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   top: 15%;
   left: -150%;
   background-color: var(--white);
-  width: 1440px;
-  height: 845px;
+  max-width: 1440px;
+  max-height: 845px;
+  min-width: 1024px;
+  min-height: 768px;
+  width: 90vw;
+  height: 67.5vw;
+  top: 50%; 
+  transform: translate(-50%, -50%);
 }
 
 .tickets-close-icon {
@@ -1508,7 +1514,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .select-logo {
-  padding: 15px 15px 0 10px;
+  padding: 15px;
+  padding-bottom: 0;
 }
 
 .select-list {
@@ -1628,7 +1635,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .entry-ticket button {
   margin: 0;
   height: 100%;
-  width: 35px;
+  width: 50px;
   background-color: var(--black);
   font-size: 15px;
   line-height: 10px;
@@ -1679,9 +1686,12 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .tickets-payment p {
-  margin-top: 8px;
   font-weight: 100;
   font-size: 18px;
+}
+
+.payment-info p {
+  margin-top: 8px;
   line-height: 21px;
 }
 
@@ -1724,7 +1734,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   margin: 0;
   margin-left: 10px;
   font-weight: normal;
-  line-height: 26px;
   font-size: var(--font-regular);
 }
 
@@ -1758,7 +1767,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .payment-total h3 {
-  margin-top: 5px;
+  margin-top: 7px;
   font-size: 32px;
   line-height: 37px;
   font-weight: normal;
@@ -1807,7 +1816,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .card-field p {
   margin-top: 15px;
   font-size: 12px;
-  line-height: 14px;
+  line-height: 15px;
 }
 
 .card-field input {
@@ -1821,6 +1830,10 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   width: 100px;
   height: 35px;
   font-size: 12px;
+  line-height: 24px;
+}
+input:focus, textarea {
+  outline: none;
 }
 
 .card-number {
@@ -2288,6 +2301,25 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   .tickets .section-title {
     margin-bottom: -28px;
   }
+  .tickets-purchase .section-title {
+      font-size: 50px;
+      letter-spacing: 0mm;
+      margin: 0;
+      margin-top: 20px;
+      padding: 0;
+  }
+  .tickets-purchase .section-title::after {
+    bottom: -25px;
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+  .purchase-inner {
+    margin-top: 80px;
+  }
+  .payment-info p {
+    margin-top: 6px;
+  }
   .contacts-text h3 {
     font-size: 24px;
     line-height: 28px;
@@ -2327,6 +2359,30 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   .footer-sub {
     margin-top: 40px;
     letter-spacing: 3px;
+  }
+  .tickets-purchase .section-title {
+    margin-bottom: -4px;
+  }
+  .tickets-subtitle {
+    margin-bottom: 1px;
+  }
+  .tickets-payment h4 {
+    letter-spacing: 1px;
+  }
+
+  .payment-type {
+    margin-bottom: 24px;
+  }
+  .payment-subtotal p {
+    font-size: 22px;
+    line-height: 25px;
+  }
+  .card-field p {
+    line-height: 10px;
+    margin-bottom: 4px;
+  }
+  .card-field input[type="number"] {
+    font-size: 12px;
   }
 }
 
@@ -2434,10 +2490,20 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   .section.contacts {
     padding-bottom: 58px;
   }
+  .select-drop-down {
+    width: 100%;
+  }
   footer {
     margin-top: -22px;
   }
 }
+@media (max-width:1023px) {
+  .tickets-purchase {
+    width: 100%;
+    min-width: 1000px;
+  }
+}
+
 
 @media (max-width:1000px) {
   .contacts-text h3 {
@@ -2447,6 +2513,97 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   .contacts-text li {
     font-size: 18px;
     line-height: 21px;
+  }
+  .tickets-purchase {
+    max-height: none;
+    min-height: 0;
+    height: 1479px;
+    width: 76.8%;
+    min-width: 590px;
+    height: 100%;
+    overflow-y: scroll;
+  }
+  .purchase-inner {
+    flex-direction: column;
+    align-items: center;
+    width: 76.8%;
+  }
+  .purchase-inner .section-title {
+    margin-top: 40px;
+    margin-bottom: 10px;
+    
+  }
+  .tickets-inputs {
+    margin-top: 50px;
+  }
+  .tickets-info,
+  .custom-select,
+  .entry-ticket {
+    width: 530px;
+  }
+  .time-placeholder {
+    right: 165px;
+  }
+  .tickets-inputs input[type="date"],
+  .tickets-inputs input[type="time"] {
+    width: 251px;
+  }
+  .tickets-subtitle {
+    margin-bottom: 5px;
+  }
+  .tickets-payment {
+    margin-top: 50px;
+    min-height: 665px;
+    height: 665px;
+  }
+  .payment-info h3 {
+    margin-top: 23px;
+  }
+
+  .custom-select p {
+    flex-basis: 480px;
+  }
+  .credit-card-main {
+    position: relative;
+    left: 0;
+    bottom: 0;
+  }
+  .credit-card-main {
+    margin-left: 15px;
+  }
+  .entry-ticket h3 {
+    flex-basis: 500px;
+  }
+  .entry-ticket .crossline,
+  .tickets-payment .crossline {
+    width: 500px;
+  }
+  .card-field:first-child p {
+    padding-top: 20px;
+  }
+  .credit-card-sub {
+    bottom: 95px;
+    right: 14px;
+  }
+  .checkout {
+    position: absolute;
+    bottom: 25px;
+    right: 15px;
+  }
+  .payment-subtotal p {
+    line-height: 22px;
+  }
+  .entry-ticket-line,
+  .payment-info,
+  .payment-subtotal,
+  .payment-total {
+    width: 500px;
+  }
+  
+  .payment-info h4 {
+    font-size: 22px;
+    line-height: 26px;
+    letter-spacing: 0;
   }
 }
 
@@ -2468,6 +2625,9 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   }
   .section-title::after {
     bottom: -21px;
+  }
+  .container.tickets .purchase-inner .section-title::after {
+    bottom: -44px;
   }
   .header-container {
     height: 120px;
@@ -2558,7 +2718,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   }
   .explore-background img,
   .explore-foreground img {
-    width: calc(100vw - 40px);
+    width: calc(100vw - 46px);
     height: auto;
     max-width: 728px;
     max-height: 705px;
@@ -2719,6 +2879,9 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   }
   .tickets .section-title {
     margin-bottom: -41px;
+  }
+  .purchase-inner .section-title {
+    margin-bottom: 10px;
   }
   .tickets-caption h3 {
     margin-bottom: 24px;
@@ -2940,7 +3103,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     margin-top: 31px;
   }
   .section.video {
-    padding-top: 42px;
+    padding-top: 46px;
   }
   .videoplayer {
     margin-top: -68px;
@@ -2952,7 +3115,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     height: 606px;
   }
   .tickets-caption h3,
-  .tickets p,
+  .tickets-grid p,
   .tickets-sum h3,
   .buy-now {
     font-size: 16px;
@@ -2982,6 +3145,98 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     width: 260px;
     margin-top: 9px;
   }
+  .tickets-purchase {
+    width: 420px;
+    min-width: 310px;
+  }
+  .purchase-inner{
+    max-height: none;
+    min-height: 0;
+    height: 1754px;
+    width: 100%;
+    max-width: 420px;
+  }
+  .tickets-info .section-title {
+    font-size: 32px;
+    line-height: 35px;
+  }
+  .tickets-inputs input[type="date"],
+  .tickets-inputs input[type="time"],
+  .custom-select{
+    width: 100%;
+    border: 2px solid #030303;
+  }
+  .tickets-info {
+    width: calc(100% - 60px);
+  }
+  .entry-ticket {
+    width: 100%;
+  }
+  .entry-ticket .crossline,
+  .tickets-payment .crossline,
+  .entry-ticket-line {
+    width: calc(100% - 30px);
+  }
+  .purchase-inner .section-title {
+    margin-bottom: 15px;
+  }
+  .tickets-forms-purchase {
+    margin-top: -2px;
+  }
+  .time-placeholder {
+    right: 77%;
+    top: 80px;
+  }
+  .tickets-payment {
+    margin-top: 75px;
+    width: calc(100% - 60px);
+    min-height: 885px;
+  }
+  .entry-ticket-line,
+  .payment-info,
+  .payment-subtotal,
+  .payment-total {
+    width: calc(100% - 30px);
+  }
+
+  .purchase-inner {
+    justify-content: flex-start;
+  }
+  .payment-info h3 {
+    margin-top: 24px;
+  }
+  .credit-card-main,
+  .credit-card-sub {
+    width: calc(100% - 30px);
+    height: 209px;
+  }
+
+  .credit-card-sub {
+    position: relative;
+    bottom: 0;
+    right: 0;
+    margin: 0 auto;
+    margin-top: 25px;
+  }
+  .card-field.inner {
+    bottom: 20px;
+    right: 27px;
+  }
+  .card-name {
+    width: calc(100% - 40px);
+  }
+  .card-field.inner .cvv-info {
+    line-height: 10px;
+    margin-top: 5px;
+    margin-left: 14px;
+  }
+  .card-number {
+    width: calc(100% - 115px);
+  }
+  .card-field:nth-child(2) input {
+    width: calc(100% - 200px);
+    min-width: 60px
+  }
 }
 
 @media (max-width:410px) {
@@ -2990,5 +3245,14 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   }
   .footer-navigation-list li:nth-child(n+3) {
     margin-right: 8vw;
+  }
+  .tickets-purchase {
+    width: 100%;
+  }
+  .payment-info img {
+    display: none;
+  }
+  .entry-ticket-line p {
+    font-size: 15px;
   }
 }
