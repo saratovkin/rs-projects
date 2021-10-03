@@ -114,7 +114,6 @@ h2 {
   height: 150px;
   background-color: var(--black);
   font-weight: 100;
-  position: relative;
   overflow-x: hidden;
 }
 
@@ -166,14 +165,53 @@ h2 {
 }
 
 .navigation-scaled {
-  display: none;
+  display: block;
   position: absolute;
-  height: 600px;
+  height: 100%;
   width: 297px;
   left: -200%;
-  top: 130px;
-  background-color: black;
-  z-index: 10;
+  top: 0;
+  background-color: #030303;
+  z-index: 20;
+}
+.nav-scaled-images {
+  display: none;
+}
+
+.navigation-scaled a {
+  text-decoration: none;
+  color: #fff;
+  transition: .5s;
+}
+.navigation-scaled a:hover {
+  color: var(--font-gold);
+}
+
+.navigation-scaled ul {
+  margin-top: 35px;
+  padding-left: 35px;
+  width: 120px;
+}
+
+.navigation-scaled li {
+  margin-bottom: 25px;
+  font-size: 20px;
+  line-height: 23px;
+  letter-spacing: 2px;
+}
+
+.navigation-scaled li::after {
+  position: absolute;
+  left: 148px;
+  content: ">";
+  transition: .5s;
+}
+
+.navigation-scaled li:hover::after {
+  color: var(--font-gold);
+}
+.navigation-scaled .social-links {
+  display: none;
 }
 
 @keyframes slideInNav {
@@ -195,29 +233,11 @@ h2 {
 }
 
 .show-nav {
-  animation: slideInNav 0.5s forwards;
+  animation: slideInNav .3s forwards;
 }
 
 .hide-nav {
-  animation: slideOutNav 0.5s forwards;
-}
-
-.navigation-scaled li {
-  margin-bottom: 25px;
-  font-size: 20px;
-  line-height: 23px;
-  letter-spacing: 2px;
-}
-
-.navigation-scaled li::after {
-  position: absolute;
-  left: 168px;
-  content: ">";
-  transition: .5s;
-}
-
-.navigation-scaled li:hover::after {
-  color: var(--font-gold);
+  animation: slideOutNav .3s forwards;
 }
 
 .header-burger-menu {
@@ -245,7 +265,7 @@ h2 {
 }
 
 .change .bar3 {
-  transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-9px, -7px);
 }
 
 
@@ -399,7 +419,7 @@ h2 {
   width: 100%;
   height: 100%;
   z-index: 50;
-  display: none;
+  display: block;
 }
 
 .welcome-pagination {
@@ -2636,6 +2656,65 @@ input:focus, textarea {
   .header-burger-menu {
     padding: 0;
   }
+  .navigation-scaled {
+    width: 100%;
+  }
+  .navigation-scaled ul {
+    padding-left: 35px;
+  }
+  .nav-scaled-images {
+    display: block;
+    width: calc(100% - 70px);
+    margin: 0 auto;
+    margin-top: 35px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .navigation-scaled li::after {
+    left: 148px;
+  }
+  .navigation-scaled .social-links li::after {
+    display: none;
+  }
+
+  .nav-img-container {
+    width: calc(50% - 10px);
+    height: 21vw;
+  }
+  .nav-img-container:first-child {
+    width: 100%;
+    height: 25.2vw;
+  }
+  .navigation-scaled img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .nav-scaled-line {
+    position: absolute;
+    width: calc(100% - 70px);
+    height: 3px;
+    background-color: #fff;
+    opacity: .5;
+    bottom: 13.5%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+
+  .navigation-scaled .social-links {
+    display: flex;
+    padding-left: 0;
+    width: 46%;
+    margin: 0 auto;
+    /* margin-top: 70px; */
+    margin-top: 8.9vw;
+    height: 50px;
+  }
+  .navigation-scaled .social-icon {
+    margin-bottom: 0;
+  }
   .welcome-grid {
     flex-direction: column;
   }
@@ -2901,6 +2980,35 @@ input:focus, textarea {
 }
 
 @media (max-width:700px) {
+
+  .navigation-scaled ul {
+    margin-top: 45px;
+  }
+  .nav-scaled-images {
+    gap: 12px;
+    flex-wrap: nowrap;
+  }
+  .nav-img-container:first-child,
+  .nav-img-container {
+    width: calc(33.3% - 8px);
+    height: 22.5vw;
+  }
+  .nav-img-container:first-child{
+    order: 2;
+  }
+  .nav-img-container:last-child{
+    order: 3;
+  }
+  .navigation-scaled .social-links {
+    min-width: 260px;
+  }
+  .nav-scaled-line {
+    position: relative;
+    top: 0;
+    /* margin: 0 auto; */
+    margin-top: 20px;
+    margin-bottom: -20px;
+  }
   .welcome-pagination {
     width: 60%;
   }
@@ -3255,4 +3363,14 @@ input:focus, textarea {
   .entry-ticket-line p {
     font-size: 15px;
   }
+}
+
+@media (max-width:360px) {
+  .navigation-scaled .social-links {
+    margin-top: 20px;
+  }
+  .navigation-scaled .social-links li {
+    border: none;
+  }
+  
 }
