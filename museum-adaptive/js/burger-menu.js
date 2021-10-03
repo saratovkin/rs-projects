@@ -1,9 +1,9 @@
 function burgerClick() {
-  if (timer) {
+  if (timerNav) {
     burgerIcon.classList.toggle("change");
     indicator ? showNav() : hideNav();
-    timer = false;
-    setTimeout(function () { timer = true; }, 500);
+    timerNav = false;
+    setTimeout(function () { timerNav = true; }, 500);
   }
 }
 
@@ -14,6 +14,7 @@ function showNav() {
   navScaled.classList.add('show-nav');
   welcomeText.classList.remove('show-overlay');
   welcomeText.classList.add('hide-overlay');
+  hideNavOuterClick();
 }
 
 function hideNav() {
@@ -24,8 +25,7 @@ function hideNav() {
   welcomeText.classList.add('show-overlay');
   setTimeout(function () { navScaled.style.display = 'none'; }, 500);
 }
-
-window.onload = function () {
+function hideNavOuterClick() {
   document.onclick = function (e) {
     let clickCheck = true;
     switch (e.target) {
@@ -44,11 +44,34 @@ window.onload = function () {
       burgerClick();
     }
   };
-};
+}
+
+// window.onload = function  () {
+//   console.log('burger is loaded');
+//   document.onclick = function (e) {
+//     console.log('burger is clicked');
+//     let clickCheck = true;
+//     switch (e.target) {
+//       case burgerIcon:
+//         clickCheck = false;
+//       case burgerIcon.childNodes.item(1):
+//         clickCheck = false;
+//       case burgerIcon.childNodes.item(3):
+//         clickCheck = false;
+//       case burgerIcon.childNodes.item(5):
+//         clickCheck = false;
+//       case navScaled:
+//         clickCheck = false;
+//     }
+//     if (clickCheck && !indicator) {
+//       burgerClick();
+//     }
+//   };
+// };
 
 
 let indicator = true;
-let timer = true;
+let timerNav = true;
 let navScaled = document.querySelector('.navigation-scaled');
 let welcomeText = document.querySelector('.welcome-text');
 let burgerIcon = document.querySelector('.header-burger-menu');
