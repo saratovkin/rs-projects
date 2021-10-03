@@ -46,30 +46,6 @@ function hideNavOuterClick() {
   };
 }
 
-// window.onload = function  () {
-//   console.log('burger is loaded');
-//   document.onclick = function (e) {
-//     console.log('burger is clicked');
-//     let clickCheck = true;
-//     switch (e.target) {
-//       case burgerIcon:
-//         clickCheck = false;
-//       case burgerIcon.childNodes.item(1):
-//         clickCheck = false;
-//       case burgerIcon.childNodes.item(3):
-//         clickCheck = false;
-//       case burgerIcon.childNodes.item(5):
-//         clickCheck = false;
-//       case navScaled:
-//         clickCheck = false;
-//     }
-//     if (clickCheck && !indicator) {
-//       burgerClick();
-//     }
-//   };
-// };
-
-
 let indicator = true;
 let timerNav = true;
 let navScaled = document.querySelector('.navigation-scaled');
