@@ -1135,7 +1135,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	height: auto;
 }
 
-.container.tickets .section-title::after {
+.section-title.tckts::after {
 	bottom: -29px;
 }
 
@@ -2368,9 +2368,6 @@ textarea {
 		margin-top: 20px;
 		padding: 0;
 	}
-	.container.tickets .section-title::after {
-		bottom: -15px;
-	}
 	.tickets-purchase .section-title::after {
 		bottom: -25px;
 		left: 0;
@@ -2555,6 +2552,9 @@ textarea {
 		padding-top: 53px;
 		padding-bottom: 52px;
 	}
+  .section-title.tckts::after {
+    bottom: -15px;
+  }
 	.section.contacts {
 		padding-bottom: 58px;
 	}
@@ -3335,6 +3335,9 @@ textarea {
 		margin-top: 33px;
 		margin-left: 59px;
 	}
+  .container.tickets .purchase-inner .section-title::after {
+    bottom: -50px;
+  }
 	.tickets-counter p {
 		margin-top: -5px;
 		margin-bottom: 10px;
