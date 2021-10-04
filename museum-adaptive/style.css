@@ -4,35 +4,34 @@
 	--white: #fff;
 	--font-gold: #9d8665;
 	--font-regular: 22px;
-  /* change to 300 if necessary */
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url(assets/fonts/Roboto-Thin.woff2) format('woff2');
-  font-weight: 100;
-  font-display: fallback;
+	font-family: 'Roboto';
+	src: url(assets/fonts/Roboto-Thin.woff2) format('woff2');
+	font-weight: 100;
+	font-display: fallback;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url(assets/fonts/Roboto-Light.woff2) format('woff2');
-  font-weight: 300;
-  font-display: fallback;
+	font-family: 'Roboto';
+	src: url(assets/fonts/Roboto-Light.woff2) format('woff2');
+	font-weight: 300;
+	font-display: fallback;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url(assets/fonts/Roboto-Regular.woff2) format('woff2');
-  font-weight: 500;
-  font-display: fallback;
+	font-family: 'Roboto';
+	src: url(assets/fonts/Roboto-Regular.woff2) format('woff2');
+	font-weight: 500;
+	font-display: fallback;
 }
 
 @font-face {
-  font-family: 'Forum';
-  src: url(assets/fonts/Forum-Regular.woff2) format('woff2');
-  font-weight: 100;
-  font-display: fallback;
+	font-family: 'Forum';
+	src: url(assets/fonts/Forum-Regular.woff2) format('woff2');
+	font-weight: 100;
+	font-display: fallback;
 }
 
 html,
@@ -622,7 +621,7 @@ h2 {
 .card-subtitle+p {
 	padding-top: 10px;
 	font-size: 18px;
-  font-weight: 100;
+	font-weight: 100;
 }
 
 
@@ -991,8 +990,8 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 
 .video-slider iframe {
 	border: 0;
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 .video-slider-item {
@@ -1003,46 +1002,48 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	display: none;
 	animation: .5s ease-in-out;
 	z-index: 3;
-  background-color: #030303;
+	background-color: #030303;
 }
 
-.video-preview{
+.video-preview {
 	max-width: 452px;
 	width: 100%;
 	height: 100%;
-  object-fit: cover;
-  cursor: pointer;
+	object-fit: cover;
+	cursor: pointer;
 }
 
 .video-slider-play {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: transparent;
-  width: 68px;
-  height: 48px; 
-  padding: 0;
-  border: none; 
-  cursor: pointer;
-  display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: transparent;
+	width: 68px;
+	height: 48px;
+	padding: 0;
+	border: none;
+	cursor: pointer;
+	display: none;
 }
+
 .video-button-shape {
-  fill: #212121;
-  fill-opacity: .8;
-  transition: .2s;
+	fill: #212121;
+	fill-opacity: .8;
+	transition: .2s;
 }
+
 .video-slider-item:hover .video-button-shape {
-  fill: #ff0000;
-  fill-opacity: 1;
+	fill: #ff0000;
+	fill-opacity: 1;
 }
 
 .video-button-red {
-  fill: #fff;
+	fill: #fff;
 }
 
-.enabled .video-slider-play{
-  display: block;
+.enabled .video-slider-play {
+	display: block;
 }
 
 .video-slider-item.active,
@@ -2097,6 +2098,14 @@ span.ripple {
 	width: 67.78vw;
 	max-height: 620px;
 	height: 44.34vw;
+	overflow: hidden;
+	position: relative;
+}
+
+.contacts-map img {
+	object-fit: cover;
+	position: absolute;
+	right: 0;
 }
 
 
@@ -3022,7 +3031,7 @@ span.ripple {
 	}
 	.section.contacts {
 		padding-top: 40px;
-		padding-bottom: 37px;
+		padding-bottom: 65px;
 	}
 	.gallery-container {
 		height: 1050px;
@@ -3045,7 +3054,7 @@ span.ripple {
 	}
 	.contacts-map {
 		width: 100%;
-		height: 65.4vw;
+		height: 62vw;
 	}
 	.contacts-text ul {
 		margin-top: 40px;
@@ -3054,6 +3063,10 @@ span.ripple {
 	.contacts-text {
 		margin-bottom: 26px;
 	}
+  .card-field.inner p {
+    margin-top: 6px;
+    margin-bottom: 7px;
+  }
 	.footer-main {
 		flex-direction: column;
 	}
@@ -3454,10 +3467,15 @@ span.ripple {
 		margin-top: 33px;
 	}
 	.select-logo {
-		padding-right: 18px;
+    padding-left: 10px;
+		padding-right: 12px;
 	}
 	.contacts-map {
 		height: 248px;
+	}
+	.contacts-map img {
+		right: -290px;
+		top: -190px;
 	}
 	.contacts-grid {
 		margin-top: 62px;
@@ -3469,6 +3487,16 @@ span.ripple {
 		width: 260px;
 		margin-top: 9px;
 	}
+  .select-list,
+  .select-logo {
+    width: 37px;
+  }
+  .tickets-close-icon {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    cursor: pointer;
+  }
 	.tickets-purchase {
 		width: 420px;
 		min-width: 310px;
@@ -3545,7 +3573,7 @@ span.ripple {
 		right: 27px;
 	}
 	.card-name {
-		width: calc(100% - 40px);
+		width: calc(100% - 30px);
 	}
 	.card-field.inner .cvv-info {
 		line-height: 10px;
@@ -3553,12 +3581,15 @@ span.ripple {
 		margin-left: 14px;
 	}
 	.card-number {
-		width: calc(100% - 115px);
+		width: calc(100% - 105px);
 	}
 	.card-field:nth-child(2) input {
-		width: calc(100% - 200px);
+		width: calc(100% - 218px);
 		min-width: 60px
 	}
+  .section.contacts {
+    padding-bottom: 37px;
+  }
 	footer {
 		margin-top: -19px;
 	}
