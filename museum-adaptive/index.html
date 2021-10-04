@@ -472,13 +472,13 @@
                                 <p>Basic 18+</p>
                                 <div class="tickets-button">
                                     <button onclick="this.nextElementSibling.stepDown()">&#8722;</button>
-                                    <input class="tickets-amount" type="number" min="0" max="10" value="1">
+                                    <input class="tickets-amount" type="number" min="0" max="20" value="1">
                                     <button onclick="this.previousElementSibling.stepUp()">+</button>
                                 </div>
                                 <p>Senior 65+</p>
                                 <div class="tickets-button">
                                     <button onclick="this.nextElementSibling.stepDown()">&#8722;</button>
-                                    <input class="tickets-amount" type="number" min="0" max="10" value="1">
+                                    <input class="tickets-amount" type="number" min="0" max="20" value="1">
                                     <button onclick="this.previousElementSibling.stepUp()">+</button>
                                 </div>
                             </div>
@@ -686,7 +686,9 @@
                                     </div>
                                 </div>
                                 <button class="checkout">
-                                    Book
+                                    <checkout-inner>
+                                        Book
+                                    </checkout-inner>
                                 </button>
 
                             </div>
@@ -815,6 +817,7 @@
     <script src="js/tickets-select.js"></script>
     <script src="js/burger-menu.js"></script>
     <script src="js/explore-slider.js"></script>
+    <script src="js/ripple-button.js"></script>
     <script>
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2FyYXRvdmtpbiIsImEiOiJja3R5N3VnODAwNnVvMnBwYzNscmdkZ2lxIn0.5cLoaV00_oRJm_pRZJEp4A';
         const map = new mapboxgl.Map({
