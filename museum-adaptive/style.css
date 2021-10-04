@@ -1404,6 +1404,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	position: absolute;
 	top: 25px;
 	right: 25px;
+  cursor: pointer;
 }
 
 .tickets-close-icon path {
@@ -1948,8 +1949,23 @@ textarea {
 	line-height: 26px;
 	font-weight: normal;
 	color: var(--white);
+  cursor: pointer;
+  overflow: hidden;
 }
 
+span.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 600ms linear;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
 
 /*  */
 
