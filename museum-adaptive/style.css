@@ -137,6 +137,13 @@ h2 {
 	height: 27px;
 	margin-bottom: 7px;
 }
+.logo-pic path {
+  transition: .5s;
+}
+
+.logo:hover path {
+  fill: var(--font-gold);
+}
 
 .logo-name {
 	margin-left: 25px;
@@ -2006,9 +2013,9 @@ textarea {
 .contacts-map {
 	content: "";
 	max-width: 960px;
-	width: 70vw;
+	width: 67.78vw;
 	max-height: 620px;
-	height: 45vw;
+	height: 44.34vw;
 }
 
 
@@ -2068,6 +2075,10 @@ textarea {
 
 .footer-left .logo {
 	align-items: flex-start;
+}
+
+.footer-left .logo-name {
+  margin-top: 5px;
 }
 
 .footer-right {
@@ -2457,7 +2468,7 @@ textarea {
 		padding-bottom: 60px;
 	}
 	.section.explore {
-		padding-top: 35px;
+		padding-top: 55px;
 	}
 	.welcome-indicator {
 		width: 12px;
@@ -2474,6 +2485,7 @@ textarea {
 	}
 	.section.visiting {
 		padding-top: 50px;
+    padding-bottom: 60px;
 	}
 	.visiting-grid {
 		padding-top: 32px;
@@ -2562,7 +2574,7 @@ textarea {
 		width: 100%;
 	}
 	footer {
-		margin-top: -28px;
+		margin-top: -22px;
 	}
 }
 
@@ -2812,6 +2824,7 @@ textarea {
 	}
 	.section.visiting {
 		padding-top: 40px;
+    padding-bottom: 80px;
 	}
 	.visiting-grid {
 		padding-top: 30px;
@@ -2978,6 +2991,9 @@ textarea {
 		padding-left: 0;
 		margin-top: 0;
 	}
+  footer{
+    margin-top: -30px;
+  }
 	.footer-navigation {
 		width: 393px;
 		margin-right: 56px;
@@ -3009,6 +3025,7 @@ textarea {
 	.footer-main::after {
 		bottom: -27%;
 	}
+  
 }
 
 @media (max-width:768px) {
@@ -3186,7 +3203,7 @@ textarea {
 		margin-right: 0;
 	}
 	.footer-sub {
-		margin-top: 80px;
+		margin-top: 75px;
 	}
 	.footer-sub p,
 	.footer-sub a {
@@ -3214,10 +3231,13 @@ textarea {
 		line-height: 40px;
 		letter-spacing: 5px;
 	}
+  .footer-left .logo-name {
+    margin-top: 0px;
+  }
 	.logo-pic {
 		width: 29px;
 		height: 16px;
-		margin-bottom: 7px;
+		margin-bottom: 6px;
 	}
 	.logo-name {
 		font-size: 16px;
@@ -3225,7 +3245,7 @@ textarea {
 	}
 	.welcome-text .section-title {
 		margin-top: 15px;
-		margin-left: -10px;
+		margin-left: -5px;
 	}
 	.welcome-subtitle {
 		font-size: 16px;
@@ -3347,11 +3367,17 @@ textarea {
 	}
 	.tickets-sum {
 		margin-top: -8px;
-		margin-left: 40px;
+		margin-left: 45px;
 	}
+  .tickets .sum {
+    margin-left: 5px;
+  }
 	.tickets-checkout button {
 		margin-top: 33px;
 	}
+  .select-logo {
+    padding-right: 18px;
+  }
 	.contacts-map {
 		height: 248px;
 	}
