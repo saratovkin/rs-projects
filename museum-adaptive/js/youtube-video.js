@@ -17,7 +17,6 @@ function setupVideo(video) {
 
     link.remove();
     button.remove();
-    media.remove();
     video.appendChild(iframe);
   });
 
