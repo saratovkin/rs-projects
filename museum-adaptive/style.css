@@ -3397,6 +3397,12 @@ span.ripple {
 	.contacts-map {
 		height: 248px;
 	}
+  .contacts-grid {
+    margin-top:62px;
+  }
+  .footer-left {
+    margin-top: 60px;
+  }
 	.footer-right {
 		width: 260px;
 		margin-top: 9px;
