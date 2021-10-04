@@ -3456,6 +3456,10 @@ span.ripple {
 		margin-top: -5px;
 		margin-bottom: 10px;
 	}
+  .payment-info img {
+    width: 120px;
+    height: 96px;
+  }
 	.tickets-button {
 		margin-bottom: 25px;
 	}
