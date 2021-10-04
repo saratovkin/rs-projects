@@ -137,12 +137,13 @@ h2 {
 	height: 27px;
 	margin-bottom: 7px;
 }
+
 .logo-pic path {
-  transition: .5s;
+	transition: .5s;
 }
 
 .logo:hover path {
-  fill: var(--font-gold);
+	fill: var(--font-gold);
 }
 
 .logo-name {
@@ -910,7 +911,7 @@ h2 {
 	-webkit-appearance: none;
 	margin: 10px 0;
 	width: 100%;
-  position: absolute;
+	position: absolute;
 }
 
 .video input[type=range]:focus {
@@ -1404,7 +1405,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	position: absolute;
 	top: 25px;
 	right: 25px;
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .tickets-close-icon path {
@@ -1949,23 +1950,25 @@ textarea {
 	line-height: 26px;
 	font-weight: normal;
 	color: var(--white);
-  cursor: pointer;
-  overflow: hidden;
+	cursor: pointer;
+	overflow: hidden;
 }
 
 span.ripple {
-  position: absolute;
-  border-radius: 50%;
-  transform: scale(0);
-  animation: ripple 600ms linear;
-  background-color: rgba(255, 255, 255, 0.7);
+	position: absolute;
+	border-radius: 50%;
+	transform: scale(0);
+	animation: ripple 600ms linear;
+	background-color: rgba(255, 255, 255, 0.7);
 }
+
 @keyframes ripple {
-  to {
-    transform: scale(4);
-    opacity: 0;
-  }
+	to {
+		transform: scale(4);
+		opacity: 0;
+	}
 }
+
 
 /*  */
 
@@ -2094,7 +2097,7 @@ span.ripple {
 }
 
 .footer-left .logo-name {
-  margin-top: 5px;
+	margin-top: 5px;
 }
 
 .footer-right {
@@ -2501,7 +2504,7 @@ span.ripple {
 	}
 	.section.visiting {
 		padding-top: 50px;
-    padding-bottom: 60px;
+		padding-bottom: 60px;
 	}
 	.visiting-grid {
 		padding-top: 32px;
@@ -2555,9 +2558,9 @@ span.ripple {
 		width: 564px;
 		height: 3px;
 	}
-  .video input[type=range] {
-    height: 18px;
-  }
+	.video input[type=range] {
+		height: 18px;
+	}
 	.volume-range {
 		width: 143px;
 		height: 3px;
@@ -2580,9 +2583,9 @@ span.ripple {
 		padding-top: 53px;
 		padding-bottom: 52px;
 	}
-  .section-title.tckts::after {
-    bottom: -15px;
-  }
+	.section-title.tckts::after {
+		bottom: -15px;
+	}
 	.section.contacts {
 		padding-bottom: 58px;
 	}
@@ -2840,7 +2843,7 @@ span.ripple {
 	}
 	.section.visiting {
 		padding-top: 40px;
-    padding-bottom: 80px;
+		padding-bottom: 80px;
 	}
 	.visiting-grid {
 		padding-top: 30px;
@@ -2907,10 +2910,9 @@ span.ripple {
 	.video .player-controls {
 		height: 57px;
 	}
-  .volume-bar-sub {
-    width: 42%;
-  }
-  
+	.volume-bar-sub {
+		width: 42%;
+	}
 	.progress-bar {
 		position: absolute;
 		top: -28%;
@@ -3007,9 +3009,9 @@ span.ripple {
 		padding-left: 0;
 		margin-top: 0;
 	}
-  footer{
-    margin-top: -30px;
-  }
+	footer {
+		margin-top: -30px;
+	}
 	.footer-navigation {
 		width: 393px;
 		margin-right: 56px;
@@ -3041,7 +3043,6 @@ span.ripple {
 	.footer-main::after {
 		bottom: -27%;
 	}
-  
 }
 
 @media (max-width:768px) {
@@ -3247,9 +3248,9 @@ span.ripple {
 		line-height: 40px;
 		letter-spacing: 5px;
 	}
-  .footer-left .logo-name {
-    margin-top: 0px;
-  }
+	.footer-left .logo-name {
+		margin-top: 0px;
+	}
 	.logo-pic {
 		width: 29px;
 		height: 16px;
@@ -3371,9 +3372,9 @@ span.ripple {
 		margin-top: 33px;
 		margin-left: 59px;
 	}
-  .container.tickets .purchase-inner .section-title::after {
-    bottom: -50px;
-  }
+	.container.tickets .purchase-inner .section-title::after {
+		bottom: -50px;
+	}
 	.tickets-counter p {
 		margin-top: -5px;
 		margin-bottom: 10px;
@@ -3385,24 +3386,24 @@ span.ripple {
 		margin-top: -8px;
 		margin-left: 45px;
 	}
-  .tickets .sum {
-    margin-left: 5px;
-  }
+	.tickets .sum {
+		margin-left: 5px;
+	}
 	.tickets-checkout button {
 		margin-top: 33px;
 	}
-  .select-logo {
-    padding-right: 18px;
-  }
+	.select-logo {
+		padding-right: 18px;
+	}
 	.contacts-map {
 		height: 248px;
 	}
-  .contacts-grid {
-    margin-top:62px;
-  }
-  .footer-left {
-    margin-top: 60px;
-  }
+	.contacts-grid {
+		margin-top: 62px;
+	}
+	.footer-left {
+		margin-top: 60px;
+	}
 	.footer-right {
 		width: 260px;
 		margin-top: 9px;
