@@ -1,5 +1,4 @@
 function mapInit() {
-  console.log('hello');
   document.querySelector('.contacts-map').id = 'map';
   mapboxgl.accessToken = 'pk.eyJ1Ijoic2FyYXRvdmtpbiIsImEiOiJja3R5N3VnODAwNnVvMnBwYzNscmdkZ2lxIn0.5cLoaV00_oRJm_pRZJEp4A';
   const map = new mapboxgl.Map({
