@@ -125,7 +125,6 @@ function validatePhone(phone) {
   return true;
 }
 
-
 let form = document.forms['customer-info'];
 
 let inputDate = document.getElementById('booking-date');
@@ -133,9 +132,7 @@ let inputTime = document.getElementById('booking-time');
 let inputName = document.getElementById('customer-name');
 let inputEmail = document.getElementById('customer-email');
 let inputTel = document.getElementById('customer-tel');
-
-// document.querySelector('.checkout').addEventListener('click', validateForm);
-
+let set
 
 inputDate.addEventListener('input', function () {
   if (!validateDate(inputDate.value)) {
@@ -183,8 +180,6 @@ inputTel.addEventListener('input', function () {
     inputTel.setCustomValidity('');
   }
 });
-
-
 
 
 function validateForm() {
