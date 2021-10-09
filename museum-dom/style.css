@@ -777,6 +777,10 @@ h2 {
 	position: relative;
 }
 
+.videoplayer * {
+	outline: none;
+}
+
 .main-video {
 	position: relative;
 	margin: 0 auto;
@@ -1170,6 +1174,27 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	margin: 0;
 	padding: 0;
 	width: 0;
+}
+
+.gallery-element {
+	opacity: 0;
+	transform: translateY(50%) scale(0.8);
+}
+
+.gallery-slide {
+	animation: slideUp 2s forwards;
+}
+
+@keyframes slideUp {
+	0% {
+		opacity: 0;
+		transform: translateY(50%) scale(0.8);
+
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0%) scale(1);
+	}
 }
 
 .gallery-element:nth-child(n + 6) {

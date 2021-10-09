@@ -626,10 +626,10 @@
                                             value="09:00:00" list="available-time"
                                             onfocus="this.style.color='#030303';this.nextElementSibling.style.display='none'">
                                         <p class=" time-placeholder">Time</p>
-                                        <input id="customer-name" type="text" name="customer-name" placeholder="Name">
-                                        <input id="customer-email" type="email" name="customer-email"
+                                        <input id="customer-name" autocomplete="off" type="text" name="customer-name" placeholder="Name">
+                                        <input id="customer-email"  type="email" name="customer-email"
                                             placeholder="E-mail">
-                                        <input id="customer-tel" type="tel" name="customer-tel" placeholder="Phone">
+                                        <input id="customer-tel" type="tel" autocomplete="off" name="customer-tel" placeholder="Phone">
                                         <datalist id="available-time">
                                             <option value="09:00">
                                             <option value="09:30">
@@ -941,7 +941,7 @@
     </footer>
 
     <script src="js/burger-menu.js"></script>
-    <script src="js/gallery-randomizer.js"></script>
+    <script src="js/gallery.js"></script>
     <script src="js/videoplayer.js"></script>
     <script src="js/tickets-purchase.js"></script>
     <script src="js/explore-slider.js"></script>

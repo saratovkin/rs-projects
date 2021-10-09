@@ -126,7 +126,6 @@ function videoHotKeys(e) {
         fullScreenVideo();
     }
     if (e.code == 'Space') {
-        console.log('why');
         e.preventDefault();
         videoPlay();
     }
