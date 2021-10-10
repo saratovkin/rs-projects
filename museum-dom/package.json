@@ -1,0 +1,20 @@
+{
+  "name": "museum-dom",
+  "version": "1.0.0",
+  "description": "rs-school project. task: museum-dom",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rolling-scopes-school/saratovkin-JSFE2021Q3.git"
+  },
+  "author": "artur saratovkin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rolling-scopes-school/saratovkin-JSFE2021Q3/issues"
+  },
+  "homepage": "https://github.com/rolling-scopes-school/saratovkin-JSFE2021Q3#readme",
+  "dependencies": {}
+}
