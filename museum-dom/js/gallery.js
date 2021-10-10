@@ -1,4 +1,4 @@
-//randomize on page- reload 
+//randomize on page reload 
 
 function shuffle(array) {
     let currentIndex = array.length;
