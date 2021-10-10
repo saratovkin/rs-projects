@@ -3047,9 +3047,6 @@ span.ripple {
 	.video .player-controls {
 		height: 57px;
 	}
-	.volume-bar-sub {
-		width: 42%;
-	}
 	.progress-bar {
 		position: absolute;
 		top: -28%;
