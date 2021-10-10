@@ -855,10 +855,16 @@
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2FyYXRvdmtpbiIsImEiOiJja3R5N3VnODAwNnVvMnBwYzNscmdkZ2lxIn0.5cLoaV00_oRJm_pRZJEp4A';
         const map = new mapboxgl.Map({
             container: 'map', // container ID
-            style: 'mapbox://styles/saratovkin/ckty7xozu0qq117mpbxr6pnbx?optimize=true', // style URL
-            center: [2.33635, 48.86090], // starting position [lng, lat]
-            zoom: 15.8, // starting zoom
+            style: 'mapbox://styles/saratovkin/ckty7xozu0qq117mpbxr6pnbx', // style URL
+            center: [2.33633, 48.86097], // starting position [lng, lat]
+            zoom: 15.77, // starting zoom
         });
+        const marker1 = new mapboxgl.Marker({ color: "black" }).setLngLat([2.3364, 48.86091]).addTo(map);
+        const marker2 = new mapboxgl.Marker({ color: "grey" }).setLngLat([2.3333, 48.8602]).addTo(map);
+        const marker3 = new mapboxgl.Marker({ color: "grey" }).setLngLat([2.3397, 48.8607]).addTo(map);
+        const marker4 = new mapboxgl.Marker({ color: "grey" }).setLngLat([2.3330, 48.8619]).addTo(map);
+        const marker5 = new mapboxgl.Marker({ color: "grey" }).setLngLat([2.3365, 48.8625]).addTo(map);
+
     </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
