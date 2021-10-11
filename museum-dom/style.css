@@ -810,7 +810,7 @@ h2 {
 	background-color: transparent;
 	border: none;
 	cursor: pointer;
-	display: block;	
+	display: block;
 }
 
 #pause,
@@ -826,7 +826,6 @@ h2 {
 	transform: translate(-50%, -50%);
 	width: 15.2%;
 	height: auto;
-
 }
 
 .play-button path {
@@ -1001,8 +1000,8 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 .display-speed {
 	position: absolute;
 	top: 15%;
-	left:50%;
-	transform: translate(-50%,-15%);
+	left: 50%;
+	transform: translate(-50%, -15%);
 	width: 100px;
 	height: 50px;
 	border-radius: 5px;
@@ -1012,6 +1011,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	transition: .1s;
 	display: none;
 }
+
 .display-speed p {
 	position: absolute;
 	top: 50%;
@@ -1048,16 +1048,14 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	height: 254px;
 	margin: 0 21px;
 }
- 
+
 .slick-arrow {
 	margin: 0;
 	padding: 0;
-
 	position: absolute;
 	bottom: 0;
 	width: 10px;
 	height: 12px;
-
 	border: none;
 	background-color: transparent;
 	font-size: 0;
@@ -1088,7 +1086,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	margin-right: 20px;
 }
 
-.slick-dots li.slick-active button{
+.slick-dots li.slick-active button {
 	background-color: #333333;
 }
 
@@ -1183,7 +1181,6 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	0% {
 		opacity: 0;
 		transform: translateY(50%) scale(0.8);
-
 	}
 	100% {
 		opacity: 1;
@@ -1271,17 +1268,15 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 
 .tickets-slideshow.show {
 	animation: fadeIn .5s forwards;
-	
 }
 
 .tickets-slideshow.hide {
 	animation: fadeOut .5s forwards;
-	
 }
+
 .tickets-img {
 	animation: slideshow .2s forwards;
 }
-
 
 .section-title.tckts::after {
 	bottom: -29px;
@@ -1665,7 +1660,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 	border: 1px solid #030303;
 }
 
-
 .tickets-inputs input[type="date"] {
 	width: 190px;
 	background: url(assets/svg/input-icons/date.svg) no-repeat 15px 50%;
@@ -1906,12 +1900,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 	background: url(assets/svg/input-icons/check.svg) no-repeat 0 50%;
 	padding-left: 30px;
 }
-
-/* .payment-date,
-.payment-time {
-
-}
- */
 
 .counter {
 	width: 32px;
@@ -2358,6 +2346,29 @@ span.ripple {
 	height: 24px;
 }
 
+.up-button {
+	position: fixed;
+	right: 16px;
+	bottom: 32px;
+	padding: 12px 13px;
+	background-color: #fff;
+	border: none;
+	border-radius: 100%;
+	cursor: pointer;
+	transform: translateY(200%);
+	opacity: 0;
+	transition: .5s;
+	border: 1px solid #030303;
+}
+
+.up-button:hover {
+	background-color: var(--font-gold);
+}
+
+.up-button:hover svg {
+	fill: #fff;
+}
+
 @media (max-width: 1700px) {
 	.video-subtitle {
 		display: none;
@@ -2790,9 +2801,9 @@ span.ripple {
 		margin-top: 40px;
 		margin-bottom: 10px;
 	}
-  .tickets-purchase .section-title::after {
-    bottom: -40px;
-  }
+	.tickets-purchase .section-title::after {
+		bottom: -40px;
+	}
 	.tickets-inputs {
 		margin-top: 50px;
 	}
@@ -3150,10 +3161,10 @@ span.ripple {
 	.contacts-text {
 		margin-bottom: 26px;
 	}
-  .card-field.inner p {
-    margin-top: 6px;
-    margin-bottom: 7px;
-  }
+	.card-field.inner p {
+		margin-top: 6px;
+		margin-bottom: 7px;
+	}
 	.footer-main {
 		flex-direction: column;
 	}
@@ -3275,7 +3286,6 @@ span.ripple {
 	.nav-scaled-line {
 		position: relative;
 		top: 0;
-		/* margin: 0 auto; */
 		margin-top: 20px;
 		margin-bottom: -20px;
 	}
@@ -3299,7 +3309,6 @@ span.ripple {
 		margin-left: 27%;
 		align-items: flex-start;
 	}
-	
 	.tickets-main-image {
 		width: 100%;
 		height: calc(100vw - 260px);
@@ -3328,7 +3337,6 @@ span.ripple {
 	.video-slider {
 		margin-top: 40px;
 	}
-
 	.section.video {
 		padding-bottom: 40px;
 	}
@@ -3544,10 +3552,10 @@ span.ripple {
 		margin-top: -5px;
 		margin-bottom: 10px;
 	}
-  .payment-info img {
-    width: 120px;
-    height: 96px;
-  }
+	.payment-info img {
+		width: 120px;
+		height: 96px;
+	}
 	.tickets-button {
 		margin-bottom: 25px;
 	}
@@ -3562,7 +3570,7 @@ span.ripple {
 		margin-top: 33px;
 	}
 	.select-logo {
-    padding-left: 10px;
+		padding-left: 10px;
 		padding-right: 12px;
 	}
 	.contacts-map {
@@ -3582,16 +3590,16 @@ span.ripple {
 		width: 260px;
 		margin-top: 9px;
 	}
-  .select-list,
-  .select-logo {
-    width: 37px;
-  }
-  .tickets-close-icon {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    cursor: pointer;
-  }
+	.select-list,
+	.select-logo {
+		width: 37px;
+	}
+	.tickets-close-icon {
+		position: absolute;
+		top: 30px;
+		right: 30px;
+		cursor: pointer;
+	}
 	.tickets-purchase {
 		width: 420px;
 		min-width: 310px;
@@ -3682,9 +3690,9 @@ span.ripple {
 		width: calc(100% - 218px);
 		min-width: 60px
 	}
-  .section.contacts {
-    padding-bottom: 37px;
-  }
+	.section.contacts {
+		padding-bottom: 37px;
+	}
 	footer {
 		margin-top: -19px;
 	}

@@ -385,34 +385,33 @@
                     </div>
                 </div>
                 <div class="video-slider">
-                    <div class="video-slider-item" >
-                        <!-- <div id="yt-video"></div> -->
-                        <iframe class="yt-iframe" width="560" height="315" src="https://www.youtube.com/embed/zp1BXPX8jcU"
-                            title="YouTube video player" frameborder="0"
+                    <div class="video-slider-item">
+                        <iframe class="yt-iframe" width="560" height="315"
+                            src="https://www.youtube.com/embed/zp1BXPX8jcU" title="YouTube video player" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                     </div>
                     <div class="video-slider-item">
-                        <iframe class="yt-iframe" width="560" height="315" src="https://www.youtube.com/embed/Vi5D6FKhRmo"
-                            title="YouTube video player" frameborder="0"
+                        <iframe class="yt-iframe" width="560" height="315"
+                            src="https://www.youtube.com/embed/Vi5D6FKhRmo" title="YouTube video player" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                     </div>
                     <div class="video-slider-item">
-                        <iframe class="yt-iframe" width="560" height="315" src="https://www.youtube.com/embed/NOhDysLnTvY"
-                            title="YouTube video player" frameborder="0"
+                        <iframe class="yt-iframe" width="560" height="315"
+                            src="https://www.youtube.com/embed/NOhDysLnTvY" title="YouTube video player" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                     </div>
                     <div class="video-slider-item">
-                        <iframe class="yt-iframe" width="560" height="315" src="https://www.youtube.com/embed/aWmJ5DgyWPI"
-                            title="YouTube video player" frameborder="0"
+                        <iframe class="yt-iframe" width="560" height="315"
+                            src="https://www.youtube.com/embed/aWmJ5DgyWPI" title="YouTube video player" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                     </div>
                     <div class="video-slider-item">
-                        <iframe class="yt-iframe" width="560" height="315" src="https://www.youtube.com/embed/2OR0OCr6uRE"
-                            title="YouTube video player" frameborder="0"
+                        <iframe class="yt-iframe" width="560" height="315"
+                            src="https://www.youtube.com/embed/2OR0OCr6uRE" title="YouTube video player"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                     </div>
@@ -453,8 +452,10 @@
                 <h2 class="section-title tckts">Buy tickets</h2>
                 <div class="tickets-grid">
                     <div class="tickets-main-image">
-                        <img class="tickets-slideshow" src="assets/img/tickets/tickets0.jpeg" alt="" width="720" height="550">
-                        <img class="tickets-slideshow next" src="assets/img/tickets/tickets1.jpeg" alt="" width="720" height="550">
+                        <img class="tickets-slideshow" src="assets/img/tickets/tickets0.jpeg" alt="" width="720"
+                            height="550">
+                        <img class="tickets-slideshow next" src="assets/img/tickets/tickets1.jpeg" alt="" width="720"
+                            height="550">
                     </div>
                     <div class="tickets-buy">
                         <div class="tickets-caption">
@@ -842,6 +843,12 @@
                 </div>
             </div>
         </div>
+        <button class="up-button" id="up-button" onclick="goTop()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="2em" height="2em" focusable="false"
+                aria-hidden="true" class="svgr-icons">
+                <path d="M3.7 6.7l3.8-3.8V15h1V2.9l3.8 3.8.7-.7-5-5-5 5z"></path>
+            </svg>
+        </button>
     </footer>
 
     <script src="js/burger-menu.js"></script>
@@ -853,7 +860,9 @@
     <script src="js/tickets-calculator.js"></script>
     <script src="js/tickets-form.js"></script>
     <script src="js/tickets-slideshow.js"></script>
+    <script src="js/up-button.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
+    <!-- <script src="js/log-result.js"></script> -->
     <script>
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2FyYXRvdmtpbiIsImEiOiJja3R5N3VnODAwNnVvMnBwYzNscmdkZ2lxIn0.5cLoaV00_oRJm_pRZJEp4A';
         const map = new mapboxgl.Map({
@@ -867,6 +876,7 @@
         const marker3 = new mapboxgl.Marker({ color: "grey" }).setLngLat([2.3397, 48.8607]).addTo(map);
         const marker4 = new mapboxgl.Marker({ color: "grey" }).setLngLat([2.3330, 48.8619]).addTo(map);
         const marker5 = new mapboxgl.Marker({ color: "grey" }).setLngLat([2.3365, 48.8625]).addTo(map);
+        map.addControl(new mapboxgl.NavigationControl());
 
     </script>
 
