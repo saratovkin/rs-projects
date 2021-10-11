@@ -7,6 +7,7 @@ $(document).ready(function () {
     speed: 1000,
     variableWidth: false,
     mobileFisrt: true,
+    swipe: false,
     responsive: [
       {
         breakpoint: 950,
