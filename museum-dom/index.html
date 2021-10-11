@@ -385,13 +385,14 @@
                     </div>
                 </div>
                 <div class="video-slider">
-                    <div class="video-slider-item">
-                        <iframe class="yt-iframe" width="560" height="315" src="https://www.youtube.com/embed/zp1BXPX8jcU"
+                    <div class="video-slider-item" >
+                        <div id="yt-video"></div>
+                        <!-- <iframe class="yt-iframe" width="560" height="315" src="https://www.youtube.com/embed/zp1BXPX8jcU"
                             title="YouTube video player" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
+                            allowfullscreen></iframe> -->
                     </div>
-                    <div class="video-slider-item">
+                    <!-- <div class="video-slider-item">
                         <iframe class="yt-iframe" width="560" height="315" src="https://www.youtube.com/embed/Vi5D6FKhRmo"
                             title="YouTube video player" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -414,7 +415,7 @@
                             title="YouTube video player" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
-                    </div>
+                    </div> -->
                 </div>
 
             </div>
@@ -452,7 +453,8 @@
                 <h2 class="section-title tckts">Buy tickets</h2>
                 <div class="tickets-grid">
                     <div class="tickets-main-image">
-                        <img src="assets/img/tickets/tickets1.jpeg" alt="" width="720" height="550">
+                        <img class="tickets-slideshow" src="assets/img/tickets/tickets0.jpeg" alt="" width="720" height="550">
+                        <img class="tickets-slideshow next" src="assets/img/tickets/tickets1.jpeg" alt="" width="720" height="550">
                     </div>
                     <div class="tickets-buy">
                         <div class="tickets-caption">
@@ -475,13 +477,13 @@
                                 <p>Basic 18+</p>
                                 <div class="tickets-button">
                                     <button onclick="removeTicket(1)">&#8722;</button>
-                                    <input class="tickets-amount basic" type="number" min="0" max="20" value="1">
+                                    <input class="tickets-amount basic" type="number" min="0" max="20" value="0">
                                     <button onclick="addTicket(1)">+</button>
                                 </div>
                                 <p>Senior 65+</p>
                                 <div class="tickets-button">
                                     <button onclick="removeTicket(0)">&#8722;</button>
-                                    <input class="tickets-amount senior" type="number" min="0" max="20" value="1">
+                                    <input class="tickets-amount senior" type="number" min="0" max="20" value="0">
                                     <button onclick="addTicket(0)">+</button>
                                 </div>
                             </div>
@@ -606,7 +608,7 @@
                             </div>
                             <div class="tickets-payment">
                                 <div class="payment-info">
-                                    <img src="assets/img/tickets/tickets2.jpeg" alt="" width="150" height="120">
+                                    <img src="assets/img/tickets/tickets-tiny.jpeg" alt="" width="150" height="120">
                                     <h3>Overview</h3>
                                     <h4>Tour to Louvre</h4>
                                     <p class=payment-date>Select date</p>
@@ -850,6 +852,7 @@
     <script src="js/welcome-slider.js"></script>
     <script src="js/tickets-calculator.js"></script>
     <script src="js/tickets-form.js"></script>
+    <script src="js/tickets-slideshow.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
     <script>
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2FyYXRvdmtpbiIsImEiOiJja3R5N3VnODAwNnVvMnBwYzNscmdkZ2lxIn0.5cLoaV00_oRJm_pRZJEp4A';
