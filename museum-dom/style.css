@@ -384,6 +384,7 @@ h2 {
 	max-width: 1000px;
 	width: 70%;
 	height: auto;
+	cursor: col-resize;
 }
 
 .welcome-slider-item {
@@ -392,7 +393,6 @@ h2 {
 	margin: 0 auto;
 	z-index: 3;
 	animation: .5s ease-in-out;
-	cursor: pointer;
 }
 
 .welcome-slider-item.active,
@@ -457,6 +457,7 @@ h2 {
 	z-index: 50;
 	display: block;
 	pointer-events: none;
+	cursor: pointer;
 }
 
 .welcome-pagination {
