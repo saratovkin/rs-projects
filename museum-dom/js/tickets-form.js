@@ -8,8 +8,10 @@ function normalStyle(elem) {
 
 function validateDate(d) {
   d = new Date(d);
+  let dTemp = d.toDateString();
   let today = new Date();
-  if (d >= today) {
+  today = today.toDateString();
+  if (dTemp) {
     displayDate(d);
     normalStyle(inputDate);
     return true;
@@ -28,7 +30,7 @@ function displayDate(d) {
 function validateTime(t) {
   let hour = t.split(':')[0];
   let minutes = t.split(':')[1];
-  if ((hour>= 9) && (hour <= 18)) {
+  if ((hour >= 9) && (hour <= 18)) {
     if (minutes == '00' || minutes == '30') {
       displayTime(t.substring(0, 5));
       //save time
@@ -125,6 +127,15 @@ function validatePhone(phone) {
   return true;
 }
 
+function setMinDate() {
+  let today = new Date();
+  today = today.toLocaleDateString('fr-CA');
+  inputDate.setAttribute('min', today);
+}
+
+
+
+
 let form = document.forms['customer-info'];
 
 let inputDate = document.getElementById('booking-date');
@@ -132,7 +143,7 @@ let inputTime = document.getElementById('booking-time');
 let inputName = document.getElementById('customer-name');
 let inputEmail = document.getElementById('customer-email');
 let inputTel = document.getElementById('customer-tel');
-let set
+setMinDate();
 
 inputDate.addEventListener('input', function () {
   if (!validateDate(inputDate.value)) {
@@ -187,6 +198,7 @@ function validateForm() {
     if (validateTime(inputTime.value)) {
       if (validateEmail(inputEmail.value)) {
         if (validatePhone(inputTel.value)) {
+          if (validateName(inputName.value));
           return true;
         }
       }
