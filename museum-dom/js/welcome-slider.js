@@ -68,8 +68,8 @@ const swipeDetect = (el) => {
     let distX = 0;
     let distY = 0;
 
-    let threshold = 150;
-    let restraint = 100;
+    let threshold = 50;
+    let restraint = 50;
 
     surface.addEventListener('mousedown', function (e) {
         startX = e.pageX;
