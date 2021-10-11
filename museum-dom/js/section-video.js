@@ -1,4 +1,3 @@
-
 //slick library init
 $(document).ready(function () {
   $('.video-slider').slick({
@@ -164,7 +163,6 @@ function changeMainVideo() {
     mainVideo.setAttribute('src', `assets/video/video${currentVideoIndex}.mp4`);
     mainVideo.setAttribute('poster', `assets/video/poster${currentVideoIndex}.jpeg`);
     showDefault();
-    // getYTFrames();
   }
 }
 
@@ -196,54 +194,3 @@ let startIndex = 0;
 
 let videoSliderSection = document.querySelector('.video-slider')
 videoSliderSection.addEventListener('click', changeMainVideo);
-
-// function getYTFrames() {
-//   let ytVideos = document.querySelectorAll('.yt-iframe');
-//   ytVideos.forEach(ytvid => {
-//     // let temp = ytvid.getAttribute('src')
-//     // ytvid.setAttribute('src', '');
-//     // ytvid.setAttribute('src', temp);
-//   });
-// }
-
-
-// // 2. This code loads the IFrame Player API code asynchronously.
-// var tag = document.createElement('script');
-
-// tag.src = "https://www.youtube.com/iframe_api";
-// var firstScriptTag = document.getElementsByTagName('script')[0];
-// firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-// // 3. This function creates an <iframe> (and YouTube player)
-// //    after the API code downloads.
-// var player;
-// function onYouTubeIframeAPIReady() {
-//   player = new YT.Player('yt-video', {
-//     height: '360',
-//     width: '640',
-//     videoId: 'zp1BXPX8jcU',
-//     events: {
-//       'onReady': onPlayerReady,
-//       'onStateChange': onPlayerStateChange
-//     }
-//   });
-// }
-
-// // 4. The API will call this function when the video player is ready.
-// function onPlayerReady(event) {
-//   event.target.playVideo();
-// }
-
-// // 5. The API calls this function when the player's state changes.
-// //    The function indicates that when playing a video (state=1),
-// //    the player should play for six seconds and then stop.
-// var done = false;
-// function onPlayerStateChange(event) {
-//   if (event.data == YT.PlayerState.PLAYING && !done) {
-//     setTimeout(stopVideo, 6000);
-//     done = true;
-//   }
-// }
-// function stopVideo() {
-//   player.stopVideo();
-// }

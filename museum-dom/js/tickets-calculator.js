@@ -113,6 +113,8 @@ window.onload = function () {
   amountBasic = +localStorage.getItem('amountBasic') || 0;
   amountSenior = +localStorage.getItem('amountSenior') || 0;
   setTicketType(typeOfExh);
+  toggleCheckout(0);
+  toggleCheckout(1);
   refreshCounter();
   refreshPrice();
 };

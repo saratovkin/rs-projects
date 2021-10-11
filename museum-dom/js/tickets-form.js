@@ -114,7 +114,7 @@ function validateEmail(email) {
 function validatePhone(phone) {
   let temp = phone.split('-').join('');
   temp = temp.split(' ').join('');
-  if (temp.length > 10 || temp.length < 5) {
+  if (temp.length > 10) {
     errorStyle(inputTel);
     return false;
   }
@@ -133,7 +133,20 @@ function setMinDate() {
   inputDate.setAttribute('min', today);
 }
 
-
+function validateForm() {
+  if (validateDate(inputDate.value)) {
+    if (validateTime(inputTime.value)) {
+      if (validateName(inputName.value)) {
+        if (validateEmail(inputEmail.value)) {
+          if (validatePhone(inputTel.value)) {
+            return true;
+          }
+        }
+      }
+    }
+  }
+  return false;
+}
 
 
 let form = document.forms['customer-info'];
@@ -185,24 +198,9 @@ inputEmail.addEventListener('input', function () {
 
 inputTel.addEventListener('input', function () {
   if (!validatePhone(inputTel.value)) {
-    inputTel.setCustomValidity('Input valid phone. Example: 1-800-150-150');
+    inputTel.setCustomValidity('Input valid phone. Example: 1-800-150-150. Max length - 10 digits');
     inputTel.reportValidity();
   } else {
     inputTel.setCustomValidity('');
   }
 });
-
-
-function validateForm() {
-  if (validateDate(inputDate.value)) {
-    if (validateTime(inputTime.value)) {
-      if (validateEmail(inputEmail.value)) {
-        if (validatePhone(inputTel.value)) {
-          if (validateName(inputName.value));
-          return true;
-        }
-      }
-    }
-  }
-  return false;
-}
