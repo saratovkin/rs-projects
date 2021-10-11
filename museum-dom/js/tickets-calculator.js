@@ -103,17 +103,19 @@ let select = document.querySelector('.select-drop-down');
 let listIcon = document.querySelector('.select-list');
 
 let ticketPrice = 20;
-let amountBasic = 1;
-let amountSenior = 1;
+let amountBasic = 0;
+let amountSenior = 0;
 let typeOfExh = 0;
 
 window.onload = function () {
   ticketPrice = +localStorage.getItem('ticketPrice') || 20;
   typeOfExh = +localStorage.getItem('type') || 0;
-  amountBasic = +localStorage.getItem('amountBasic') || 1;
-  amountSenior = +localStorage.getItem('amountSenior') || 1;
+  amountBasic = +localStorage.getItem('amountBasic') || 0;
+  amountSenior = +localStorage.getItem('amountSenior') || 0;
   setTicketType(typeOfExh);
   refreshCounter();
   refreshPrice();
 };
+
+
 
