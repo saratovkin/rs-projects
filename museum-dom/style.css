@@ -384,6 +384,7 @@ h2 {
 	max-width: 1000px;
 	width: 70%;
 	height: auto;
+	cursor: col-resize;
 }
 
 .welcome-slider-item {
@@ -392,7 +393,6 @@ h2 {
 	margin: 0 auto;
 	z-index: 3;
 	animation: .5s ease-in-out;
-	cursor: pointer;
 }
 
 .welcome-slider-item.active,
@@ -457,6 +457,7 @@ h2 {
 	z-index: 50;
 	display: block;
 	pointer-events: none;
+	cursor: pointer;
 }
 
 .welcome-pagination {
@@ -1257,6 +1258,30 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	width: 100%;
 	height: auto;
 }
+
+.tickets-main-image {
+	position: relative;
+}
+
+.tickets-slideshow.next {
+	position: absolute;
+	left: 0;
+	opacity: 0;
+}
+
+.tickets-slideshow.show {
+	animation: fadeIn .5s forwards;
+	
+}
+
+.tickets-slideshow.hide {
+	animation: fadeOut .5s forwards;
+	
+}
+.tickets-img {
+	animation: slideshow .2s forwards;
+}
+
 
 .section-title.tckts::after {
 	bottom: -29px;
@@ -3274,10 +3299,12 @@ span.ripple {
 		margin-left: 27%;
 		align-items: flex-start;
 	}
+	
 	.tickets-main-image {
 		width: 100%;
 		height: calc(100vw - 260px);
 		overflow: hidden;
+		opacity: 1;
 	}
 	.tickets-caption h3 {
 		margin-bottom: 0;
