@@ -3,6 +3,7 @@ let timeOfDay;
 let picIndex;
 let imgFlag = true;
 let city;
+
 const weatherIcon = document.querySelector('.weather-icon');
 const temperature = document.querySelector('.temperature');
 const weatherDescription = document.querySelector('.weather-description');
@@ -10,6 +11,8 @@ const windSpeed = document.querySelector('.wind');
 const humidity = document.querySelector('.humidity');
 const cityInput = document.querySelector('.city');
 const nameInput = document.querySelector('.name');
+const quoteText = document.querySelector('.quote');
+const quoteAuthor = document.querySelector('.author');
 
 String.prototype.formatCity = function () {
   let word = [];
@@ -102,8 +105,9 @@ function prevImage() {
 }
 
 async function getWeather() {
+  let lang = 'en';
   cityInput.setAttribute('value', city.formatCity());
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=en&appid=a577b21df2838235e562dac66bb4f133&units=metric`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${lang}&appid=a577b21df2838235e562dac66bb4f133&units=metric`;
   const res = await fetch(url);
   const data = await res.json();
   weatherIcon.className = 'weather-icon owf';
@@ -124,6 +128,14 @@ async function getWeather() {
   }
 }
 
+async function getQuotes() {
+  const url = 'https://raw.githubusercontent.com/saratovkin/momentum-quotes/main/en-quotes.json';
+  const res = await fetch(url);
+  const data = await res.json();
+  const quote = data[getRandomNum(0, data.length - 1)];
+  quoteText.innerHTML = `"${quote.text}"`;
+  quoteAuthor.innerHTML = quote.author;
+}
 
 cityInput.addEventListener('change', function () {
   city = cityInput.value;
@@ -138,6 +150,7 @@ window.addEventListener('load', function () {
   showGreeting();
   setBg();
   getWeather('Minsk');
+  getQuotes();
 });
 
 
@@ -147,6 +160,7 @@ nameInput.addEventListener('change', function () {
 
 document.querySelector('.slide-next').addEventListener('click', nextImage);
 document.querySelector('.slide-prev').addEventListener('click', prevImage);
+document.querySelector('.change-quote').addEventListener('click', getQuotes);
 
 
 
