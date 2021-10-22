@@ -35,6 +35,7 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 120px;
+  margin-top: 14px;
   margin-bottom: 28px;
 }
 
@@ -50,6 +51,7 @@ body {
   opacity: .8;
   cursor: pointer;
   transition: .3s;
+  pointer-events: none;
 }
 
 .play-item:hover {
@@ -57,20 +59,22 @@ body {
 }
 
 .play-item::before {
-  content: "\2713";  
+  content: "▶";  
   position: absolute;
   left: 0;
   top: 2px;
   font-weight: 900;
+  pointer-events: all;
 }
 
 .item-active::before {
-  color: #C5B358;
+  color: #c5b358;
 }
 
 .player-icon,
 .slider-icon,
-.change-quote {
+.change-quote,
+.volume-icon {
   width: 32px;
   height: 32px;
   background-size: 32px 32px;
@@ -115,6 +119,107 @@ body {
 
 .play-next {
   background-image: url("../assets/svg/play-next.svg");
+}
+
+.progress-bar {
+	position: relative;
+  width: 100%;
+	height: 8px;
+  margin-top: 14px;
+}
+
+.progress-bar-main {
+	position: absolute;
+  left: 0;
+  background-color: #fff;
+  width: 100%;
+	height: 8px;
+}
+
+.progress-bar-sub {
+	position: absolute;
+  left: 0;
+	width: 0%;
+	height: 8px;
+	background-color: #c5b358;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+	background-color: transparent;
+}
+
+input[type=range] {
+	-webkit-appearance: none;
+  background-color: transparent;
+	width: 100%;
+	position: absolute;
+  left: 0;
+}
+
+input[type=range]:focus {
+	outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+	width: 100%;
+	height: 8px;
+	cursor: pointer;
+	background-color: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+	height: 10px;
+	width: 10px;
+	border-radius: 15px;
+	background: transparent;
+	cursor: pointer;
+	-webkit-appearance: none;
+	margin-top: -1px;
+}
+
+.audio-duration {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+}
+
+.volume {
+  display: flex;
+  margin-top: 6px;
+}
+
+.volume-icon {
+  width: 20px;
+  height: 20px;
+  background-image: url("../assets/svg/volume.svg");
+  background-size: 20px 20px;
+}
+
+.volume-icon path {
+  fill: #fff;
+}
+
+.volume-range {
+  margin-top: 6px;
+  margin-left: 12px;
+  width: 50%;
+	height: 8px;
+	background-color: transparent;
+	position: relative;
+}
+
+.volume-bar-main {
+	position: absolute;
+	width: 100%;
+	height: 8px;
+	background-color: #fff;
+}
+
+.volume-bar-sub {
+	position: absolute;
+	width: 100%;
+	height: 8px;
+	background-color: #c5b358;
 }
 
 .weather {

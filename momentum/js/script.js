@@ -1,8 +1,21 @@
+import playList from '../js/playList.js';
+
 let username;
+
 let timeOfDay;
 let picIndex;
 let imgFlag = true;
+
+let audioFlag = false;
+let audioIndex = 0;
+
 let city;
+
+let tempVolume = 0;
+
+// true for EN, false for RU
+let lang = false;
+let language = lang ? 'en' : 'ru';
 
 const weatherIcon = document.querySelector('.weather-icon');
 const temperature = document.querySelector('.temperature');
@@ -13,6 +26,13 @@ const cityInput = document.querySelector('.city');
 const nameInput = document.querySelector('.name');
 const quoteText = document.querySelector('.quote');
 const quoteAuthor = document.querySelector('.author');
+const audio = document.querySelector('audio');
+const button = document.querySelector('.play');
+const currentDuration = document.querySelector('.current-duration');
+const fullDuration = document.querySelector('.full-duration');
+const trackName = document.querySelector('.track-name');
+const progressBar = document.getElementById('progress-bar');
+const volume = document.getElementById('volume-bar');
 
 String.prototype.formatCity = function () {
   let word = [];
@@ -35,7 +55,8 @@ function showDate() {
   const date = document.querySelector('date');
   const today = new Date();
   const options = { weekday: 'long', month: 'long', day: 'numeric' };
-  const currentDate = today.toLocaleDateString('en-US', options);
+  const region = (lang) ? 'en-US' : 'ru-RU';
+  const currentDate = today.toLocaleDateString(region, options);
   date.textContent = currentDate;
 }
 
@@ -59,7 +80,22 @@ function getTimeOfDay() {
 function showGreeting() {
   const greeting = document.querySelector('.greeting');
   timeOfDay = getTimeOfDay();
-  greeting.textContent = `Good ${timeOfDay},`;
+  if (lang) {
+    greeting.textContent = `Good ${timeOfDay},`;
+  } else {
+    if (timeOfDay == 'morning') {
+      greeting.textContent = 'Доброе утро, ';
+    }
+    if (timeOfDay == 'afternoon') {
+      greeting.textContent = 'Добрый день, ';
+    }
+    if (timeOfDay == 'evening') {
+      greeting.textContent = 'Добрый вечер, ';
+    }
+    if (timeOfDay == 'night') {
+      greeting.textContent = 'Спокойной ночи, ';
+    }
+  }
   if (username != '' && typeof username != 'undefined') {
     nameInput.value = username;
   }
@@ -105,9 +141,8 @@ function prevImage() {
 }
 
 async function getWeather() {
-  let lang = 'en';
   cityInput.setAttribute('value', city.formatCity());
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${lang}&appid=a577b21df2838235e562dac66bb4f133&units=metric`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=${language}&appid=a577b21df2838235e562dac66bb4f133&units=metric`;
   const res = await fetch(url);
   const data = await res.json();
   weatherIcon.className = 'weather-icon owf';
@@ -117,24 +152,146 @@ async function getWeather() {
     temperature.textContent = '';
     windSpeed.textContent = '';
     humidity.textContent = '';
-    weatherDescription.textContent = `We couldn't find "${city}". Please, try another location :)`;
+    weatherDescription.textContent = lang ?
+      `We couldn't find "${city}". Please, try another location.` :
+      `Мы не смогли найти "${city}". Пожалуйста, введите другую локацию.`;
   } else {
     weatherIcon.className = 'weather-icon owf';
     weatherIcon.classList.add(`owf-${data.weather[0].id}`);
     temperature.textContent = `${Math.floor(data.main.temp)}°C`;
-    windSpeed.textContent = `Wind speed: ${Math.floor(data.wind.speed)} m/s`;
-    humidity.textContent = `Humidity: ${data.main.humidity}%`;
+    windSpeed.textContent = lang ?
+      `Wind speed: ${Math.floor(data.wind.speed)} m/s` :
+      `Скорость ветра: ${Math.floor(data.wind.speed)} м/с`;
+    humidity.textContent = lang ?
+      `Humidity: ${data.main.humidity}%` :
+      `Влажность: ${data.main.humidity}%`;
     weatherDescription.textContent = data.weather[0].description;
   }
 }
 
 async function getQuotes() {
-  const url = 'https://raw.githubusercontent.com/saratovkin/momentum-quotes/main/en-quotes.json';
+  const url = `https://raw.githubusercontent.com/saratovkin/momentum-quotes/main/${language}-quotes.json`;
   const res = await fetch(url);
   const data = await res.json();
   const quote = data[getRandomNum(0, data.length - 1)];
   quoteText.innerHTML = `"${quote.text}"`;
   quoteAuthor.innerHTML = quote.author;
+}
+
+function playAudio() {
+
+  if (!audioFlag) {
+    audio.currentTime = 0;
+    audio.play();
+    audioFlag = true;
+  } else {
+    audio.pause();
+    audioFlag = false;
+  }
+  toggleBtn();
+  showAudioMarker();
+}
+
+function showAudioMarker() {
+  document.querySelectorAll('.play-list .play-item').forEach(item => {
+    item.classList.remove('item-active');
+  });
+  document.querySelector(`.play-list .play-item:nth-child(${audioIndex + 1})`).classList.add('item-active');
+}
+
+function playNext() {
+  audioIndex++;
+  if (audioIndex > 3) {
+    audioIndex = 0;
+  }
+  audio.src = playList[audioIndex].src;
+  setCurrentTrack(playList[audioIndex]);
+  audio.play();
+  showAudioMarker();
+}
+
+function playPrev() {
+  audioIndex--;
+  if (audioIndex < 0) {
+    audioIndex = 3;
+  }
+  setCurrentTrack(playList[audioIndex]);
+  audio.play();
+  showAudioMarker();
+}
+
+function toggleBtn() {
+  button.classList.toggle('pause');
+}
+
+function showPlayList() {
+  playList.forEach(item => {
+    const li = document.createElement('li');
+    li.classList.add('play-item');
+    li.textContent = item.title;
+    document.querySelector('.play-list').append(li);
+  });
+  setCurrentTrack(playList[0]);
+}
+
+function setCurrentTrack(track) {
+  currentDuration.textContent = '00:00';
+  fullDuration.textContent = track.duration;
+  trackName.textContent = track.title;
+  audio.src = track.src;
+}
+
+function convertTime(time) {
+  let mins = Math.floor(time / 60);
+  if (mins < 10) {
+    mins = '0' + String(mins);
+  }
+  let secs = Math.round(time % 60);
+  if (secs < 10) {
+    secs = '0' + String(secs);
+  }
+  return mins + ':' + secs;
+}
+
+function changeProgressBar() {
+  let displayProgress = document.getElementById('bar-sub');
+  displayProgress.style.width = `${progressBar.value}%`;
+  currentDuration.textContent = convertTime(audio.currentTime);
+}
+
+function audioProgress() {
+  if (!isNaN(audio.duration)) {
+    progressBar.value = (audio.currentTime / audio.duration) * 100;
+  }
+  changeProgressBar();
+}
+
+function audioChangeTime() {
+  audio.currentTime = (audio.duration * progressBar.value) / 100;
+}
+
+function changeVolumeBar() {
+  document.getElementById('volume-sub').style.width = `${volume.value}%`;
+}
+
+function changeVolume() {
+  audio.volume = volume.value / 100;
+  if (audio.volume == 0) {
+    document.querySelector('.volume-icon').style.backgroundImage = 'url("assets/svg/mute.svg")';
+  } else {
+    document.querySelector('.volume-icon').style.backgroundImage = 'url("assets/svg/volume.svg")';
+  }
+  changeVolumeBar();
+}
+
+function mute() {
+  if (audio.volume == 0) {
+    volume.value = tempVolume;
+  } else {
+    tempVolume = volume.value;
+    volume.value = 0;
+  }
+  changeVolume();
 }
 
 cityInput.addEventListener('change', function () {
@@ -151,8 +308,8 @@ window.addEventListener('load', function () {
   setBg();
   getWeather('Minsk');
   getQuotes();
+  showPlayList();
 });
-
 
 nameInput.addEventListener('change', function () {
   localStorage.setItem('username', nameInput.value);
@@ -161,6 +318,14 @@ nameInput.addEventListener('change', function () {
 document.querySelector('.slide-next').addEventListener('click', nextImage);
 document.querySelector('.slide-prev').addEventListener('click', prevImage);
 document.querySelector('.change-quote').addEventListener('click', getQuotes);
+document.querySelector('.play-next').addEventListener('click', playNext);
+document.querySelector('.play-prev').addEventListener('click', playPrev);
+document.querySelector('.play').addEventListener('click', playAudio);
+audio.addEventListener('timeupdate', audioProgress);
+progressBar.addEventListener('input', audioChangeTime);
+volume.addEventListener('input', changeVolume);
+document.querySelector('.volume-icon').addEventListener('click', mute);
+
 
 
 
