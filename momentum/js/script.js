@@ -13,6 +13,11 @@ let city;
 
 let tempVolume = 0;
 
+const state = {
+  language: 'en',
+  photoSource: 'github',
+  blocks: ['time', 'date','greeting', 'quote', 'weather', 'audio', 'todolist']
+}
 // true for EN, false for RU
 let lang = false;
 let language = lang ? 'en' : 'ru';
@@ -112,11 +117,10 @@ function getURL() {
   if ((picIndex + '').length == 1) {
     picIndex = '0' + picIndex;
   }
-
   return `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeOfDay}/${picIndex}.jpg`;
 }
 
-function setBg() {
+function setBgGH() {
   imgFlag = false;
   const img = new Image();
   img.src = getURL();
@@ -126,17 +130,27 @@ function setBg() {
   setTimeout(function () { imgFlag = true }, 1000);
 }
 
+
+function getLinkToImage() {
+  const url = 'https://api.unsplash.com/photos/random?orientation=landscape&query=nature&client_id=dtkO_hag5StGhJA-3odxAVROrP3c94nDFKGbf8HCMtA';
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data.urls.regular)
+    });
+}
+
 function nextImage() {
   if (imgFlag) {
     (picIndex != 20) ? picIndex++ : picIndex = 1;
-    setBg();
+    setBgGH();
   }
 }
 
 function prevImage() {
   if (imgFlag) {
     (picIndex != 1) ? picIndex-- : picIndex = 20;
-    setBg();
+    setBgGH();
   }
 }
 
@@ -179,35 +193,47 @@ async function getQuotes() {
 }
 
 function playAudio() {
-
   if (!audioFlag) {
     audio.currentTime = 0;
     audio.play();
     audioFlag = true;
+    showMarkers();
   } else {
     audio.pause();
+    hideMarkers();
     audioFlag = false;
   }
   toggleBtn();
-  showAudioMarker();
 }
 
-function showAudioMarker() {
-  document.querySelectorAll('.play-list .play-item').forEach(item => {
-    item.classList.remove('item-active');
-  });
+function showMarkers() {
+  hideMarkers();
   document.querySelector(`.play-list .play-item:nth-child(${audioIndex + 1})`).classList.add('item-active');
 }
 
-function playNext() {
-  audioIndex++;
+function hideMarkers() {
+  document.querySelectorAll('.play-list .play-item').forEach(item => {
+    item.classList.remove('item-active');
+  });
+}
+
+function playNext(i) {
+  if (typeof i == 'object') {
+    audioIndex++;
+  } else {
+    audioIndex = i;
+  }
   if (audioIndex > 3) {
     audioIndex = 0;
   }
   audio.src = playList[audioIndex].src;
   setCurrentTrack(playList[audioIndex]);
   audio.play();
-  showAudioMarker();
+  if (!audioFlag) {
+    audioFlag = true;
+    toggleBtn();
+  }
+  showMarkers();
 }
 
 function playPrev() {
@@ -217,27 +243,49 @@ function playPrev() {
   }
   setCurrentTrack(playList[audioIndex]);
   audio.play();
-  showAudioMarker();
+  if (!audioFlag) {
+    audioFlag = true;
+    toggleBtn();
+  }
+  showMarkers();
 }
+
+
 
 function toggleBtn() {
   button.classList.toggle('pause');
+
 }
 
 function showPlayList() {
+  let i = 0;
   playList.forEach(item => {
     const li = document.createElement('li');
     li.classList.add('play-item');
-    li.textContent = item.title;
+    li.id = 'item' + i;
+    li.textContent = lang ? item.title : item.titleRu;
     document.querySelector('.play-list').append(li);
+    i++;
   });
   setCurrentTrack(playList[0]);
+  var temp = function (i) {
+    if(i==audioIndex){
+      playAudio();
+    } else {
+      playNext(i);
+    }
+  }
+  document.getElementById("item0").addEventListener('click', temp.bind(event, 0));
+  document.getElementById("item1").addEventListener('click', temp.bind(event, 1));
+  document.getElementById("item2").addEventListener('click', temp.bind(event, 2));
+  document.getElementById("item3").addEventListener('click', temp.bind(event, 3));
+
 }
 
 function setCurrentTrack(track) {
   currentDuration.textContent = '00:00';
   fullDuration.textContent = track.duration;
-  trackName.textContent = track.title;
+  trackName.textContent = lang ? track.title : track.titleRu;
   audio.src = track.src;
 }
 
@@ -246,7 +294,7 @@ function convertTime(time) {
   if (mins < 10) {
     mins = '0' + String(mins);
   }
-  let secs = Math.round(time % 60);
+  let secs = Math.floor(time % 60);
   if (secs < 10) {
     secs = '0' + String(secs);
   }
@@ -268,6 +316,7 @@ function audioProgress() {
 
 function audioChangeTime() {
   audio.currentTime = (audio.duration * progressBar.value) / 100;
+
 }
 
 function changeVolumeBar() {
@@ -305,10 +354,11 @@ window.addEventListener('load', function () {
   city = localStorage.getItem('city') || 'Minsk';
   showTime();
   showGreeting();
-  setBg();
+  setBgGH();
   getWeather('Minsk');
   getQuotes();
   showPlayList();
+
 });
 
 nameInput.addEventListener('change', function () {
@@ -322,12 +372,10 @@ document.querySelector('.play-next').addEventListener('click', playNext);
 document.querySelector('.play-prev').addEventListener('click', playPrev);
 document.querySelector('.play').addEventListener('click', playAudio);
 audio.addEventListener('timeupdate', audioProgress);
+audio.addEventListener('ended', playNext);
 progressBar.addEventListener('input', audioChangeTime);
 volume.addEventListener('input', changeVolume);
 document.querySelector('.volume-icon').addEventListener('click', mute);
-
-
-
 
 
 
