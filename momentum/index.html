@@ -82,10 +82,9 @@
       <div class="author"></div>
     </div>
     <div class="settings">
-
       <div class="settings-inner">
         <div class="title">
-          <p>
+          <p class="title-text">
             Settings
           </p>
           <div class="settings-close">
@@ -96,70 +95,79 @@
           <div class="settings-field">
             <div class="language-icon">
             </div>
-            <div class="settings-subtitle">Language:</div>
+            <div class="settings-subtitle language">Language:</div>
           </div>
           <div class="input-container">
-            <input class="custom-radio" type="radio" id="en" name="language" checked="checked">
-            <label for="en">English</label>
-            <input class="custom-radio" type="radio" id="ru" name="language">
-            <label for="ru">Русский</label>
+            <form name="set-lang" class="set-lang">
+              <input class="custom-radio" type="radio" id="en" name="language" value="en" checked>
+              <label for="en" class="english-language">English</label>
+              <input class="custom-radio" type="radio" id="ru" name="language" value="ru">
+              <label for="ru" class="russian-language">Русский </label>
+            </form>
           </div>
         </div>
         <div class="source-selector">
           <div class="settings-field">
             <div class="source-icon">
             </div>
-            <div class="settings-subtitle">Image source:</div>
+            <div class="settings-subtitle source">Image source:</div>
           </div>
           <div class="input-container">
-            <input class="custom-radio" type="radio" id="gh" name="source" checked="checked">
-            <label for="gh">GitHub</label>
-            <input class="custom-radio" type="radio" id="unspl" name="source">
-            <label for="unspl">Unsplash</label>
-            <input class="custom-radio" type="radio" id="flickr" name="source">
-            <label for="flickr">Flickr</label>
+            <form name="set-source" class="set-source">
+              <input class="custom-radio" type="radio" id="gh" name="source" value="github" checked>
+              <label for="gh">GitHub</label>
+              <input class="custom-radio" type="radio" id="unsplash" name="source" value="unsplash">
+              <label for="unsplash">Unsplash</label>
+              <input class="custom-radio" type="radio" id="flickr" name="source" value="flickr">
+              <label for="flickr">Flickr</label>
+            </form>
           </div>
         </div>
         <div class="displayed-widgets">
           <div class="settings-field">
             <div class="widgets-icon">
             </div>
-            <div class="settings-subtitle">Display widgets:</div>
+            <div class="settings-subtitle widgets">Display widgets:</div>
           </div>
           <div class="checkbox">
-            <div class="checkbox-container">
-              <input class="custom-checkbox" type="checkbox" id="time" checked>
-              <label for="time">Time</label>
-            </div>
-            <div class="checkbox-container">
-              <input class="custom-checkbox" type="checkbox" id="date" checked>
-              <label for="date">Date</label>
-            </div>
-            <div class="checkbox-container">
-              <input class="custom-checkbox" type="checkbox" id="greeting" checked>
-              <label for="greeting">Greeting</label>
-            </div>
-            <div class="checkbox-container">
-              <input class="custom-checkbox" type="checkbox" id="quotes" checked>
-              <label for="quotes">Quotes</label>
-            </div>
-            <div class="checkbox-container">
-              <input class="custom-checkbox" type="checkbox" id="weather" checked>
-              <label for="weather">Weather</label>
-            </div>
-            <div class="checkbox-container">
-              <input class="custom-checkbox" type="checkbox" id="player" checked>
-              <label for="player">Player</label>
-            </div>
-            <div class="checkbox-container">
-              <input class="custom-checkbox" type="checkbox" id="todo" checked>
-              <label for="todo">Todo List</label>
-            </div>
+            <form name="set-widgets" class="set-widgets">
+              <div class="checkbox-container">
+                <input class="custom-checkbox" type="checkbox" id="time" checked>
+                <label class="time-widget" for="time">Time</label>
+              </div>
+              <div class="checkbox-container">
+                <input class="custom-checkbox" type="checkbox" id="date" checked>
+                <label class="date-widget" for="date">Date</label>
+              </div>
+              <div class="checkbox-container">
+                <input class="custom-checkbox" type="checkbox" id="greeting" checked>
+                <label class="greeting-widget" for="greeting">Greeting</label>
+              </div>
+              <div class="checkbox-container">
+                <input class="custom-checkbox" type="checkbox" id="quotes" checked>
+                <label class="quotes-widget" for="quotes">Quotes</label>
+              </div>
+              <div class="checkbox-container">
+                <input class="custom-checkbox" type="checkbox" id="weather" checked>
+                <label class="weather-widget" for="weather">Weather</label>
+              </div>
+              <div class="checkbox-container">
+                <input class="custom-checkbox" type="checkbox" id="player" checked>
+                <label class="player-widget" for="player">Player</label>
+              </div>
+              <div class="checkbox-container">
+                <input class="custom-checkbox" type="checkbox" id="todo" checked>
+                <label class="todo-widget" for="todo">Todo List</label>
+              </div>
+            </form>
           </div>
         </div>
-
       </div>
+    </div>
+    <div class="settings-icon">
 
+    </div>
+    <div class="todo-icon">
 
     </div>
 

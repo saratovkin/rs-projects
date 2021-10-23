@@ -13,14 +13,17 @@ let city;
 
 let tempVolume = 0;
 
-const state = {
-  language: 'en',
-  photoSource: 'github',
-  blocks: ['time', 'date','greeting', 'quote', 'weather', 'audio', 'todolist']
-}
 // true for EN, false for RU
-let lang = false;
-let language = lang ? 'en' : 'ru';
+let lang;
+let language = localStorage.getItem('language') || 'en';
+if (language == 'en') {
+  lang = true;
+} else {
+  lang = false;
+}
+
+let source = localStorage.getItem('source') || 'github';
+
 
 const weatherIcon = document.querySelector('.weather-icon');
 const temperature = document.querySelector('.temperature');
@@ -38,6 +41,9 @@ const fullDuration = document.querySelector('.full-duration');
 const trackName = document.querySelector('.track-name');
 const progressBar = document.getElementById('progress-bar');
 const volume = document.getElementById('volume-bar');
+const settingsMenu = document.querySelector('.settings');
+const settingsIcon = document.querySelector('.settings-icon');
+const settingsClose = document.querySelector('.settings-close');
 
 String.prototype.formatCity = function () {
   let word = [];
@@ -250,8 +256,6 @@ function playPrev() {
   showMarkers();
 }
 
-
-
 function toggleBtn() {
   button.classList.toggle('pause');
 
@@ -269,7 +273,7 @@ function showPlayList() {
   });
   setCurrentTrack(playList[0]);
   var temp = function (i) {
-    if(i==audioIndex){
+    if (i == audioIndex) {
       playAudio();
     } else {
       playNext(i);
@@ -343,6 +347,90 @@ function mute() {
   changeVolume();
 }
 
+function showSettings() {
+  settingsMenu.style.transform = 'translateY(-400px)';
+  settingsIcon.style.opacity = '0';
+}
+
+function hideSettings() {
+  settingsMenu.style.transform = 'translateY(400px)';
+  settingsIcon.style.opacity = '1';
+}
+
+function changeLang() {
+  let langForm = new FormData(document.querySelector('.set-lang'));
+  language = langForm.get('language');
+  localStorage.setItem('language', language);
+}
+
+function showCurrentLang() {
+  if (lang) {
+    document.getElementById('en').setAttribute('checked', 'checked');
+    document.getElementById('ru').removeAttribute('checked', 'checked');
+  } else {
+    document.getElementById('en').removeAttribute('checked', 'checked');
+    document.getElementById('ru').setAttribute('checked', 'checked');
+  }
+}
+
+function changeSource() {
+  let sourceForm = new FormData(document.querySelector('.set-source'));
+  source = sourceForm.get('source');
+  localStorage.setItem('source', source);
+}
+
+function showCurrentSource() {
+  console.log(source);
+  document.getElementById('gh').removeAttribute('checked', 'checked');
+  document.getElementById('unsplash').removeAttribute('checked', 'checked');
+  document.getElementById('flickr').removeAttribute('checked', 'checked');
+  if (source == 'github') {
+    document.getElementById('gh').setAttribute('checked', 'checked');
+  }
+  if (source == 'unsplash') {
+    document.getElementById('unsplash').setAttribute('checked', 'checked');
+  }
+  if (source == 'flickr') {
+    document.getElementById('flickr').setAttribute('checked', 'checked');
+  }
+}
+
+function changeWidgets() {
+  let sourceForm = new FormData(document.querySelector('.set-source'));
+}
+
+function tranlateSettings() {
+  document.querySelector('.title-text').textContent = lang ? 'Settings' : 'Настройки';
+  document.querySelector('.settings-subtitle.language').textContent = lang ? 'Language:' : 'Язык:';
+  document.querySelector('.settings-subtitle.source').textContent = lang ? 'Image source:' : 'Источник изображений:';
+  document.querySelector('.english-language').textContent = lang ? 'English' : 'Английский';
+  document.querySelector('.russian-language').textContent = lang ? 'Russian' : 'Русский';
+  document.querySelector('.settings-subtitle.widgets').textContent = lang ? 'Display widgets:' : 'Отображать виджеты:';
+  document.querySelector('.time-widget').textContent = lang ? 'Time' : 'Время';
+  document.querySelector('.date-widget').textContent = lang ? 'Date' : 'Дата';
+  document.querySelector('.greeting-widget').textContent = lang ? 'Greeting' : 'Приветствие';
+  document.querySelector('.quotes-widget').textContent = lang ? 'Quotes' : 'Цитаты';
+  document.querySelector('.weather-widget').textContent = lang ? 'Weather' : 'Погода';
+  document.querySelector('.player-widget').textContent = lang ? 'Player' : 'Плеер';
+  document.querySelector('.todo-widget').textContent = lang ? 'Todo List' : 'Список дел';
+
+
+
+}
+
+tranlateSettings();
+
+function initAll() {
+  showTime();
+  showGreeting();
+  showCurrentLang();
+  showCurrentSource();
+  setBgGH();
+  getWeather('Minsk');
+  getQuotes();
+  showPlayList();
+}
+
 cityInput.addEventListener('change', function () {
   city = cityInput.value;
   localStorage.setItem('city', city);
@@ -352,13 +440,7 @@ cityInput.addEventListener('change', function () {
 window.addEventListener('load', function () {
   username = localStorage.getItem('username') || '';
   city = localStorage.getItem('city') || 'Minsk';
-  showTime();
-  showGreeting();
-  setBgGH();
-  getWeather('Minsk');
-  getQuotes();
-  showPlayList();
-
+  initAll();
 });
 
 nameInput.addEventListener('change', function () {
@@ -376,6 +458,10 @@ audio.addEventListener('ended', playNext);
 progressBar.addEventListener('input', audioChangeTime);
 volume.addEventListener('input', changeVolume);
 document.querySelector('.volume-icon').addEventListener('click', mute);
+settingsIcon.addEventListener('click', showSettings);
+settingsClose.addEventListener('click', hideSettings);
+document.querySelector('.set-lang').addEventListener('input', changeLang);
+document.querySelector('.set-source').addEventListener('input', changeSource);
 
 
 
