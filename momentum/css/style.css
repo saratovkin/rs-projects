@@ -376,6 +376,149 @@ input[type=range]::-webkit-slider-thumb {
   min-height: 20px;
 }
 
+.settings {
+  width: 300px;
+  height: 350px;
+  position: absolute;
+  background-color: #333;
+  bottom: 0;
+  right: 0;
+  color: #fff;
+}
+
+.settings-inner {
+  width: 250px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: 15px;
+}
+
+.checkbox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.checkbox-container{
+  width: 125px;
+  text-align: left;
+}
+
+.title {
+  position: relative;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+}
+
+.title *{
+  margin-top: 15px;
+}
+
+.settings-close {
+  width: 20px;
+  height: 20px;
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url(../assets/svg/settings/close.svg);
+  cursor: pointer;
+}
+
+.settings-field {
+  display: flex;
+  column-gap: 5px;
+  margin: 10px 0;
+  position: relative;
+}
+
+.settings-subtitle::after {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #fff;
+}
+
+.language-icon,
+.source-icon,
+.widgets-icon {
+  background-image: url(../assets/svg/settings/language.svg);
+  width: 15px;
+  height: 15px;
+  background-size: 15px 15px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
+.source-icon {
+  background-image: url(../assets/svg/settings/image.svg);
+}
+
+.input-container {
+  text-align: left;
+}
+
+.input-container label {
+  margin-right: 10px;
+}
+
+.widgets-icon {
+  background-image: url(../assets/svg/settings/visibility.svg);
+}
+
+.custom-checkbox,
+.custom-radio  {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.custom-radio+label::before {
+  content: '';
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 3px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 15px 15px;
+  background-image: url(../assets/svg/settings/radio-unchecked.svg);
+  cursor: pointer;
+}
+ 
+.custom-radio:checked+label::before {
+  background-image: url(../assets/svg/settings/radio-checked.svg);
+}
+
+label {
+  cursor: pointer;
+  user-select: none; 
+}
+
+.custom-checkbox+label::before {
+  content: '';
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 18px 18px;
+  background-image: url(../assets/svg/settings/unchecked.svg);
+  cursor: pointer;
+}
+
+.custom-checkbox:checked+label::before {
+  background-image: url(../assets/svg/settings/checked.svg);
+}
+
+
 @media (max-width: 768px) {
   .time {
     min-height: 80px;
