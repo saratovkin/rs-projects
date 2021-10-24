@@ -1,19 +1,16 @@
 import playList from '../js/playList.js';
 
 let username;
-
 let timeOfDay;
 let picIndex;
+let city;
 let imgFlag = true;
-
 let audioFlag = false;
 let audioIndex = 0;
-
-let city;
-
 let tempVolume = 0;
+let addFlag = false;
+let linkIndex = 0;
 
-// true for EN, false for RU
 let lang;
 let language = localStorage.getItem('language') || 'en';
 if (language == 'en') {
@@ -24,7 +21,16 @@ if (language == 'en') {
 
 let source = localStorage.getItem('source') || 'github';
 
+let imageTag = localStorage.getItem('tag') || 'nature';
 
+
+
+
+
+const body = document.querySelector('body');
+const time = document.querySelector('time');
+const date = document.querySelector('date');
+const greeting = document.querySelector('.greeting');
 const weatherIcon = document.querySelector('.weather-icon');
 const temperature = document.querySelector('.temperature');
 const weatherDescription = document.querySelector('.weather-description');
@@ -39,11 +45,20 @@ const button = document.querySelector('.play');
 const currentDuration = document.querySelector('.current-duration');
 const fullDuration = document.querySelector('.full-duration');
 const trackName = document.querySelector('.track-name');
-const progressBar = document.getElementById('progress-bar');
-const volume = document.getElementById('volume-bar');
 const settingsMenu = document.querySelector('.settings');
 const settingsIcon = document.querySelector('.settings-icon');
 const settingsClose = document.querySelector('.settings-close');
+const linksIcon = document.querySelector('.links-icon');
+
+const progressBar = document.getElementById('progress-bar');
+const volume = document.getElementById('volume-bar');
+const timeWidget = document.getElementById('time');
+const dateWidget = document.getElementById('date');
+const greetingWidget = document.getElementById('greeting');
+const quotesWidget = document.getElementById('quotes');
+const weatherWidget = document.getElementById('weather');
+const playerWidget = document.getElementById('player');
+const linksWidget = document.getElementById('links-visibility');
 
 String.prototype.formatCity = function () {
   let word = [];
@@ -54,16 +69,14 @@ String.prototype.formatCity = function () {
 };
 
 function showTime() {
-  const time = document.querySelector('time');
-  const date = new Date();
-  const currentTime = date.toLocaleTimeString();
+  const now = new Date();
+  const currentTime = now.toLocaleTimeString();
   time.textContent = currentTime;
   showDate();
   setTimeout(showTime, 500);
 }
 
 function showDate() {
-  const date = document.querySelector('date');
   const today = new Date();
   const options = { weekday: 'long', month: 'long', day: 'numeric' };
   const region = (lang) ? 'en-US' : 'ru-RU';
@@ -89,7 +102,6 @@ function getTimeOfDay() {
 }
 
 function showGreeting() {
-  const greeting = document.querySelector('.greeting');
   timeOfDay = getTimeOfDay();
   if (lang) {
     greeting.textContent = `Good ${timeOfDay},`;
@@ -131,33 +143,94 @@ function setBgGH() {
   const img = new Image();
   img.src = getURL();
   img.onload = () => {
-    document.querySelector('body').style.backgroundImage = `url(${img.src})`;
+    body.style.backgroundImage = `url(${img.src})`;
   };
   setTimeout(function () { imgFlag = true }, 1000);
 }
 
+async function setBgUnsplash() {
+  const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${imageTag}&client_id=dtkO_hag5StGhJA-3odxAVROrP3c94nDFKGbf8HCMtA`;
+  const res = await fetch(url);
+  const data = await res.json();
+  const img = new Image();
+  img.src = data.urls.regular;
+  img.onload = () => {
+    body.style.backgroundImage = `url(${img.src})`;
+  };
+}
 
-function getLinkToImage() {
-  const url = 'https://api.unsplash.com/photos/random?orientation=landscape&query=nature&client_id=dtkO_hag5StGhJA-3odxAVROrP3c94nDFKGbf8HCMtA';
-  fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      console.log(data.urls.regular)
+async function setBgFlickr() {
+  const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=0291ac2d30b9f9bc48589b0c2fb70b32&tags=${imageTag}&extras=url_l&format=json&nojsoncallback=1`;
+  const res = await fetch(url);
+  const data = await res.json();
+  const img = new Image();
+  let index = getRandomNum(1, 90);
+  img.src = data.photos.photo[index].url_l;
+  img.onload = () => {
+    body.style.backgroundImage = `url(${img.src})`;
+  };
+}
+
+function setBg() {
+  if (source == 'github') {
+    document.querySelectorAll('.slider-icon').forEach(item => {
+      item.style.opacity = 1;
+      item.style.pointerEvents = 'auto';
     });
+    document.querySelector('.tag').style.opacity = '0';
+    document.querySelector('.tag').style.marginBottom = '-30px';
+    setBgGH();
+  }
+
+  if (source == 'unsplash') {
+    document.querySelector('.tag').style.opacity = '1';
+    document.querySelector('.tag').style.marginBottom = '-10px';
+    document.querySelectorAll('.slider-icon').forEach(item => {
+      item.style.opacity = 0;
+      item.style.pointerEvents = 'none';
+    });
+    setBgUnsplash();
+  }
+
+  if (source == 'flickr') {
+    document.querySelector('.tag').style.opacity = '1';
+    document.querySelector('.tag').style.marginBottom = '-10px';
+    document.querySelectorAll('.slider-icon').forEach(item => {
+      item.style.opacity = 1;
+      item.style.pointerEvents = 'auto';
+    });
+    setBgFlickr();
+  }
 }
 
 function nextImage() {
-  if (imgFlag) {
-    (picIndex != 20) ? picIndex++ : picIndex = 1;
-    setBgGH();
+  if (source == 'github') {
+    if (imgFlag) {
+      (picIndex != 20) ? picIndex++ : picIndex = 1;
+      setBgGH();
+    }
+  }
+  if (source == 'flickr') {
+    setBgFlickr();
   }
 }
 
 function prevImage() {
-  if (imgFlag) {
-    (picIndex != 1) ? picIndex-- : picIndex = 20;
-    setBgGH();
+  if (source == 'github') {
+    if (imgFlag) {
+      (picIndex != 1) ? picIndex-- : picIndex = 20;
+      setBgGH();
+    }
   }
+  if (source == 'flickr') {
+    setBgFlickr();
+  }
+}
+
+function getTag() {
+  imageTag = document.getElementById('tag').value;
+  localStorage.setItem('tag', imageTag);
+  setBg();
 }
 
 async function getWeather() {
@@ -347,20 +420,44 @@ function mute() {
   changeVolume();
 }
 
+function showLinks() {
+  document.querySelector('.links').style.transform = 'translateY(0)';
+  document.querySelector('.links-icon').style.opacity = '0';
+}
+
+function hideLinks() {
+  document.querySelector('.links').style.transform = 'translateY(100%)';
+  document.querySelector('.links-icon').style.opacity = '1';
+}
+
 function showSettings() {
-  settingsMenu.style.transform = 'translateY(-400px)';
+  settingsMenu.style.transform = 'translateY(0)';
   settingsIcon.style.opacity = '0';
 }
 
 function hideSettings() {
-  settingsMenu.style.transform = 'translateY(400px)';
+  settingsMenu.style.transform = 'translateY(100%)';
   settingsIcon.style.opacity = '1';
+}
+
+function showAddLinks() {
+  if (!addFlag) {
+    document.querySelector('.add-link').style.backgroundImage = 'url(assets/svg/back.svg)'
+    document.querySelector('.link-inner').style.marginLeft = '-250px';
+    addFlag = true;
+  } else {
+    document.querySelector('.add-link').style.backgroundImage = 'url(assets/svg/add.svg)'
+    document.querySelector('.link-inner').style.marginLeft = '0';
+    addFlag = false;
+  }
 }
 
 function changeLang() {
   let langForm = new FormData(document.querySelector('.set-lang'));
   language = langForm.get('language');
+  lang = (language == 'en') ? true : false;
   localStorage.setItem('language', language);
+  initAll();
 }
 
 function showCurrentLang() {
@@ -377,10 +474,10 @@ function changeSource() {
   let sourceForm = new FormData(document.querySelector('.set-source'));
   source = sourceForm.get('source');
   localStorage.setItem('source', source);
+  setBg();
 }
 
 function showCurrentSource() {
-  console.log(source);
   document.getElementById('gh').removeAttribute('checked', 'checked');
   document.getElementById('unsplash').removeAttribute('checked', 'checked');
   document.getElementById('flickr').removeAttribute('checked', 'checked');
@@ -395,11 +492,203 @@ function showCurrentSource() {
   }
 }
 
-function changeWidgets() {
-  let sourceForm = new FormData(document.querySelector('.set-source'));
+function showCurrentTag() {
+  document.querySelector('.picture-tag').value = imageTag;
 }
 
-function tranlateSettings() {
+function hideTime() {
+  let widgetsForm = new FormData(document.querySelector('.set-widgets'));
+  if (widgetsForm.get('time')) {
+    localStorage.setItem('time', true);
+    time.style.opacity = 1;
+  } else {
+    timeWidget.removeAttribute('checked');
+    time.style.opacity = 0;
+    localStorage.setItem('time', false);
+  }
+}
+
+function hideDate() {
+  let widgetsForm = new FormData(document.querySelector('.set-widgets'));
+  if (widgetsForm.get('date')) {
+    localStorage.setItem('date', true);
+    date.style.opacity = 1;
+  } else {
+    localStorage.setItem('date', false);
+    date.style.opacity = 0;
+  }
+}
+
+function hideGreeting() {
+  let widgetsForm = new FormData(document.querySelector('.set-widgets'));
+  if (widgetsForm.get('greeting')) {
+    localStorage.setItem('greeting', true);
+    greeting.style.opacity = 1;
+    nameInput.style.opacity = 1;
+  } else {
+    localStorage.setItem('greeting', false);
+    greeting.style.opacity = 0;
+    nameInput.style.opacity = 0;
+  }
+}
+
+function hideQuotes() {
+  let widgetsForm = new FormData(document.querySelector('.set-widgets'));
+  let quotes = document.querySelector('.quotes');
+  let button = document.querySelector('.change-quote');
+  if (widgetsForm.get('quotes')) {
+    localStorage.setItem('quotes', true);
+    quotes.style.opacity = 1;
+    button.style.opacity = 1;
+  } else {
+    localStorage.setItem('quotes', false);
+    quotes.style.opacity = 0;
+    button.style.opacity = 0;
+  }
+}
+
+function hideWeather() {
+  let widgetsForm = new FormData(document.querySelector('.set-widgets'));
+  let weather = document.querySelector('.weather');
+  if (widgetsForm.get('weather')) {
+    localStorage.setItem('weather', true);
+    weather.style.opacity = 1;
+  } else {
+    localStorage.setItem('weather', false);
+    weather.style.opacity = 0;
+  }
+}
+
+function hidePlayer() {
+  let widgetsForm = new FormData(document.querySelector('.set-widgets'));
+  let player = document.querySelector('.player');
+  if (widgetsForm.get('player')) {
+    localStorage.setItem('player', true);
+    player.style.opacity = 1;
+    player.style.pointerEvents = 'auto';
+  } else {
+    localStorage.setItem('player', false);
+    player.style.opacity = 0;
+    player.style.pointerEvents = 'none';
+  }
+}
+
+function hideLinksIcon() {
+  let widgetsForm = new FormData(document.querySelector('.set-widgets'));
+  if (widgetsForm.get('links-visibility')) {
+    localStorage.setItem('links-visibility', true);
+    linksIcon.style.opacity = 1;
+    linksIcon.style.pointerEvents = "auto";
+  } else {
+    localStorage.setItem('todo', false);
+    linksIcon.style.opacity = 0;
+    linksIcon.style.pointerEvents = "none";
+  }
+}
+
+function showCurrentWidgets() {
+  if (!JSON.parse(localStorage.getItem('time'))) {
+    timeWidget.removeAttribute('checked');
+    hideTime();
+  }
+  if (!JSON.parse(localStorage.getItem('date'))) {
+    dateWidget.removeAttribute('checked');
+    hideDate();
+  }
+  if (!JSON.parse(localStorage.getItem('greeting'))) {
+    greetingWidget.removeAttribute('checked');
+    hideGreeting();
+  }
+  if (!JSON.parse(localStorage.getItem('quotes'))) {
+    quotesWidget.removeAttribute('checked');
+    hideQuotes();
+  }
+  if (!JSON.parse(localStorage.getItem('weather'))) {
+    weatherWidget.removeAttribute('checked');
+    hideWeather();
+  }
+  if (!JSON.parse(localStorage.getItem('player'))) {
+    playerWidget.removeAttribute('checked');
+    hidePlayer();
+  }
+  if (!JSON.parse(localStorage.getItem('links-visibility'))) {
+    linksWidget.removeAttribute('checked');
+    hideLinksIcon();
+  }
+}
+
+const withHttp = (url) => url.replace(/^(?:(.*:)?\/\/)?(.*)/i, (match, schemma, nonSchemmaUrl) => schemma ? match : `http://${nonSchemmaUrl}`);
+
+
+function createLink(name, link, flag) {
+  console.log(flag);
+  if (typeof name == 'object') {
+    name = document.getElementById('link-name').value;
+  }
+  if (typeof link == 'undefined') {
+    link = document.getElementById('link-link').value;
+  }
+  if (!name || !link) {
+    return;
+  }
+  const linkWrap = document.createElement('div');
+  linkWrap.classList.add('link-wrap');
+
+  const deleteBtn = document.createElement('img');
+  deleteBtn.classList.add('link-more');
+  deleteBtn.setAttribute('src', 'assets/svg/settings/close.svg');
+  deleteBtn.id = linkIndex;
+  deleteBtn.addEventListener('click', deleteLink);
+
+  const a = document.createElement('a');
+  a.classList.add('custom-link');
+  a.setAttribute('href', withHttp(link));
+  a.setAttribute('target', '_blank');
+
+  const nameSpan = document.createElement('span');
+  nameSpan.classList.add('link-name');
+  nameSpan.textContent = name;
+
+  const img = document.createElement('img');
+  img.setAttribute('src', 'assets/svg/webpage.svg');
+
+  a.append(img);
+  a.append(nameSpan);
+
+  linkWrap.append(a);
+  linkWrap.append(deleteBtn);
+  linkWrap.id = `link${linkIndex}`;
+
+  document.querySelector('.link-list').append(linkWrap);
+
+  showAddLinks();
+  addFlag = false;
+  linkIndex++;
+  if (typeof flag == 'undefined') {
+    let linksString = localStorage.getItem('linksString') || '';
+    linksString += name + '##' + link + '$$';
+    localStorage.setItem('linksString', linksString);
+    console.log(linksString);
+  }
+}
+
+function getSavedLinks() {
+  let linksString = localStorage.getItem('linksString') || '';
+  if (linksString) {
+    let links = linksString.split('$$');
+    links.forEach(item => {
+      item = item.split('##');
+      createLink(item[0], item[1], false);
+    });
+  }
+}
+
+function deleteLink(e) {
+  document.getElementById(`link${e.currentTarget.id}`).remove();
+}
+
+
+function translateSettings() {
   document.querySelector('.title-text').textContent = lang ? 'Settings' : 'Настройки';
   document.querySelector('.settings-subtitle.language').textContent = lang ? 'Language:' : 'Язык:';
   document.querySelector('.settings-subtitle.source').textContent = lang ? 'Image source:' : 'Источник изображений:';
@@ -412,24 +701,63 @@ function tranlateSettings() {
   document.querySelector('.quotes-widget').textContent = lang ? 'Quotes' : 'Цитаты';
   document.querySelector('.weather-widget').textContent = lang ? 'Weather' : 'Погода';
   document.querySelector('.player-widget').textContent = lang ? 'Player' : 'Плеер';
-  document.querySelector('.todo-widget').textContent = lang ? 'Todo List' : 'Список дел';
-
-
-
+  document.querySelector('.links-widget').textContent = lang ? 'Links' : 'Ссылки';
+  document.querySelector('.tag-label').textContent = lang ? 'Tag:' : 'Тэг:';
+  document.querySelector('.change-tag').textContent = lang ? 'Change' : 'Изменить';
+  document.querySelector('.links-text').textContent = lang ? 'Links:' : 'Ссылки:';
+  document.querySelector('.label-name').textContent = lang ? 'Name:' : 'Название:';
+  document.querySelector('.label-link').textContent = lang ? 'Link:' : 'Ссылка:';
+  document.querySelector('.add-button').textContent = lang ? 'Add' : 'Добавить';
 }
 
-tranlateSettings();
-
 function initAll() {
+  showCurrentWidgets();
   showTime();
   showGreeting();
   showCurrentLang();
   showCurrentSource();
-  setBgGH();
+  setBg();
   getWeather('Minsk');
   getQuotes();
-  showPlayList();
+  translateSettings();
+  showCurrentTag();
+  getSavedLinks();
 }
+
+
+timeWidget.addEventListener('click', hideTime);
+dateWidget.addEventListener('click', hideDate);
+greetingWidget.addEventListener('click', hideGreeting);
+quotesWidget.addEventListener('click', hideQuotes);
+weatherWidget.addEventListener('click', hideWeather);
+playerWidget.addEventListener('click', hidePlayer);
+linksWidget.addEventListener('click', hideLinksIcon);
+audio.addEventListener('timeupdate', audioProgress);
+audio.addEventListener('ended', playNext);
+progressBar.addEventListener('input', audioChangeTime);
+volume.addEventListener('input', changeVolume);
+settingsIcon.addEventListener('click', showSettings);
+settingsClose.addEventListener('click', hideSettings);
+
+document.querySelector('.slide-next').addEventListener('click', nextImage);
+document.querySelector('.slide-prev').addEventListener('click', prevImage);
+document.querySelector('.change-quote').addEventListener('click', getQuotes);
+document.querySelector('.play-next').addEventListener('click', playNext);
+document.querySelector('.play-prev').addEventListener('click', playPrev);
+document.querySelector('.play').addEventListener('click', playAudio);
+document.querySelector('.volume-icon').addEventListener('click', mute);
+document.querySelector('.links-icon').addEventListener('click', showLinks);
+document.querySelector('.links-close').addEventListener('click', hideLinks);
+document.querySelector('.set-lang').addEventListener('input', changeLang);
+document.querySelector('.add-link').addEventListener('click', showAddLinks);
+document.querySelector('.add-button').addEventListener('click', createLink);
+
+document.querySelector('.change-tag').addEventListener('click', getTag);
+
+
+document.querySelectorAll('.radio-wrapper').forEach(item => {
+  item.addEventListener('input', changeSource);
+});
 
 cityInput.addEventListener('change', function () {
   city = cityInput.value;
@@ -440,6 +768,7 @@ cityInput.addEventListener('change', function () {
 window.addEventListener('load', function () {
   username = localStorage.getItem('username') || '';
   city = localStorage.getItem('city') || 'Minsk';
+  showPlayList();
   initAll();
 });
 
@@ -447,21 +776,8 @@ nameInput.addEventListener('change', function () {
   localStorage.setItem('username', nameInput.value);
 });
 
-document.querySelector('.slide-next').addEventListener('click', nextImage);
-document.querySelector('.slide-prev').addEventListener('click', prevImage);
-document.querySelector('.change-quote').addEventListener('click', getQuotes);
-document.querySelector('.play-next').addEventListener('click', playNext);
-document.querySelector('.play-prev').addEventListener('click', playPrev);
-document.querySelector('.play').addEventListener('click', playAudio);
-audio.addEventListener('timeupdate', audioProgress);
-audio.addEventListener('ended', playNext);
-progressBar.addEventListener('input', audioChangeTime);
-volume.addEventListener('input', changeVolume);
-document.querySelector('.volume-icon').addEventListener('click', mute);
-settingsIcon.addEventListener('click', showSettings);
-settingsClose.addEventListener('click', hideSettings);
-document.querySelector('.set-lang').addEventListener('input', changeLang);
-document.querySelector('.set-source').addEventListener('input', changeSource);
-
-
-
+document.getElementById('tag').addEventListener("keypress", function (event) {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+  }
+});
