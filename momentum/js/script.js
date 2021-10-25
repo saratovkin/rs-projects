@@ -4,12 +4,15 @@ let username;
 let timeOfDay;
 let picIndex;
 let city;
+let linkIndex;
 let imgFlag = true;
 let audioFlag = false;
 let audioIndex = 0;
 let tempVolume = 0;
 let addFlag = false;
-let linkIndex = 0;
+
+// localStorage.clear();
+
 
 let lang;
 let language = localStorage.getItem('language') || 'en';
@@ -18,14 +21,8 @@ if (language == 'en') {
 } else {
   lang = false;
 }
-
 let source = localStorage.getItem('source') || 'github';
-
 let imageTag = localStorage.getItem('tag') || 'nature';
-
-
-
-
 
 const body = document.querySelector('body');
 const time = document.querySelector('time');
@@ -59,6 +56,8 @@ const quotesWidget = document.getElementById('quotes');
 const weatherWidget = document.getElementById('weather');
 const playerWidget = document.getElementById('player');
 const linksWidget = document.getElementById('links-visibility');
+localStorage.setItem('links', '');
+localStorage.setItem('linkIndex', '');
 
 String.prototype.formatCity = function () {
   let word = [];
@@ -67,6 +66,8 @@ String.prototype.formatCity = function () {
   });
   return word.join(' ');
 };
+
+const withHttp = (url) => url.replace(/^(?:(.*:)?\/\/)?(.*)/i, (match, schemma, nonSchemmaUrl) => schemma ? match : `http://${nonSchemmaUrl}`);
 
 function showTime() {
   const now = new Date();
@@ -80,7 +81,7 @@ function showDate() {
   const today = new Date();
   const options = { weekday: 'long', month: 'long', day: 'numeric' };
   const region = (lang) ? 'en-US' : 'ru-RU';
-  const currentDate = today.toLocaleDateString(region, options);
+  const currentDate = today.toLocaleDateString(region, options).formatCity();
   date.textContent = currentDate;
 }
 
@@ -183,22 +184,22 @@ function setBg() {
   }
 
   if (source == 'unsplash') {
-    document.querySelector('.tag').style.opacity = '1';
-    document.querySelector('.tag').style.marginBottom = '-10px';
     document.querySelectorAll('.slider-icon').forEach(item => {
       item.style.opacity = 0;
       item.style.pointerEvents = 'none';
     });
+    document.querySelector('.tag').style.opacity = '1';
+    document.querySelector('.tag').style.marginBottom = '-10px';
     setBgUnsplash();
   }
 
   if (source == 'flickr') {
-    document.querySelector('.tag').style.opacity = '1';
-    document.querySelector('.tag').style.marginBottom = '-10px';
     document.querySelectorAll('.slider-icon').forEach(item => {
       item.style.opacity = 1;
       item.style.pointerEvents = 'auto';
     });
+    document.querySelector('.tag').style.opacity = '1';
+    document.querySelector('.tag').style.marginBottom = '-10px';
     setBgFlickr();
   }
 }
@@ -336,6 +337,9 @@ function toggleBtn() {
 
 function showPlayList() {
   let i = 0;
+  document.querySelectorAll('.play-item').forEach(item => {
+    item.remove();
+  });
   playList.forEach(item => {
     const li = document.createElement('li');
     li.classList.add('play-item');
@@ -356,7 +360,6 @@ function showPlayList() {
   document.getElementById("item1").addEventListener('click', temp.bind(event, 1));
   document.getElementById("item2").addEventListener('click', temp.bind(event, 2));
   document.getElementById("item3").addEventListener('click', temp.bind(event, 3));
-
 }
 
 function setCurrentTrack(track) {
@@ -438,18 +441,6 @@ function showSettings() {
 function hideSettings() {
   settingsMenu.style.transform = 'translateY(100%)';
   settingsIcon.style.opacity = '1';
-}
-
-function showAddLinks() {
-  if (!addFlag) {
-    document.querySelector('.add-link').style.backgroundImage = 'url(assets/svg/back.svg)'
-    document.querySelector('.link-inner').style.marginLeft = '-250px';
-    addFlag = true;
-  } else {
-    document.querySelector('.add-link').style.backgroundImage = 'url(assets/svg/add.svg)'
-    document.querySelector('.link-inner').style.marginLeft = '0';
-    addFlag = false;
-  }
 }
 
 function changeLang() {
@@ -580,48 +571,58 @@ function hideLinksIcon() {
     linksIcon.style.opacity = 1;
     linksIcon.style.pointerEvents = "auto";
   } else {
-    localStorage.setItem('todo', false);
+    localStorage.setItem('links-visibility', false);
     linksIcon.style.opacity = 0;
     linksIcon.style.pointerEvents = "none";
   }
 }
 
 function showCurrentWidgets() {
-  if (!JSON.parse(localStorage.getItem('time'))) {
+  if (JSON.parse(localStorage.getItem('time')) == false) {
     timeWidget.removeAttribute('checked');
     hideTime();
   }
-  if (!JSON.parse(localStorage.getItem('date'))) {
+  if (JSON.parse(localStorage.getItem('date')) == false) {
     dateWidget.removeAttribute('checked');
     hideDate();
   }
-  if (!JSON.parse(localStorage.getItem('greeting'))) {
+  if (JSON.parse(localStorage.getItem('greeting')) == false) {
     greetingWidget.removeAttribute('checked');
     hideGreeting();
   }
-  if (!JSON.parse(localStorage.getItem('quotes'))) {
+  if (JSON.parse(localStorage.getItem('quotes')) == false) {
     quotesWidget.removeAttribute('checked');
     hideQuotes();
   }
-  if (!JSON.parse(localStorage.getItem('weather'))) {
+  if (JSON.parse(localStorage.getItem('weather')) == false) {
     weatherWidget.removeAttribute('checked');
     hideWeather();
   }
-  if (!JSON.parse(localStorage.getItem('player'))) {
+  if (JSON.parse(localStorage.getItem('player')) == false) {
     playerWidget.removeAttribute('checked');
     hidePlayer();
   }
-  if (!JSON.parse(localStorage.getItem('links-visibility'))) {
+  if (JSON.parse(localStorage.getItem('links-visibility')) == false) {
     linksWidget.removeAttribute('checked');
     hideLinksIcon();
   }
 }
 
-const withHttp = (url) => url.replace(/^(?:(.*:)?\/\/)?(.*)/i, (match, schemma, nonSchemmaUrl) => schemma ? match : `http://${nonSchemmaUrl}`);
+function showAddWindow() {
+  if (!addFlag) {
+    document.querySelector('.add-link').style.backgroundImage = 'url(assets/svg/back.svg)'
+    document.querySelector('.link-inner').style.marginLeft = '-250px';
+    addFlag = true;
+  } else {
+    document.querySelector('.add-link').style.backgroundImage = 'url(assets/svg/add.svg)'
+    document.querySelector('.link-inner').style.marginLeft = '0';
+    addFlag = false;
+  }
+}
 
+function createLink(name, link) {
+  linkIndex = localStorage.getItem('linkIndex') || 0;
 
-function createLink(name, link, flag) {
-  console.log(flag);
   if (typeof name == 'object') {
     name = document.getElementById('link-name').value;
   }
@@ -661,32 +662,53 @@ function createLink(name, link, flag) {
 
   document.querySelector('.link-list').append(linkWrap);
 
-  showAddLinks();
-  addFlag = false;
+  let links = JSON.parse(localStorage.getItem("links") || "[]");
+
+  let newLink = {
+    name: name,
+    link: link,
+    id: linkWrap.id
+  }
+
+  if (arrayObjectIndexOf(links, newLink.id) == -1) {
+    links.push(newLink);
+  }
   linkIndex++;
-  if (typeof flag == 'undefined') {
-    let linksString = localStorage.getItem('linksString') || '';
-    linksString += name + '##' + link + '$$';
-    localStorage.setItem('linksString', linksString);
-    console.log(linksString);
+  localStorage.setItem('links', JSON.stringify(links));
+  localStorage.setItem('linkIndex', linkIndex);
+
+  if (addFlag) {
+    showAddWindow();
   }
 }
 
 function getSavedLinks() {
-  let linksString = localStorage.getItem('linksString') || '';
-  if (linksString) {
-    let links = linksString.split('$$');
-    links.forEach(item => {
-      item = item.split('##');
-      createLink(item[0], item[1], false);
-    });
+  let links = JSON.parse(localStorage.getItem("links") || "[]");
+  localStorage.setItem('linkIndex', 0);
+  for (let i = 0; i < links.length; i++) {
+    if (links[i]) {
+      createLink(links[i].name, links[i].link);
+    }
   }
 }
 
 function deleteLink(e) {
+  let links = JSON.parse(localStorage.getItem("links") || "[]");
+  let id = `link${e.currentTarget.id}`;
+  let deleteIndex = arrayObjectIndexOf(links, id);
+  links.splice(deleteIndex, 1, null);
+  localStorage.setItem('links', JSON.stringify(links));
   document.getElementById(`link${e.currentTarget.id}`).remove();
 }
 
+function arrayObjectIndexOf(arr, searchTerm) {
+  for (var i = 0, len = arr.length; i < len; i++) {
+    if (arr[i]) {
+      if (arr[i].id == searchTerm) return i;
+    }
+  }
+  return -1;
+}
 
 function translateSettings() {
   document.querySelector('.title-text').textContent = lang ? 'Settings' : 'Настройки';
@@ -717,13 +739,13 @@ function initAll() {
   showCurrentLang();
   showCurrentSource();
   setBg();
+  showPlayList();
   getWeather('Minsk');
   getQuotes();
   translateSettings();
   showCurrentTag();
   getSavedLinks();
 }
-
 
 timeWidget.addEventListener('click', hideTime);
 dateWidget.addEventListener('click', hideDate);
@@ -732,12 +754,12 @@ quotesWidget.addEventListener('click', hideQuotes);
 weatherWidget.addEventListener('click', hideWeather);
 playerWidget.addEventListener('click', hidePlayer);
 linksWidget.addEventListener('click', hideLinksIcon);
-audio.addEventListener('timeupdate', audioProgress);
-audio.addEventListener('ended', playNext);
-progressBar.addEventListener('input', audioChangeTime);
-volume.addEventListener('input', changeVolume);
 settingsIcon.addEventListener('click', showSettings);
 settingsClose.addEventListener('click', hideSettings);
+progressBar.addEventListener('input', audioChangeTime);
+volume.addEventListener('input', changeVolume);
+audio.addEventListener('timeupdate', audioProgress);
+audio.addEventListener('ended', playNext);
 
 document.querySelector('.slide-next').addEventListener('click', nextImage);
 document.querySelector('.slide-prev').addEventListener('click', prevImage);
@@ -748,12 +770,10 @@ document.querySelector('.play').addEventListener('click', playAudio);
 document.querySelector('.volume-icon').addEventListener('click', mute);
 document.querySelector('.links-icon').addEventListener('click', showLinks);
 document.querySelector('.links-close').addEventListener('click', hideLinks);
-document.querySelector('.set-lang').addEventListener('input', changeLang);
-document.querySelector('.add-link').addEventListener('click', showAddLinks);
+document.querySelector('.add-link').addEventListener('click', showAddWindow);
 document.querySelector('.add-button').addEventListener('click', createLink);
-
 document.querySelector('.change-tag').addEventListener('click', getTag);
-
+document.querySelector('.set-lang').addEventListener('input', changeLang);
 
 document.querySelectorAll('.radio-wrapper').forEach(item => {
   item.addEventListener('input', changeSource);
@@ -768,7 +788,6 @@ cityInput.addEventListener('change', function () {
 window.addEventListener('load', function () {
   username = localStorage.getItem('username') || '';
   city = localStorage.getItem('city') || 'Minsk';
-  showPlayList();
   initAll();
 });
 
