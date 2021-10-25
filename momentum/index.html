@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="assets/favicon.ico" rel="§rtcut icon" />
+  <link rel="stylesheet" href="css/owfont-regular.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <title>momentum</title>
+</head>
+
+<body>
+  <header class="header">
+    <div class="player">
+      <div class="track-name">
+      </div>
+      <audio src="assets/sounds/Aphex Twin - Ageispolis.mp3"></audio>
+
+      <div class="progress-bar">
+        <div class="progress-bar-main"></div>
+        <div class="progress-bar-sub" id="bar-sub"></div>
+        <input type="range" value="0" id="progress-bar">
+      </div>
+      <div class="volume">
+        <div class="volume-icon"></div>
+
+        <div class="volume-range">
+          <div class="volume-bar-main"></div>
+          <div class="volume-bar-sub" id="volume-sub"></div>
+          <input type="range" value="100" id="volume-bar">
+        </div>
+
+        <div class="audio-duration">
+          <div class="current-duration">
+            00:00
+          </div>
+          <div class="duration-slash">
+            &nbsp;/&nbsp;
+          </div>
+          <div class="full-duration">
+            00:00
+          </div>
+        </div>
+      </div>
+      <div class="player-controls">
+        <button class="play-prev player-icon"></button>
+        <button class="play player-icon"></button>
+        <button class="play-next player-icon"></button>
+      </div>
+      <ul class="play-list"></ul>
+    </div>
+    <div class="weather">
+      <input type="text" class="city" />
+      <i class="weather-icon owf"></i>
+      <div class="weather-error"></div>
+      <div class="description-container">
+        <span class="temperature"></span>
+        <span class="weather-description"></span>
+      </div>
+      <div class="wind"></div>
+      <div class="humidity"></div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="slider-icons">
+      <button class="slide-prev slider-icon"></button>
+      <button class="slide-next slider-icon"></button>
+    </div>
+    <time class="time">
+    </time>
+    <date class="date"></date>
+    <div class="greeting-container">
+      <span class="greeting"></span>
+      <input type="text" class="name" placeholder="[Enter name]" />
+    </div>
+  </main>
+  <footer class="footer">
+    <button class="change-quote"></button>
+    <div class="quotes">
+      <div class="quote"></div>
+      <div class="author"></div>
+    </div>
+    <div class="settings">
+      <div class="settings-inner">
+        <div class="title">
+          <p class="title-text">
+            Settings
+          </p>
+          <div class="settings-close">
+
+          </div>
+        </div>
+        <div class="language-selector">
+          <div class="settings-field">
+            <div class="language-icon">
+            </div>
+            <div class="settings-subtitle language">Language:</div>
+          </div>
+          <div class="input-container">
+            <form name="set-lang" class="set-lang">
+              <input class="custom-radio" type="radio" id="en" name="language" value="en" checked>
+              <label for="en" class="english-language">English</label>
+              <input class="custom-radio" type="radio" id="ru" name="language" value="ru">
+              <label for="ru" class="russian-language">Русский </label>
+            </form>
+          </div>
+        </div>
+        <div class="source-selector">
+          <div class="settings-field">
+            <div class="source-icon">
+            </div>
+            <div class="settings-subtitle source">Image source:</div>
+          </div>
+          <div class="input-container">
+            <form name="set-source" class="set-source">
+              <div class="radio-wrapper">
+                <input class="custom-radio" type="radio" id="gh" name="source" value="github" checked>
+                <label for="gh">GitHub</label>
+              </div>
+              <div class="radio-wrapper">
+                <input class="custom-radio" type="radio" id="unsplash" name="source" value="unsplash">
+                <label for="unsplash">Unsplash</label>
+              </div>
+              <div class="radio-wrapper">
+                <input class="custom-radio" type="radio" id="flickr" name="source" value="flickr">
+                <label for="flickr">Flickr</label>
+              </div>
+              <div class="tag">
+                <label class="tag-label" for="tag">Tag:</label>
+                <input class="picture-tag" type="text" id="tag" value="nature">
+                <div class="change-tag">Change</div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="displayed-widgets">
+          <div class="settings-field">
+            <div class="widgets-icon">
+            </div>
+            <div class="settings-subtitle widgets">Display widgets:</div>
+          </div>
+          <form name="set-widgets" class="set-widgets">
+            <div class="checkbox">
+              <div class="checkbox-container">
+                <input class="custom-checkbox" type="checkbox" id="time" name="time" checked>
+                <label class="time-widget" for="time">Time</label>
+              </div>
+              <div class="checkbox-container">
+                <input class="custom-checkbox" type="checkbox" id="date" name="date" checked>
+                <label class="date-widget" for="date">Date</label>
+              </div>
+              <div class="checkbox-container">
+                <input class="custom-checkbox" type="checkbox" id="greeting" name="greeting" checked>
+                <label class="greeting-widget" for="greeting">Greeting</label>
+              </div>
+              <div class="checkbox-container">
+                <input class="custom-checkbox" type="checkbox" id="quotes" name="quotes" checked>
+                <label class="quotes-widget" for="quotes">Quotes</label>
+              </div>
+              <div class="checkbox-container">
+                <input class="custom-checkbox" type="checkbox" id="weather" name="weather" checked>
+                <label class="weather-widget" for="weather">Weather</label>
+              </div>
+              <div class="checkbox-container">
+                <input class="custom-checkbox" type="checkbox" id="player" name="player" checked>
+                <label class="player-widget" for="player">Player</label>
+              </div>
+              <div class="checkbox-container">
+                <input class="custom-checkbox" type="checkbox" id="links-visibility" name="links-visibility" checked>
+                <label class="links-widget" for="links-visibility">Todo List</label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="links">
+      <div class="links-title">
+        <p class="links-text">Links:</p>
+        <div class="add-link">
+        </div>
+        <div class="links-close">
+        </div>
+      </div>
+      <div class="link-inner">
+        <div class="link-list">
+          <div class="link-wrap">
+            <a class="custom-link" href="https://rs.school/" target="_blank">
+              <img src="https://rs.school/favicon.ico" alt="">
+              <span class="link-name">Rolling Scopes School</span>
+            </a>
+          </div>
+          <div class="link-wrap">
+            <a class="custom-link" href="https://github.com/saratovkin/" target="_blank">
+              <img src="https://github.com/favicon.ico" alt="">
+              <span class="link-name">Github</span>
+            </a>
+          </div>
+        </div>
+        <div class="link-add-form">
+          <div class="add-container">
+            <label class="label-name" for="link-name">Name</label>
+            <input type="text" name="link-name" id="link-name">
+          </div>
+          <div class="add-container">
+            <label class="label-link" for="link-link">Link</label>
+            <input type="text" name="link-link" id="link-link">
+          </div>
+          <div class="add-button">
+            Add
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="settings-icon">
+    </div>
+    <div class="links-icon">
+    </div>
+  </footer>
+  <script src="js/script.js" type="module"></script>
+</body>
+
+</html>
