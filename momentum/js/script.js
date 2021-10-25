@@ -19,7 +19,7 @@ if (language == 'en') {
   lang = false;
 }
 let source = localStorage.getItem('source') || 'github';
-let imageTag = 'nature';
+let imageTag = getTimeOfDay();
 
 const body = document.querySelector('body');
 const time = document.querySelector('time');
@@ -179,30 +179,18 @@ async function setBgFlickr() {
 
 function setBg() {
   if (source == 'github') {
-    document.querySelectorAll('.slider-icon').forEach(item => {
-      item.style.opacity = 1;
-      item.style.pointerEvents = 'auto';
-    });
     document.querySelector('.tag').style.opacity = '0';
     document.querySelector('.tag').style.marginBottom = '-30px';
     setBgGH();
   }
 
   if (source == 'unsplash') {
-    document.querySelectorAll('.slider-icon').forEach(item => {
-      item.style.opacity = 0;
-      item.style.pointerEvents = 'none';
-    });
     document.querySelector('.tag').style.opacity = '1';
     document.querySelector('.tag').style.marginBottom = '-10px';
     setBgUnsplash();
   }
 
   if (source == 'flickr') {
-    document.querySelectorAll('.slider-icon').forEach(item => {
-      item.style.opacity = 1;
-      item.style.pointerEvents = 'auto';
-    });
     document.querySelector('.tag').style.opacity = '1';
     document.querySelector('.tag').style.marginBottom = '-10px';
     setBgFlickr();
@@ -829,11 +817,8 @@ console.log(`
 Добавлять можно бесконечное количество ссылок, виджет имеет адаптивную высоту.
 
 Из особенностей основного приложения: 
-  -Я целенаправленно отключил стрелки переключения бэкграунда при выборе Unsplash в качестве источника. Сделано это с целью уменьшения нагрузки на их API (т.к. установлен лимит 50 реквестов в час).
-
   -В настройках можно указать тэг для поиска изображений в Flickr и Unsplash.
 Если тег не валиден - источник изображения не изменится(сохранится предыдущий). После перезагрузки тег изменяется на дефолтный(nature), чтобы избежать зависания страницы на несуществующем теге.
 
   -Картинки с Flickr подгружаются достаточно медленно, нужно подождать 3-7 секунд для обновления изображения. При обновлении страницы с Flickr в качестве источника первое время висит белый экран. Картинки по тегам тоже приходят не всегда идеальные, такой вот сервис :)
-
 `);
