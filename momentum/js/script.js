@@ -314,6 +314,7 @@ function playNext(i) {
   setCurrentTrack(playList[audioIndex]);
   audio.play();
   if (!audioFlag) {
+    // add code here
     audioFlag = true;
     toggleBtn();
   }
@@ -336,7 +337,6 @@ function playPrev() {
 
 function toggleBtn() {
   button.classList.toggle('pause');
-
 }
 
 function showPlayList() {
@@ -355,6 +355,7 @@ function showPlayList() {
   if (audioFlag) {
     audioFlag = false;
     toggleBtn();
+    audioIndex = 0;
   }
   setCurrentTrack(playList[0]);
   var temp = function (i) {
