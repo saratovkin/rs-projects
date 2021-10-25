@@ -11,9 +11,6 @@ let audioIndex = 0;
 let tempVolume = 0;
 let addFlag = false;
 
-// localStorage.clear();
-
-
 let lang;
 let language = localStorage.getItem('language') || 'en';
 if (language == 'en') {
@@ -22,7 +19,7 @@ if (language == 'en') {
   lang = false;
 }
 let source = localStorage.getItem('source') || 'github';
-let imageTag = localStorage.getItem('tag') || 'nature';
+let imageTag = 'nature';
 
 const body = document.querySelector('body');
 const time = document.querySelector('time');
@@ -150,14 +147,18 @@ function setBgGH() {
 }
 
 async function setBgUnsplash() {
-  const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${imageTag}&client_id=dtkO_hag5StGhJA-3odxAVROrP3c94nDFKGbf8HCMtA`;
-  const res = await fetch(url);
-  const data = await res.json();
-  const img = new Image();
-  img.src = data.urls.regular;
-  img.onload = () => {
-    body.style.backgroundImage = `url(${img.src})`;
-  };
+  try {
+    const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${imageTag}&client_id=dtkO_hag5StGhJA-3odxAVROrP3c94nDFKGbf8HCMtA`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const img = new Image();
+    img.src = data.urls.regular;
+    img.onload = () => {
+      body.style.backgroundImage = `url(${img.src})`;
+    };
+  } catch (e) {
+    console.log('tag is inavlid');
+  }
 }
 
 async function setBgFlickr() {
@@ -165,11 +166,15 @@ async function setBgFlickr() {
   const res = await fetch(url);
   const data = await res.json();
   const img = new Image();
-  let index = getRandomNum(1, 90);
-  img.src = data.photos.photo[index].url_l;
-  img.onload = () => {
-    body.style.backgroundImage = `url(${img.src})`;
-  };
+  try {
+    let index = getRandomNum(1, 90);
+    img.src = await data.photos.photo[index].url_l;
+    img.onload = () => {
+      body.style.backgroundImage = `url(${img.src})`;
+    };
+  } catch (e) {
+    console.log('tag is inavlid');
+  }
 }
 
 function setBg() {
@@ -230,7 +235,6 @@ function prevImage() {
 
 function getTag() {
   imageTag = document.getElementById('tag').value;
-  localStorage.setItem('tag', imageTag);
   setBg();
 }
 
@@ -348,6 +352,10 @@ function showPlayList() {
     document.querySelector('.play-list').append(li);
     i++;
   });
+  if (audioFlag) {
+    audioFlag = false;
+    toggleBtn();
+  }
   setCurrentTrack(playList[0]);
   var temp = function (i) {
     if (i == audioIndex) {
@@ -800,3 +808,26 @@ document.getElementById('tag').addEventListener("keypress", function (event) {
     event.preventDefault();
   }
 });
+
+
+console.log(`
+                                                            
+Все пункты задания выполнены.
+Самооценка 160/150
+
+В качестве дополнительного функциоанала сделан список ссылок (кнопка в нижнем левом углу).
+По умолчанию сохранены две ссылки - RSS и мой гитхаб.
+При нажатии кнопки "+" открывается меню добавления новой ссылки. 
+У ссылки есть название и непосредственно адрес страницы, которая открывается при клике на ссылку.
+При нажатии на символ "х" около ссылки она удаляется. 
+Добавлять можно бесконечно количество ссылок, виджет имеет адаптивную высоту.
+
+Из особенностей основного приложения: 
+  -Я целенаправленно отключил стрелки переключения бэкграунда при выборе Unsplash в качестве источника. Сделано это с целью уменьшения нагрузки на их API (т.к. установлен лимит 50 реквестов в час).
+
+  -В настройках можно указать тэг для поиска изображений в Flickr и Unsplash.
+Если тег не валиден - источник изображения не изменится(сохранится предыдущий). После перезагрузки тег изменяется на дефолтный(nature), чтобы избежать зависания страницы на несуществующем теге.
+
+  -Картинки с Flickr подгружаются достаточно медленно, нужно подождать 3-7 секунд для обновления изображения. Картинки по тегам тоже приходят не всегда идеальные, такой вот сервис :)
+
+`);
