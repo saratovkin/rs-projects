@@ -26,9 +26,19 @@ html,body {
 
 .icon {
   margin: 100px auto;
+  margin-bottom: 50px;
   width: 220px;
   height: 140px;
-  background-image: url(../art-quiz/assets/img/logo.png);
+  background-image: url(../art-quiz/assets/img/main-page/logo.png);
+}
+
+.page-name {
+  width: 200px;
+  height: 36px;
+  font-weight: 700;
+  font-size: 36px;
+  margin: 0 auto;
+  margin-bottom: 50px;
 }
 
 .select-type {
@@ -36,7 +46,6 @@ html,body {
   width: 40vw;
   cursor: pointer;
   transition: .5s;
-  /* display: none; */
 }
 
 .select-type:hover {
@@ -49,10 +58,12 @@ html,body {
   max-height: 400px;
   width: 40vw;
   height: 40vw;
+  background-color: rgba(255, 255, 255, 0.2);
   background-repeat: no-repeat;
   background-position: center center;
   box-shadow: -12px 12px 16px 0px rgba(34, 60, 80, 0.2);
 }
+
 
 .type-name {
   margin-top: 15px;
@@ -66,11 +77,11 @@ html,body {
 }
 
 .artists .type-pic {
-  background-image: url(../art-quiz/assets/img/type1.jpg);
+  background-image: url(../art-quiz/assets/img/main-page/type1.jpg);
 }
 
 .pictures .type-pic {
-  background-image: url(../art-quiz/assets/img/type2.jpg);
+  background-image: url(../art-quiz/assets/img/main-page/type2.jpg);
 }
 
 .settings-btn {
@@ -92,12 +103,6 @@ html,body {
 .settings-btn:hover {
   color: #fff;
   background-color: #30537a;
-}
-
-.settings {
-  width: 100%;
-  height: 100px;
-  background-color: black;
 }
 
 .settings-field {
@@ -152,6 +157,12 @@ html,body {
   background-repeat: no-repeat;
   background-position: center center;
   background-image: url(../art-quiz/assets/svg/settings/unmute.svg);
+  cursor: pointer;
+  transition: .3s;
+}
+
+.mute-icon:hover {
+  transform: scale(1.1, 1.1);
 }
 
 input[type=range] {
@@ -183,6 +194,22 @@ input[type=range]::-webkit-slider-thumb {
   background: #30537a;
   cursor: pointer;
   -webkit-appearance: none;
+  transition: .5s;
+}
+
+.blocked input[type=range]{
+  transition: .5s;
+  pointer-events: none;
+}
+
+.blocked .time-bar-sub {
+  transition: .5s;
+  background-color: #bcbcbc;
+}
+
+.blocked input[type=range]::-webkit-slider-thumb {
+  transition: .5s;
+  background-color: #bcbcbc;
 }
 
 .volume-range,
@@ -199,7 +226,7 @@ input[type=range]::-webkit-slider-thumb {
   border-radius: 2px;
   width: 100%;
   height: 8px;
-  background-color: #fff;
+  background-color: #cfe2f3;
 }
 
 .volume-bar-sub,
@@ -208,7 +235,7 @@ input[type=range]::-webkit-slider-thumb {
   border-radius: 2px;
   width: 100%;
   height: 8px;
-  background-color: #30537a;;
+  background-color: #30537a;
 }
 
 .custom-checkbox {
@@ -227,6 +254,11 @@ input[type=range]::-webkit-slider-thumb {
   background-size: 20px 20px;
   background-image: url(../art-quiz/assets/svg/settings/unchecked.svg);
   cursor: pointer;
+  transition: .5s;
+}
+
+.custom-checkbox:hover+label::before {
+  transform: scale(1.1, 1.1);
 }
 
 .custom-checkbox:checked+label::before {
@@ -241,12 +273,104 @@ input[type=range]::-webkit-slider-thumb {
   line-height: 20px;
 }
 
+.time-selected {
+  width: 20px;
+}
 
 .button-container {
   margin-top: 95px;
   display: flex;
   justify-content: center;
   column-gap: 50px;
+}
+
+.categories-page {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 30px;
+  column-gap: 30px;
+  padding-bottom: 100px;
+}
+
+.category {
+  cursor: pointer;
+  transition: .5s;
+  overflow: hidden;
+}
+
+.category:hover {
+  box-shadow: 0px 0px 32px 10px rgba(0, 0, 0, 0.5);
+}
+
+.category-title {
+  width: 100%;
+  background-color: #fff;
+  padding-bottom: 10px;
+  position: relative;
+  color: #555;
+  z-index: 2;
+}
+
+.category-title * {
+  margin-left: 10px;
+}
+
+.category-number {
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 72px;
+  text-align: left;
+}
+
+.category-name {
+  transition: .5s;
+}
+
+.category:hover .category-name {
+  letter-spacing: 5px;
+}
+
+.category-stats {
+  position: absolute;
+  right: 8px;
+  top: 16px;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 26px;
+  color: transparent;
+}
+
+.category-img {
+  max-width: 300px;
+  max-height: 300px;
+  min-width: 150px;
+  min-height: 150px;
+  width: 20vw;
+  height: 20vw;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  transition: .5s;
+  filter: saturate(0%);
+}
+
+.category:hover .category-img {
+  transform: scale(1.1, 1.1);
+}
+
+.category.attempted .category-title,
+.category.attempted .category-stats {
+  color: #30537a;
+}
+
+.category.attempted .category-img{
+  filter: saturate(100%);
+}
+
+.category:hover .category.attempted {
+  box-shadow: 0px 0px 32px 10px rgba(21, 99, 159, 0.5);
 }
 
 .hide {

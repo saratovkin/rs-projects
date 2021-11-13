@@ -17,12 +17,15 @@
     <div class="container">
       <div class="icon">
       </div>
+      <div class="page-name">
+
+      </div>
     </div>
   </header>
   <main>
     <div class="container">
       <div class="main-container">
-        <div class="select-type artists">
+        <div class="select-type artists" id="artists-mode">
           <div class="type-pic">
           </div>
           <div class="type-name">
@@ -30,7 +33,7 @@
             </p>
           </div>
         </div>
-        <div class="select-type pictures">
+        <div class="select-type pictures" id="pictures-mode">
           <div class="type-pic">
 
           </div>
@@ -58,18 +61,18 @@
         <div class="settings-field hide">
           <div class="settings-icon time"></div>
           <div class="time-bar">
-            <input class="custom-checkbox" type="checkbox" id="time" name="time" checked>
             <div class="checkbox-container">
-              <label class="time-mode" for="time"></label>
+              <input class="custom-checkbox" type="checkbox" id="time" name="time">
+              <label class="time-mode" id="time-mode" for="time"></label>
               <div class="time-mode">on/off</div>
             </div>
             <div class="time-range">
               <div class="time-bar-main"></div>
               <div class="time-bar-sub" id="time-sub"></div>
-              <input type="range" min="0" max="6" value="6" id="time-bar">
+              <input type="range" min="0" max="5" value="5" id="time-bar">
             </div>
-            <div class="time-selected">
-              6
+            <div class="time-selected" id="time-selected">
+              30
             </div>
           </div>
           <div class="settings-title">
@@ -77,22 +80,191 @@
           </div>
         </div>
       </div>
-      <div class="settings-btn main">
+      <div class="settings-btn main" id="settings-btn">
         Settings
       </div>
       <div class="button-container hide">
-        <div class="settings-btn">
+        <div class="settings-btn" id="save-btn">
           Save
         </div>
-        <div class="settings-btn">
+        <div class="settings-btn" id="default-btn">
           Default
         </div>
       </div>
-    </div>
-    <div class="settings hide">
+      <div class="categories-page artists hide">
+        <div class="category attempted">
+          <div class="category-title">
+            <div class="category-number">
+            </div>
+            <div class="category-name">
+              Portrait
+            </div>
+            <div class="category-stats">
+            </div>
+          </div>
+          <div class="category-img">
 
-    </div>
+          </div>
+        </div>
+        <div class="category">
+          <div class="category-title">
+            <div class="category-number">
+            </div>
+            <div class="category-name">
+              Landscape
+            </div>
+            <div class="category-stats">
+            </div>
+          </div>
+          <div class="category-img">
 
+          </div>
+        </div>
+        <div class="category">
+          <div class="category-title">
+            <div class="category-number">
+            </div>
+            <div class="category-name">
+              Still Life
+            </div>
+            <div class="category-stats">
+            </div>
+          </div>
+          <div class="category-img">
+
+          </div>
+        </div>
+        <div class="category">
+          <div class="category-title">
+            <div class="category-number">
+            </div>
+            <div class="category-name">
+              Graphic
+            </div>
+            <div class="category-stats">
+            </div>
+          </div>
+          <div class="category-img">
+
+          </div>
+        </div>
+        <div class="category">
+          <div class="category-title">
+            <div class="category-number">
+            </div>
+            <div class="category-name">
+              Antique
+            </div>
+            <div class="category-stats">
+            </div>
+          </div>
+          <div class="category-img">
+
+          </div>
+        </div>
+        <div class="category">
+          <div class="category-title">
+            <div class="category-number">
+            </div>
+            <div class="category-name">
+              Avant-Garde
+            </div>
+            <div class="category-stats">
+            </div>
+          </div>
+          <div class="category-img">
+
+          </div>
+        </div>
+        <div class="category">
+          <div class="category-title">
+            <div class="category-number">
+            </div>
+            <div class="category-name">
+              Renaissance
+            </div>
+            <div class="category-stats">
+            </div>
+          </div>
+          <div class="category-img">
+
+          </div>
+        </div>
+        <div class="category">
+          <div class="category-title">
+            <div class="category-number">
+            </div>
+            <div class="category-name">
+              Surrealism
+            </div>
+            <div class="category-stats">
+            </div>
+          </div>
+          <div class="category-img">
+
+          </div>
+        </div>
+        <div class="category">
+          <div class="category-title">
+            <div class="category-number">
+            </div>
+            <div class="category-name">
+              Kitsch
+            </div>
+            <div class="category-stats">
+            </div>
+          </div>
+          <div class="category-img">
+
+          </div>
+        </div>
+        <div class="category">
+          <div class="category-title">
+            <div class="category-number">
+            </div>
+            <div class="category-name">
+              Minimalism
+            </div>
+            <div class="category-stats">
+            </div>
+          </div>
+          <div class="category-img">
+
+          </div>
+        </div>
+        <div class="category">
+          <div class="category-title">
+            <div class="category-number">
+            </div>
+            <div class="category-name">
+              Avangard
+            </div>
+            <div class="category-stats">
+            </div>
+          </div>
+          <div class="category-img">
+
+          </div>
+        </div>
+        <div class="category">
+          <div class="category-title">
+            <div class="category-number">
+            </div>
+            <div class="category-name">
+              Industrial
+            </div>
+            <div class="category-stats">
+            </div>
+          </div>
+          <div class="category-img">
+
+          </div>
+        </div>
+      </div>
+      <div class="categories-page pictures hide">
+
+      </div>
+    </div>
   </main>
   <footer>
 
