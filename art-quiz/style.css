@@ -1,0 +1,254 @@
+html,body {
+  margin: 0;
+  padding: 0;
+  background: rgb(243,248,255);
+  background: linear-gradient(90deg, rgba(243,248,255,1) 0%, rgba(241,241,241,1) 39%, rgba(170,170,170,1) 100%);
+  min-width: 360px;
+  height: 100%;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+}
+
+.container {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.main-container {
+  margin: 0 auto;
+  max-width: 1000px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.icon {
+  margin: 100px auto;
+  width: 220px;
+  height: 140px;
+  background-image: url(../art-quiz/assets/img/logo.png);
+}
+
+.select-type {
+  max-width: 400px;
+  width: 40vw;
+  cursor: pointer;
+  transition: .5s;
+  /* display: none; */
+}
+
+.select-type:hover {
+  transform: scale(1.05, 1.05);
+}
+
+.type-pic,
+.settings-field {
+  max-width: 400px;
+  max-height: 400px;
+  width: 40vw;
+  height: 40vw;
+  background-repeat: no-repeat;
+  background-position: center center;
+  box-shadow: -12px 12px 16px 0px rgba(34, 60, 80, 0.2);
+}
+
+.type-name {
+  margin-top: 15px;
+  text-align: end;
+  font-weight: 700;
+  font-size: 36px;
+}
+
+.type-name span {
+  font-weight: 400;
+}
+
+.artists .type-pic {
+  background-image: url(../art-quiz/assets/img/type1.jpg);
+}
+
+.pictures .type-pic {
+  background-image: url(../art-quiz/assets/img/type2.jpg);
+}
+
+.settings-btn {
+  width: 100px;
+  height: 35px;
+  margin: 0;
+  text-align: center;
+  line-height: 35px;
+  border: 2px solid #fff;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: .5s;
+  cursor: pointer;
+}
+
+.settings-btn.main {
+  margin: 0 auto;
+}
+
+.settings-btn:hover {
+  color: #fff;
+  background-color: #30537a;
+}
+
+.settings {
+  width: 100%;
+  height: 100px;
+  background-color: black;
+}
+
+.settings-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 60px;
+}
+
+.settings-field {
+  text-align: center;
+}
+
+.settings-icon {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.settings-icon.volume {
+  background-image: url(../art-quiz/assets/svg/settings/sound-icon.svg);
+}
+
+.settings-icon.time {
+  background-image: url(../art-quiz/assets/svg/settings/time-icon.svg);
+}
+
+.settings-title {
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 36px;
+  color: #30537a;
+}
+
+.volume-bar,
+.time-bar {
+  margin: 0 auto;
+  height: 8px;
+  width: 90%;
+  display: flex;
+  column-gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.mute-icon {
+  width: 20px;
+  margin: 0;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url(../art-quiz/assets/svg/settings/unmute.svg);
+}
+
+input[type=range] {
+  margin: 0;
+  margin-top: -3px;
+  -webkit-appearance: none;
+  background-color: transparent;
+  width: 100%;
+  position: absolute;
+  left: 0;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  height: 15px;
+  width: 15px;
+  border-radius: 15px;
+  border: 1px solid #fff;
+  background: #30537a;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+.volume-range,
+.time-range {
+  width: 50%;
+  height: 8px;
+  background-color: transparent;
+  position: relative;
+}
+
+.volume-bar-main,
+.time-bar-main {
+  position: absolute;
+  border-radius: 2px;
+  width: 100%;
+  height: 8px;
+  background-color: #fff;
+}
+
+.volume-bar-sub,
+.time-bar-sub {
+  position: absolute;
+  border-radius: 2px;
+  width: 100%;
+  height: 8px;
+  background-color: #30537a;;
+}
+
+.custom-checkbox {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.custom-checkbox+label::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 20px 20px;
+  background-image: url(../art-quiz/assets/svg/settings/unchecked.svg);
+  cursor: pointer;
+}
+
+.custom-checkbox:checked+label::before {
+  background-image: url(../art-quiz/assets/svg/settings/checked.svg);
+}
+
+.time-mode,
+.time-selected {
+  color: #30537a;
+  user-select: none; 
+  font-size: 20px;
+  line-height: 20px;
+}
+
+
+.button-container {
+  margin-top: 95px;
+  display: flex;
+  justify-content: center;
+  column-gap: 50px;
+}
+
+.hide {
+  display: none;
+}

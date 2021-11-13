@@ -7,13 +7,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Art Quiz</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <header>
     <div class="container">
       <div class="icon">
-
       </div>
     </div>
   </header>
@@ -22,23 +24,80 @@
       <div class="main-container">
         <div class="select-type artists">
           <div class="type-pic">
+          </div>
+          <div class="type-name">
+            Artists <span>Quiz</span>
+            </p>
+          </div>
+        </div>
+        <div class="select-type pictures">
+          <div class="type-pic">
 
           </div>
-          <p class="type-name">
-            Artists Quiz
+          <div class="type-name">
+            Pictures <span>Quiz</span>
             </p>
+          </div>
         </div>
-        
-        <div class="select-type pictures">
-<!-- PICTURES  QUIZ -->
+        <div class="settings-field hide">
+          <div class="settings-icon volume">
+
+          </div>
+          <div class="volume-bar">
+            <div class="mute-icon"></div>
+            <div class="volume-range">
+              <div class="volume-bar-main"></div>
+              <div class="volume-bar-sub" id="volume-sub"></div>
+              <input type="range" value="100" id="volume-bar">
+            </div>
+          </div>
+          <div class="settings-title">
+            Volume
+          </div>
+        </div>
+        <div class="settings-field hide">
+          <div class="settings-icon time"></div>
+          <div class="time-bar">
+            <input class="custom-checkbox" type="checkbox" id="time" name="time" checked>
+            <div class="checkbox-container">
+              <label class="time-mode" for="time"></label>
+              <div class="time-mode">on/off</div>
+            </div>
+            <div class="time-range">
+              <div class="time-bar-main"></div>
+              <div class="time-bar-sub" id="time-sub"></div>
+              <input type="range" min="0" max="6" value="6" id="time-bar">
+            </div>
+            <div class="time-selected">
+              6
+            </div>
+          </div>
+          <div class="settings-title">
+            Time game
+          </div>
+        </div>
+      </div>
+      <div class="settings-btn main">
+        Settings
+      </div>
+      <div class="button-container hide">
+        <div class="settings-btn">
+          Save
+        </div>
+        <div class="settings-btn">
+          Default
         </div>
       </div>
     </div>
+    <div class="settings hide">
+
+    </div>
+
   </main>
   <footer>
 
     <footer>
-      <div class="container">
+      <!-- <div class="container">
         <div class="footer-container">
           <p>© 2021</p>
           <a href="https://rs.school/js/" target=" _blank">The Rolling Scopes School</a>
@@ -46,8 +105,9 @@
         </div>
       </div>
       </div>
+    </footer> -->
     </footer>
-  </footer>
+    <script src="../art-quiz/js/main-menu.js"></script>
 </body>
 
 </html>
