@@ -1,4 +1,4 @@
-const volume = document.getElementById('volume-bar');
+const volumeBar = document.getElementById('volume-bar');
 const timeBar = document.getElementById('time-bar');
 
 const settingsBtn = document.getElementById('settings-btn');
@@ -10,21 +10,35 @@ const picturesBtn = document.getElementById('pictures-mode');
 const homeBtn = document.getElementById('home-btn');
 const scoreBtn = document.getElementById('score-btn');
 
+
+const homeBtnPopup = document.getElementById('home-btn-popup');
+const scoreBtnPopup = document.getElementById('score-btn-popup');
+
 const answerIndicators = document.querySelectorAll('.question-bullet');
 
 const artistsPage = document.querySelector('.categories-page.artists');
 
+const popupIcon = document.querySelector('.popup-icon');
+const popupBtn = document.querySelector('.popup-btn');
+
+const timerInfo = document.querySelector('.pagination-timer');
+
 let timeMode;
 let timeLimit;
+
+let questeionInterval;
+let questionTimeOut;
 
 let questionNumber;
 let cardNumber;
 let correctAnswer;
 let images;
 
-// TODO change to real audio
-const audio = {};
+let answersCounter;
+
+let volume;
 let tempVolume;
+let soundEffect;
 
 function getRandomNum(min, max) {
   return Math.floor(Math.random() * max) + min;
@@ -44,25 +58,26 @@ function shuffle(array) {
   return array;
 }
 
-function toggleElem(selector) {
-  document.querySelectorAll(selector).forEach(item => {
-    item.classList.toggle('hide');
-  });
-}
-
 function toggleBlock(elem) {
-  elem.currentTarget.path.forEach(item => {
-    toggleElem(item);
+  elem.currentTarget.show.forEach(item => {
+    document.querySelectorAll(item).forEach(obj => {
+      obj.classList.remove('hide');
+    });
+  });
+  elem.currentTarget.hide.forEach(item => {
+    document.querySelectorAll(item).forEach(obj => {
+      obj.classList.add('hide');
+    });
   });
 }
 
 function displayVolume() {
-  document.getElementById('volume-sub').style.width = `${volume.value}%`;
+  document.getElementById('volume-sub').style.width = `${volumeBar.value}%`;
 }
 
 function setVolume() {
-  audio.volume = volume.value / 100;
-  if (audio.volume == 0) {
+  volume = volumeBar.value / 100;
+  if (volume == 0) {
     document.querySelector('.mute-icon').style.backgroundImage = 'url("assets/svg/settings/mute.svg")';
   } else {
     document.querySelector('.mute-icon').style.backgroundImage = 'url("assets/svg/settings/unmute.svg")';
@@ -71,24 +86,19 @@ function setVolume() {
 }
 
 function mute() {
-  if (audio.volume == 0) {
-    volume.value = tempVolume;
+  if (volume == 0) {
+    volumeBar.value = tempVolume;
   } else {
     tempVolume = volume.value;
-    volume.value = 0;
+    volumeBar.value = 0;
   }
   setVolume();
 }
 
-
-// TODO fix checkbox bug
 function showTimeMode() {
   if (timeMode == true) {
-    document.getElementById('time').checked = true;
     document.querySelector('.time-range').classList.remove('blocked');
-  }
-  if (timeMode == false) {
-    document.getElementById('time').checked = false;
+  } else {
     document.querySelector('.time-range').classList.add('blocked');
   }
 }
@@ -111,17 +121,26 @@ function setTimeInterval() {
 function saveSettings(elem) {
   localStorage.setItem('timeLimit', timeLimit);
   localStorage.setItem('timeMode', timeMode);
-  localStorage.setItem('volume', volume.value);
+  localStorage.setItem('volume', volumeBar.value / 10);
   toggleBlock(elem);
 }
 
 function setDefault() {
   timeBar.value = 3;
   timeMode = false;
+  volume = 0.8;
+  volumeBar.value = 80;
   initSettings();
 }
 
 function initSettings() {
+  if (timeMode) {
+    document.getElementById('time-checkbox').setAttribute('checked', 'checked');
+  } else {
+    document.getElementById('time-checkbox').removeAttribute('checked');
+
+  }
+
   setTimeInterval();
   setVolume();
   showTimeMode();
@@ -138,8 +157,15 @@ function displayPreviews() {
 
 function initGame(card) {
   cardNumber = card;
+  answersCounter = 0;
   questionNumber = (card - 1) * 10;
   images = getImageData();
+  answerIndicators.forEach(item => {
+    item.classList.remove('correct');
+    item.classList.remove('wrong');
+  });
+  document.querySelector('.page-name').innerHTML = '';
+  document.querySelector('.popup-next').classList.remove('hide');
   images.then((res) => {
     images = res;
     showQuestion(questionNumber);
@@ -166,7 +192,7 @@ function showQuestion(qNum) {
   document.querySelector('.artists-mode').classList.remove('blocked');
   document.querySelector('.page-name').innerHTML = 'Кто автор данной картины?';
   let currentQuestion = images[qNum];
-  document.querySelector('.image-question').style.backgroundImage = `url("assets/img/image-data/img/${currentQuestion.imageNum}.jpg")`;
+  showQuestionInfo(currentQuestion);
   correctAnswer = currentQuestion.author;
   let randomAnswer;
   let answers = [];
@@ -182,6 +208,25 @@ function showQuestion(qNum) {
     let temp = answers.pop();
     item.innerHTML = temp;
   });
+  if (timeMode) {
+    let tempTime = timeLimit;
+    timerInfo.innerHTML = '00:' + (tempTime + '').padStart(2, '0');
+    questeionInterval = setInterval(() => {
+      tempTime--;
+      if (tempTime == 3) {
+        playAudio("assets/sound-effects/timer.mp3");
+        timerInfo.classList.add('last-seconds');
+      }
+      timerInfo.innerHTML = '00:' + (tempTime + '').padStart(2, '0');
+    }, 1000);
+    questionTimeOut = setTimeout(() => checkAnswer(), timeLimit * 1000);
+  }
+}
+
+function showQuestionInfo(current) {
+  document.querySelector('.image-question').style.backgroundImage = `url("assets/img/image-data/img/${current.imageNum}.jpg")`;
+  document.querySelector('.popup-image').style.backgroundImage = `url("assets/img/image-data/img/${current.imageNum}.jpg")`;
+  document.querySelector('.popup-info').innerHTML = `${current.name} <br>${current.author}<br>${current.year}`;
 }
 
 function getAnswer(elem) {
@@ -189,48 +234,141 @@ function getAnswer(elem) {
 }
 
 function checkAnswer(answer) {
-  if (answer.innerHTML == correctAnswer) {
-    answer.classList.add('correct');
-    answerIndicators[questionNumber - (cardNumber - 1) * 10].classList.add('correct');
+  clearInterval(questeionInterval);
+  clearTimeout(questionTimeOut);
+  timerInfo.classList.remove('last-seconds');
+  if (answer) {
+    if (answer.innerHTML == correctAnswer) {
+      answersCounter++;
+      answer.classList.add('correct');
+      answerIndicators[questionNumber - (cardNumber - 1) * 10].classList.add('correct');
+      popupIcon.classList.remove('wrong');
+      playAudio("assets/sound-effects/right.mp3");
+
+    } else {
+      answer.classList.add('wrong');
+      answerIndicators[questionNumber - (cardNumber - 1) * 10].classList.add('wrong');
+      popupIcon.classList.add('wrong');
+      playAudio("assets/sound-effects/wrong.mp3");
+    }
   } else {
-    answer.classList.add('wrong');
     answerIndicators[questionNumber - (cardNumber - 1) * 10].classList.add('wrong');
+    popupIcon.classList.add('wrong');
   }
   document.querySelector('.artists-mode').classList.add('blocked');
+  document.querySelector('.answer-popup').classList.remove('hide');
+}
+
+function nextQuestion() {
   questionNumber++;
-  console.log(questionNumber);
-  console.log((cardNumber * 10 - 1));
+  document.querySelector('.answer-popup').classList.add('hide');
   if ((cardNumber * 10 - 1) >= questionNumber) {
-    setTimeout(() => showQuestion(questionNumber), 500);
+    showQuestion(questionNumber);
   } else {
-    console.log('round is over');
+    let results = JSON.parse(localStorage.getItem('attempted')) || [];
+    results[cardNumber - 1] = answersCounter;
+    localStorage.setItem('attempted', JSON.stringify(results));
+    showRoundResult();
+    displayAttemptedCategory();
   }
 }
 
-settingsBtn.path = ['.settings-field', '.select-type', '.button-container', '.main'];
+function showRoundResult() {
+  let finalPopup = document.querySelector('.popup-final');
+  document.querySelector('.artists-mode').classList.add('blocked');
+  document.querySelector('.answer-popup').classList.remove('hide');
+  document.querySelector('.popup-next').classList.add('hide');
+  finalPopup.querySelector('.final-score').innerHTML = `${answersCounter}/10`;
+  getEmoji(finalPopup.querySelector('.final-icon'));
+}
+
+function getEmoji(elem) {
+  elem.className = '';
+  elem.classList.add('final-icon');
+  let type;
+  if (answersCounter < 2) {
+    type = 'very-bad';
+  }
+  if (answersCounter >= 2 && answersCounter < 4) {
+    type = 'bad';
+  }
+  if (answersCounter >= 4 && answersCounter < 6) {
+    type = 'normal';
+  }
+  if (answersCounter >= 6 && answersCounter < 9) {
+    type = 'good';
+  }
+  if (answersCounter >= 9) {
+    type = 'very-good';
+  }
+  elem.classList.add(type);
+}
+
+function displayAttemptedCategory() {
+  let attempted = JSON.parse(localStorage.getItem('attempted')) || [];
+  let temp;
+  attempted.forEach((item, index) => {
+    if (item != null) {
+      temp = document.querySelectorAll('.category')[index];
+      temp.classList.add('attempted');
+      temp.querySelector('.category-stats').innerHTML = `${item}/10`;
+    }
+  });
+}
+
+function endGame(elem){
+  if(soundEffect){
+    soundEffect.pause();
+  }
+  clearInterval(questeionInterval);
+  clearTimeout(questionTimeOut);
+  timerInfo.classList.remove('last-seconds');
+  timerInfo.innerHTML = '';
+  toggleBlock(elem);
+}
+
+function playAudio(url) {
+  soundEffect = new Audio(url);
+  soundEffect.volume = volume;
+  console.log(soundEffect.volume);
+  soundEffect.play();
+}
+
+settingsBtn.show = ['.settings-field', , '.button-container',];
+settingsBtn.hide = ['.select-type', '.main'];
 settingsBtn.addEventListener('click', toggleBlock);
 
-saveBtn.path = settingsBtn.path;
+saveBtn.show = settingsBtn.hide;
+saveBtn.hide = settingsBtn.show;
 saveBtn.addEventListener('click', saveSettings);
 
-artistsBtn.path = ['.main-container', '.settings-btn.main', '.categories-page.artists', '.pagination'];
+artistsBtn.show = ['.categories-page.artists', '.pagination'];
+artistsBtn.hide = ['.main', '.main-container', '.settings-btn.main'];
 artistsBtn.addEventListener('click', toggleBlock);
 
-picturesBtn.path = ['.main-container', '.settings-btn.main', '.categories-page.pictures', '.pagination'];
+picturesBtn.show = ['.categories-page.pictures', '.pagination'];
+picturesBtn.show = ['.main-container', '.settings-btn.main'];
 picturesBtn.addEventListener('click', toggleBlock);
 
-homeBtn.path = ['.main-container', '.settings-btn.main', '.categories-page.artists', '.pagination'];
-homeBtn.addEventListener('click', toggleBlock);
+homeBtn.show = ['.main-container', '.select-type', '.main', '.icon'];
+homeBtn.hide = ['.categories-page.artists', '.categories-page.pictures', '.pagination', '.artists-mode', '.answer-popup'];
+homeBtn.addEventListener('click', endGame);
 
-artistsPage.path = ['.categories-page.artists', '.artists-mode', '.icon'];
+homeBtnPopup.show = homeBtn.show;
+homeBtnPopup.hide = homeBtn.hide;
+homeBtnPopup.addEventListener('click', toggleBlock);
+
+artistsPage.show = ['.artists-mode'];
+artistsPage.hide = ['.categories-page.artists', '.icon'];
 artistsPage.addEventListener('click', (elem) => {
   toggleBlock(elem);
   initGame(elem.target.querySelector('.category-number').innerHTML);
 });
 
-volume.addEventListener('input', setVolume);
+volumeBar.addEventListener('input', setVolume);
 timeBar.addEventListener('input', setTimeInterval);
 saveBtn.addEventListener('click', saveSettings);
+popupBtn.addEventListener('click', nextQuestion);
 
 document.querySelector('.mute-icon').addEventListener('click', mute);
 document.getElementById('time-mode').addEventListener('click', toggleTimeMode);
@@ -241,8 +379,9 @@ window.addEventListener('load', function () {
   timeLimit = +localStorage.getItem('timeLimit') || 25;
   timeBar.value = timeLimit / 5 - 1;
   timeMode = JSON.parse(localStorage.getItem('timeMode'));
-  audio.volume = localStorage.getItem('volume') || 80;
-  volume.value = audio.volume;
+  volume = +localStorage.getItem('volume') || 0.8;
+  volumeBar.value = volume;
   displayPreviews();
   initSettings();
+  displayAttemptedCategory();
 });
