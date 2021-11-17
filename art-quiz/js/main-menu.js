@@ -8,15 +8,16 @@ const artistsBtn = document.getElementById('artists-mode');
 const picturesBtn = document.getElementById('pictures-mode');
 
 const homeBtn = document.getElementById('home-btn');
-const scoreBtn = document.getElementById('score-btn');
-
+const backBtn = document.getElementById('back-btn');
 
 const homeBtnPopup = document.getElementById('home-btn-popup');
-const scoreBtnPopup = document.getElementById('score-btn-popup');
+const nextBtnPopup = document.getElementById('next-btn-popup');
+
 
 const answerIndicators = document.querySelectorAll('.question-bullet');
 
 const artistsPage = document.querySelector('.categories-page.artists');
+const picturesPage = document.querySelector('.categories-page.pictures');
 
 const popupIcon = document.querySelector('.popup-icon');
 const popupBtn = document.querySelector('.popup-btn');
@@ -33,12 +34,15 @@ let questionNumber;
 let cardNumber;
 let correctAnswer;
 let images;
+let roundResults;
 
 let answersCounter;
 
 let volume;
 let tempVolume;
 let soundEffect;
+
+let isAudioEnabled = true;
 
 function getRandomNum(min, max) {
   return Math.floor(Math.random() * max) + min;
@@ -59,6 +63,9 @@ function shuffle(array) {
 }
 
 function toggleBlock(elem) {
+  // console.log(elem.currentTarget);
+  // console.log(elem.currentTarget.show);
+  // console.log(elem.currentTarget.hide);
   elem.currentTarget.show.forEach(item => {
     document.querySelectorAll(item).forEach(obj => {
       obj.classList.remove('hide');
@@ -85,6 +92,15 @@ function setVolume() {
   displayVolume();
 }
 
+function changeVolume() {
+  setVolume();
+  if (isAudioEnabled) {
+    isAudioEnabled = false;
+    playAudio("assets/sound-effects/right.mp3");
+    setTimeout(() => (isAudioEnabled = true), 600);
+  }
+}
+
 function mute() {
   if (volume == 0) {
     volumeBar.value = tempVolume;
@@ -92,7 +108,7 @@ function mute() {
     tempVolume = volume.value;
     volumeBar.value = 0;
   }
-  setVolume();
+  changeVolume();
 }
 
 function showTimeMode() {
@@ -155,11 +171,12 @@ function displayPreviews() {
   });
 }
 
-function initGame(card) {
-  cardNumber = card;
+function initGame(flag, card) {
+  cardNumber = flag ? card : (+card + 12);
   answersCounter = 0;
-  questionNumber = (card - 1) * 10;
+  questionNumber = (cardNumber - 1) * 10;
   images = getImageData();
+  roundResults = [];
   answerIndicators.forEach(item => {
     item.classList.remove('correct');
     item.classList.remove('wrong');
@@ -168,7 +185,7 @@ function initGame(card) {
   document.querySelector('.popup-next').classList.remove('hide');
   images.then((res) => {
     images = res;
-    showQuestion(questionNumber);
+    flag ? showAristsQuestion(questionNumber) : showPicturesQuestion(questionNumber);
   });
 }
 
@@ -183,7 +200,7 @@ async function getImageData() {
   }
 }
 
-function showQuestion(qNum) {
+function showAristsQuestion(qNum) {
   // longest is Николай Богданов-Бельский
   document.querySelectorAll('.answer').forEach(item => {
     item.classList.remove('correct');
@@ -192,11 +209,11 @@ function showQuestion(qNum) {
   document.querySelector('.artists-mode').classList.remove('blocked');
   document.querySelector('.page-name').innerHTML = 'Кто автор данной картины?';
   let currentQuestion = images[qNum];
-  showQuestionInfo(currentQuestion);
-  correctAnswer = currentQuestion.author;
+  showQuestionInfo(true, currentQuestion);
+  correctAnswer = currentQuestion;
   let randomAnswer;
   let answers = [];
-  answers.push(correctAnswer);
+  answers.push(correctAnswer.author);
   while (answers.length != 4) {
     randomAnswer = images[getRandomNum(0, 240)].author;
     if (!answers.includes(randomAnswer)) {
@@ -223,39 +240,94 @@ function showQuestion(qNum) {
   }
 }
 
-function showQuestionInfo(current) {
-  document.querySelector('.image-question').style.backgroundImage = `url("assets/img/image-data/img/${current.imageNum}.jpg")`;
+function showPicturesQuestion(qNum) {
+  document.querySelectorAll('.picture-answer').forEach(item => {
+    item.classList.remove('correct');
+    item.classList.remove('wrong');
+  });
+  let currentQuestion = images[qNum];
+  document.querySelector('.pictures-mode').classList.remove('blocked');
+  document.querySelector('.page-name').innerHTML = `Какую картинку нарисовал ${currentQuestion.author}?`;
+  showQuestionInfo(false, currentQuestion);
+  correctAnswer = currentQuestion;
+  let randomAnswer;
+  let answers = [];
+  let authors = []
+  authors.push(correctAnswer.author);
+  answers.push(currentQuestion);
+  while (answers.length != 4) {
+    randomAnswer = images[getRandomNum(0, 240)];
+    if (!authors.includes(randomAnswer.author)) {
+      authors.push(randomAnswer.author)
+      answers.push(randomAnswer);
+    }
+  }
+  shuffle(answers);
+  document.querySelectorAll('.picture-answer').forEach(item => {
+    let temp = answers.pop();
+    item.style.backgroundImage = `url("assets/img/image-data/img/${temp.imageNum}.jpg")`;
+    item.num = temp.imageNum;
+  });
+  if (timeMode) {
+    let tempTime = timeLimit;
+    timerInfo.innerHTML = '00:' + (tempTime + '').padStart(2, '0');
+    questeionInterval = setInterval(() => {
+      tempTime--;
+      if (tempTime == 3) {
+        playAudio("assets/sound-effects/timer.mp3");
+        timerInfo.classList.add('last-seconds');
+      }
+      timerInfo.innerHTML = '00:' + (tempTime + '').padStart(2, '0');
+    }, 1000);
+    questionTimeOut = setTimeout(() => checkAnswer(), timeLimit * 1000);
+  }
+}
+
+function showQuestionInfo(flag, current) {
+  if (flag) {
+    document.querySelector('.image-question').style.backgroundImage = `url("assets/img/image-data/img/${current.imageNum}.jpg")`;
+  }
   document.querySelector('.popup-image').style.backgroundImage = `url("assets/img/image-data/img/${current.imageNum}.jpg")`;
   document.querySelector('.popup-info').innerHTML = `${current.name} <br>${current.author}<br>${current.year}`;
 }
 
-function getAnswer(elem) {
-  checkAnswer(elem.target);
-}
-
-function checkAnswer(answer) {
+function checkAnswer(elem) {
+  let answer;
+  if (elem) {
+    answer = elem.target;
+  }
   clearInterval(questeionInterval);
   clearTimeout(questionTimeOut);
   timerInfo.classList.remove('last-seconds');
-  if (answer) {
-    if (answer.innerHTML == correctAnswer) {
-      answersCounter++;
-      answer.classList.add('correct');
+  if ((answer && answer.innerHTML == correctAnswer.author) || (answer && answer.num == correctAnswer.imageNum)) {
+    console.log('its true');
+    roundResults.push(true);
+    answersCounter++;
+    answer.classList.add('correct');
+    if (cardNumber <= 12) {
       answerIndicators[questionNumber - (cardNumber - 1) * 10].classList.add('correct');
-      popupIcon.classList.remove('wrong');
-      playAudio("assets/sound-effects/right.mp3");
-
     } else {
-      answer.classList.add('wrong');
-      answerIndicators[questionNumber - (cardNumber - 1) * 10].classList.add('wrong');
-      popupIcon.classList.add('wrong');
-      playAudio("assets/sound-effects/wrong.mp3");
+      answerIndicators[10 + questionNumber - (cardNumber - 1) * 10].classList.add('correct');
     }
+    popupIcon.classList.remove('wrong');
+    playAudio("assets/sound-effects/right.mp3");
   } else {
-    answerIndicators[questionNumber - (cardNumber - 1) * 10].classList.add('wrong');
+    console.log('its false');
+    roundResults.push(false);
+    if (answer) {
+      answer.classList.add('wrong')
+    }
+    if (cardNumber <= 12) {
+      answerIndicators[questionNumber - (cardNumber - 1) * 10].classList.add('wrong');
+    } else {
+      answerIndicators[10 + questionNumber - (cardNumber - 1) * 10].classList.add('wrong');
+
+    }
     popupIcon.classList.add('wrong');
+    playAudio("assets/sound-effects/wrong.mp3");
   }
   document.querySelector('.artists-mode').classList.add('blocked');
+  document.querySelector('.pictures-mode').classList.add('blocked');
   document.querySelector('.answer-popup').classList.remove('hide');
 }
 
@@ -263,10 +335,17 @@ function nextQuestion() {
   questionNumber++;
   document.querySelector('.answer-popup').classList.add('hide');
   if ((cardNumber * 10 - 1) >= questionNumber) {
-    showQuestion(questionNumber);
+    if (cardNumber <= 12) {
+      showAristsQuestion(questionNumber);
+    } else {
+      showPicturesQuestion(questionNumber);
+    }
   } else {
     let results = JSON.parse(localStorage.getItem('attempted')) || [];
-    results[cardNumber - 1] = answersCounter;
+    results[cardNumber - 1] = {
+      answersCounter: answersCounter,
+      roundResults: roundResults
+    }
     localStorage.setItem('attempted', JSON.stringify(results));
     showRoundResult();
     displayAttemptedCategory();
@@ -304,6 +383,7 @@ function getEmoji(elem) {
   elem.classList.add(type);
 }
 
+
 function displayAttemptedCategory() {
   let attempted = JSON.parse(localStorage.getItem('attempted')) || [];
   let temp;
@@ -311,27 +391,53 @@ function displayAttemptedCategory() {
     if (item != null) {
       temp = document.querySelectorAll('.category')[index];
       temp.classList.add('attempted');
-      temp.querySelector('.category-stats').innerHTML = `${item}/10`;
+      temp.querySelector('.category-stats').innerHTML = `${item.answersCounter}/10`;
     }
   });
 }
 
-function endGame(elem){
-  if(soundEffect){
+function endGame(elem) {
+  if (soundEffect) {
     soundEffect.pause();
   }
   clearInterval(questeionInterval);
   clearTimeout(questionTimeOut);
   timerInfo.classList.remove('last-seconds');
   timerInfo.innerHTML = '';
+  document.querySelector('.page-name').innerHTML = '';
   toggleBlock(elem);
 }
 
 function playAudio(url) {
   soundEffect = new Audio(url);
   soundEffect.volume = volume;
-  console.log(soundEffect.volume);
   soundEffect.play();
+}
+
+function displayScore(elem) {
+  // longest is Сальвадор Дали - пчела вызванная полетом граната над пробуждением за секунду перед сном
+  let images = getImageData();
+  images.then((res) => {
+    let results = JSON.parse(localStorage.getItem('attempted')) || [];
+    let cardIndex = elem.querySelector('.category-number').innerHTML;
+    let temp = (cardIndex - 1) * 10;
+    let catName = elem.querySelector('.category-name').innerHTML;
+    res = res.slice(temp, temp + 10);
+    document.querySelectorAll('.score-card').forEach((item, questionIndex) => {
+      item.number = cardIndex;
+      item.querySelector('.score-image').style.backgroundImage = `url("assets/img/image-data/img/${temp}.jpg")`;
+      item.querySelector('.score-title').innerHTML = catName;
+      item.querySelector('.score-image-info').innerHTML = `${res[questionIndex].name} <br>${res[questionIndex].author}<br>${res[questionIndex].year}`;
+      if (results[cardIndex - 1]) {
+        if (results[cardIndex - 1].roundResults[questionIndex]) {
+          item.querySelector('.score-image').classList.add('played');
+        } else {
+          item.querySelector('.score-image').classList.remove('played');
+        }
+      }
+      temp++;
+    });
+  });
 }
 
 settingsBtn.show = ['.settings-field', , '.button-container',];
@@ -347,25 +453,48 @@ artistsBtn.hide = ['.main', '.main-container', '.settings-btn.main'];
 artistsBtn.addEventListener('click', toggleBlock);
 
 picturesBtn.show = ['.categories-page.pictures', '.pagination'];
-picturesBtn.show = ['.main-container', '.settings-btn.main'];
+picturesBtn.hide = ['.main', '.main-container', '.settings-btn.main'];
 picturesBtn.addEventListener('click', toggleBlock);
 
 homeBtn.show = ['.main-container', '.select-type', '.main', '.icon'];
-homeBtn.hide = ['.categories-page.artists', '.categories-page.pictures', '.pagination', '.artists-mode', '.answer-popup'];
+homeBtn.hide = ['.categories-page.artists', '.categories-page.pictures', '.pagination', '.artists-mode', '.pictures-mode', '.answer-popup', '.category-score'];
 homeBtn.addEventListener('click', endGame);
 
 homeBtnPopup.show = homeBtn.show;
 homeBtnPopup.hide = homeBtn.hide;
 homeBtnPopup.addEventListener('click', toggleBlock);
 
-artistsPage.show = ['.artists-mode'];
-artistsPage.hide = ['.categories-page.artists', '.icon'];
+nextBtnPopup.show = ['.categories-page.artists'];
+nextBtnPopup.hide = ['.answer-popup', '.artists-mode', '.pictures-mode'];
+nextBtnPopup.addEventListener('click', endGame);
+
+backBtn.show = ['.categories-page.artists'];
+backBtn.hide = ['.category-score', '.pagination-btn.back', '.artists-mode', '.pictures-mode'];
+backBtn.addEventListener('click', endGame);
+
 artistsPage.addEventListener('click', (elem) => {
-  toggleBlock(elem);
-  initGame(elem.target.querySelector('.category-number').innerHTML);
+  if (elem.target.classList.contains('category-results')) {
+    artistsPage.show = ['.category-score', '.pagination-btn.back'];
+    artistsPage.hide = ['.categories-page.artists'];
+    toggleBlock(elem);
+    displayScore(elem.target.parentElement.parentElement);
+  } else {
+    artistsPage.show = ['.artists-mode', '.pagination-btn.back'];
+    artistsPage.hide = ['.categories-page.artists', '.icon'];
+    toggleBlock(elem);
+    initGame(true, elem.target.querySelector('.category-number').innerHTML);
+  }
 });
 
-volumeBar.addEventListener('input', setVolume);
+picturesPage.addEventListener('click', (elem) => {
+  picturesPage.show = ['.pictures-mode', '.pagination-btn.back'];
+  picturesPage.hide = ['.categories-page.pictures', 'icon'];
+  toggleBlock(elem);
+  initGame(false, elem.target.querySelector('.category-number').innerHTML);
+});
+
+
+volumeBar.addEventListener('input', changeVolume);
 timeBar.addEventListener('input', setTimeInterval);
 saveBtn.addEventListener('click', saveSettings);
 popupBtn.addEventListener('click', nextQuestion);
@@ -373,14 +502,20 @@ popupBtn.addEventListener('click', nextQuestion);
 document.querySelector('.mute-icon').addEventListener('click', mute);
 document.getElementById('time-mode').addEventListener('click', toggleTimeMode);
 document.getElementById('default-btn').addEventListener('click', setDefault);
-document.querySelector('.answers').addEventListener('click', getAnswer);
+document.querySelector('.answers').addEventListener('click', checkAnswer);
+document.querySelector('.picture-answers').addEventListener('click', checkAnswer);
 
 window.addEventListener('load', function () {
   timeLimit = +localStorage.getItem('timeLimit') || 25;
   timeBar.value = timeLimit / 5 - 1;
   timeMode = JSON.parse(localStorage.getItem('timeMode'));
-  volume = +localStorage.getItem('volume') || 0.8;
-  volumeBar.value = volume;
+  volume = localStorage.getItem('volume');
+  if (volume == null) {
+    volume = .8;
+  } else {
+    volume = +volume;
+  }
+  volumeBar.value = volume * 10;
   displayPreviews();
   initSettings();
   displayAttemptedCategory();
