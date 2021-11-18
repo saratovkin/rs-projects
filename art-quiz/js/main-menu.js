@@ -419,7 +419,8 @@ function displayScore(flag, elem) {
   images.then((res) => {
     let results = JSON.parse(localStorage.getItem('attempted')) || [];
     let cardIndex = elem.querySelector('.category-number').innerHTML;
-    let temp = flag ? (cardIndex - 1) * 10 : (cardIndex - 1) * 10 + 120;
+    cardIndex = flag ? cardIndex : (+cardIndex + 12);
+    let temp = (cardIndex - 1) * 10;
     let catName = elem.querySelector('.category-name').innerHTML;
     res = res.slice(temp, temp + 10);
     document.querySelectorAll('.score-card').forEach((item, questionIndex) => {
