@@ -61,6 +61,7 @@ body {
 
 .settings-btn.main {
   margin: 0 auto;
+  margin-bottom: 50px;
 }
 
 .pagination-btn {
@@ -520,6 +521,7 @@ input[type=range]::-webkit-slider-thumb {
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: center center;
+  transition: background-image .2s ease-in-out;
 }
 
 .picture-answers {
@@ -539,6 +541,7 @@ input[type=range]::-webkit-slider-thumb {
   background-position: center;
   transition: .5s;
   cursor: pointer;
+  transition: background-image .2s ease-in-out;
 }
 
 .answers {
@@ -730,6 +733,7 @@ input[type=range]::-webkit-slider-thumb {
   position: relative;
   overflow-y: hidden;
   cursor: pointer;
+  transition: background-image .2s ease-in-out;
 }
 
 .score-image.played {
