@@ -291,14 +291,14 @@ function showPicturesQuestion(qNum) {
 }
 
 function showQuestionInfo(flag, current) {
-  if (flag) {
-    const img = new Image();
-    img.src = getImageURL(current.imageNum);
-    img.onload = () => {
+  const img = new Image();
+  img.src = getImageURL(current.imageNum);
+  img.onload = () => {
+    if (flag) {
       document.querySelector('.image-question').style.backgroundImage = `url(${img.src})`;
-      document.querySelector('.popup-image').style.backgroundImage = `url(${img.src})`;
 
     };
+    document.querySelector('.popup-image').style.backgroundImage = `url(${img.src})`;
   }
   document.querySelector('.popup-info').innerHTML = `${current.name} <br>${current.author}<br>${current.year}`;
 }
