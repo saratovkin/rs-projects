@@ -13,7 +13,6 @@ const backBtn = document.getElementById('back-btn');
 const homeBtnPopup = document.getElementById('home-btn-popup');
 const nextBtnPopup = document.getElementById('next-btn-popup');
 
-
 const answerIndicators = document.querySelectorAll('.question-bullet');
 
 const artistsPage = document.querySelector('.categories-page.artists');
@@ -27,7 +26,7 @@ const timerInfo = document.querySelector('.pagination-timer');
 let timeMode;
 let timeLimit;
 
-let questeionInterval;
+let timerInterval;
 let questionTimeOut;
 
 let questionNumber;
@@ -225,7 +224,7 @@ function showAristsQuestion(qNum) {
   if (timeMode) {
     let tempTime = timeLimit;
     timerInfo.innerHTML = '00:' + (tempTime + '').padStart(2, '0');
-    questeionInterval = setInterval(() => {
+    timerInterval = setInterval(() => {
       tempTime--;
       if (tempTime == 3) {
         playAudio("assets/sound-effects/timer.mp3");
@@ -268,7 +267,7 @@ function showPicturesQuestion(qNum) {
   if (timeMode) {
     let tempTime = timeLimit;
     timerInfo.innerHTML = '00:' + (tempTime + '').padStart(2, '0');
-    questeionInterval = setInterval(() => {
+    timerInterval = setInterval(() => {
       tempTime--;
       if (tempTime == 3) {
         playAudio("assets/sound-effects/timer.mp3");
@@ -296,7 +295,7 @@ function checkAnswer(elem) {
   if (elem) {
     answer = elem.target;
   }
-  clearInterval(questeionInterval);
+  clearInterval(timerInterval);
   clearTimeout(questionTimeOut);
   timerInfo.classList.remove('last-seconds');
   if ((answer && answer.innerHTML == correctAnswer.author) || (answer && answer.num == correctAnswer.imageNum)) {
@@ -381,7 +380,6 @@ function getEmoji(elem) {
   elem.classList.add(type);
 }
 
-
 function displayAttemptedCategory() {
   let attempted = JSON.parse(localStorage.getItem('attempted')) || [];
   let temp;
@@ -399,7 +397,7 @@ function endGame(elem) {
     soundEffect.pause();
   }
   hidePictureInfo();
-  clearInterval(questeionInterval);
+  clearInterval(timerInterval);
   clearTimeout(questionTimeOut);
   timerInfo.classList.remove('last-seconds');
   timerInfo.innerHTML = '';
@@ -449,10 +447,6 @@ function hidePictureInfo() {
     item.classList.remove('clicked');
   });
 }
-
-document.querySelectorAll('.score-image').forEach(item => {
-  item.addEventListener('click', showPictureInfo);
-});
 
 settingsBtn.show = ['.settings-field', , '.button-container',];
 settingsBtn.hide = ['.select-type', '.main'];
@@ -521,7 +515,6 @@ picturesPage.addEventListener('click', (elem) => {
   }
 });
 
-
 volumeBar.addEventListener('input', changeVolume);
 timeBar.addEventListener('input', setTimeInterval);
 saveBtn.addEventListener('click', saveSettings);
@@ -532,6 +525,10 @@ document.getElementById('time-mode').addEventListener('click', toggleTimeMode);
 document.getElementById('default-btn').addEventListener('click', setDefault);
 document.querySelector('.answers').addEventListener('click', checkAnswer);
 document.querySelector('.picture-answers').addEventListener('click', checkAnswer);
+
+document.querySelectorAll('.score-image').forEach(item => {
+  item.addEventListener('click', showPictureInfo);
+});
 
 window.addEventListener('load', function () {
   timeLimit = +localStorage.getItem('timeLimit') || 25;
