@@ -158,11 +158,18 @@ function initSettings() {
   showTimeMode();
 }
 
+function getImageURL(index) {
+  return `https://raw.githubusercontent.com/irinainina/image-data/master/img/${index}.jpg`;
+}
 function displayPreviews() {
   let index = 0;
   document.querySelectorAll('.category').forEach(item => {
     item.querySelector('.category-number').innerHTML = (index >= 120) ? ((index - 120) / 10 + 1) : (index / 10 + 1);
-    item.querySelector('.category-img').style.backgroundImage = `url("assets/img/image-data/img/${index}.jpg")`;
+    const img = new Image();
+    img.src = getImageURL(index);
+    img.onload = () => {
+      item.querySelector('.category-img').style.backgroundImage = `url(${img.src})`;
+    };
     index += 10;
   });
 }
@@ -261,7 +268,11 @@ function showPicturesQuestion(qNum) {
   shuffle(answers);
   document.querySelectorAll('.picture-answer').forEach(item => {
     let temp = answers.pop();
-    item.style.backgroundImage = `url("assets/img/image-data/img/${temp.imageNum}.jpg")`;
+    const img = new Image();
+    img.src = getImageURL(temp.imageNum);
+    img.onload = () => {
+      item.style.backgroundImage = `url(${img.src})`;
+    };
     item.num = temp.imageNum;
   });
   if (timeMode) {
@@ -281,9 +292,14 @@ function showPicturesQuestion(qNum) {
 
 function showQuestionInfo(flag, current) {
   if (flag) {
-    document.querySelector('.image-question').style.backgroundImage = `url("assets/img/image-data/img/${current.imageNum}.jpg")`;
+    const img = new Image();
+    img.src = getImageURL(current.imageNum);
+    img.onload = () => {
+      document.querySelector('.image-question').style.backgroundImage = `url(${img.src})`;
+      document.querySelector('.popup-image').style.backgroundImage = `url(${img.src})`;
+
+    };
   }
-  document.querySelector('.popup-image').style.backgroundImage = `url("assets/img/image-data/img/${current.imageNum}.jpg")`;
   document.querySelector('.popup-info').innerHTML = `${current.name} <br>${current.author}<br>${current.year}`;
 }
 
@@ -423,7 +439,11 @@ function displayScore(flag, elem) {
     res = res.slice(temp, temp + 10);
     document.querySelectorAll('.score-card').forEach((item, questionIndex) => {
       item.number = cardIndex;
-      item.querySelector('.score-image').style.backgroundImage = `url("assets/img/image-data/img/${temp}.jpg")`;
+      const img = new Image();
+      img.src = getImageURL(temp);
+      img.onload = () => {
+        item.querySelector('.score-image').style.backgroundImage = `url(${img.src})`;
+      };
       item.querySelector('.score-title').innerHTML = catName;
       item.querySelector('.score-image-info').innerHTML = `${res[questionIndex].name} <br>${res[questionIndex].author}<br>${res[questionIndex].year}`;
       if (results[cardIndex - 1]) {
