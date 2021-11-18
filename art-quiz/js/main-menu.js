@@ -63,9 +63,6 @@ function shuffle(array) {
 }
 
 function toggleBlock(elem) {
-  // console.log(elem.currentTarget);
-  // console.log(elem.currentTarget.show);
-  // console.log(elem.currentTarget.hide);
   elem.currentTarget.show.forEach(item => {
     document.querySelectorAll(item).forEach(obj => {
       obj.classList.remove('hide');
@@ -292,6 +289,9 @@ function showQuestionInfo(flag, current) {
 }
 
 function checkAnswer(elem) {
+  if (soundEffect) {
+    soundEffect.pause();
+  }
   let answer;
   if (elem) {
     answer = elem.target;
@@ -300,7 +300,6 @@ function checkAnswer(elem) {
   clearTimeout(questionTimeOut);
   timerInfo.classList.remove('last-seconds');
   if ((answer && answer.innerHTML == correctAnswer.author) || (answer && answer.num == correctAnswer.imageNum)) {
-    console.log('its true');
     roundResults.push(true);
     answersCounter++;
     answer.classList.add('correct');
@@ -312,7 +311,6 @@ function checkAnswer(elem) {
     popupIcon.classList.remove('wrong');
     playAudio("assets/sound-effects/right.mp3");
   } else {
-    console.log('its false');
     roundResults.push(false);
     if (answer) {
       answer.classList.add('wrong')
@@ -400,6 +398,7 @@ function endGame(elem) {
   if (soundEffect) {
     soundEffect.pause();
   }
+  hidePictureInfo();
   clearInterval(questeionInterval);
   clearTimeout(questionTimeOut);
   timerInfo.classList.remove('last-seconds');
@@ -414,13 +413,13 @@ function playAudio(url) {
   soundEffect.play();
 }
 
-function displayScore(elem) {
+function displayScore(flag, elem) {
   // longest is Сальвадор Дали - пчела вызванная полетом граната над пробуждением за секунду перед сном
   let images = getImageData();
   images.then((res) => {
     let results = JSON.parse(localStorage.getItem('attempted')) || [];
     let cardIndex = elem.querySelector('.category-number').innerHTML;
-    let temp = (cardIndex - 1) * 10;
+    let temp = flag ? (cardIndex - 1) * 10 : (cardIndex - 1) * 10 + 120;
     let catName = elem.querySelector('.category-name').innerHTML;
     res = res.slice(temp, temp + 10);
     document.querySelectorAll('.score-card').forEach((item, questionIndex) => {
@@ -440,6 +439,20 @@ function displayScore(elem) {
   });
 }
 
+function showPictureInfo(elem) {
+  elem.target.classList.toggle('clicked');
+}
+
+function hidePictureInfo() {
+  document.querySelectorAll('.score-image').forEach(item => {
+    item.classList.remove('clicked');
+  });
+}
+
+document.querySelectorAll('.score-image').forEach(item => {
+  item.addEventListener('click', showPictureInfo);
+});
+
 settingsBtn.show = ['.settings-field', , '.button-container',];
 settingsBtn.hide = ['.select-type', '.main'];
 settingsBtn.addEventListener('click', toggleBlock);
@@ -450,26 +463,33 @@ saveBtn.addEventListener('click', saveSettings);
 
 artistsBtn.show = ['.categories-page.artists', '.pagination'];
 artistsBtn.hide = ['.main', '.main-container', '.settings-btn.main'];
-artistsBtn.addEventListener('click', toggleBlock);
+artistsBtn.addEventListener('click', (elem) => {
+  nextBtnPopup.show = ['.categories-page.artists', '.icon'];
+  nextBtnPopup.hide = ['.answer-popup', '.artists-mode', '.pagination-btn.back'];
+  backBtn.show = ['.categories-page.artists', '.icon'];
+  backBtn.hide = ['.category-score', '.pagination-btn.back', '.artists-mode'];
+  toggleBlock(elem);
+});
 
 picturesBtn.show = ['.categories-page.pictures', '.pagination'];
 picturesBtn.hide = ['.main', '.main-container', '.settings-btn.main'];
-picturesBtn.addEventListener('click', toggleBlock);
+picturesBtn.addEventListener('click', (elem) => {
+  nextBtnPopup.show = ['.categories-page.pictures', '.icon'];
+  nextBtnPopup.hide = ['.answer-popup', '.pictures-mode', '.pagination-btn.back'];
+  backBtn.show = ['.categories-page.pictures', '.icon'];
+  backBtn.hide = ['.category-score', '.pagination-btn.back', '.pictures-mode'];
+  toggleBlock(elem);
+});
 
 homeBtn.show = ['.main-container', '.select-type', '.main', '.icon'];
-homeBtn.hide = ['.categories-page.artists', '.categories-page.pictures', '.pagination', '.artists-mode', '.pictures-mode', '.answer-popup', '.category-score'];
+homeBtn.hide = ['.categories-page.artists', '.categories-page.pictures', '.pagination', '.pagination-btn.back', '.artists-mode', '.pictures-mode', '.answer-popup', '.category-score'];
 homeBtn.addEventListener('click', endGame);
 
 homeBtnPopup.show = homeBtn.show;
 homeBtnPopup.hide = homeBtn.hide;
 homeBtnPopup.addEventListener('click', toggleBlock);
 
-nextBtnPopup.show = ['.categories-page.artists'];
-nextBtnPopup.hide = ['.answer-popup', '.artists-mode', '.pictures-mode'];
 nextBtnPopup.addEventListener('click', endGame);
-
-backBtn.show = ['.categories-page.artists'];
-backBtn.hide = ['.category-score', '.pagination-btn.back', '.artists-mode', '.pictures-mode'];
 backBtn.addEventListener('click', endGame);
 
 artistsPage.addEventListener('click', (elem) => {
@@ -477,7 +497,7 @@ artistsPage.addEventListener('click', (elem) => {
     artistsPage.show = ['.category-score', '.pagination-btn.back'];
     artistsPage.hide = ['.categories-page.artists'];
     toggleBlock(elem);
-    displayScore(elem.target.parentElement.parentElement);
+    displayScore(true, elem.target.parentElement.parentElement);
   } else {
     artistsPage.show = ['.artists-mode', '.pagination-btn.back'];
     artistsPage.hide = ['.categories-page.artists', '.icon'];
@@ -487,10 +507,17 @@ artistsPage.addEventListener('click', (elem) => {
 });
 
 picturesPage.addEventListener('click', (elem) => {
-  picturesPage.show = ['.pictures-mode', '.pagination-btn.back'];
-  picturesPage.hide = ['.categories-page.pictures', 'icon'];
-  toggleBlock(elem);
-  initGame(false, elem.target.querySelector('.category-number').innerHTML);
+  if (elem.target.classList.contains('category-results')) {
+    picturesPage.show = ['.category-score', '.pagination-btn.back'];
+    picturesPage.hide = ['.categories-page.pictures'];
+    toggleBlock(elem);
+    displayScore(false, elem.target.parentElement.parentElement);
+  } else {
+    picturesPage.show = ['.pictures-mode', '.pagination-btn.back'];
+    picturesPage.hide = ['.categories-page.pictures', 'icon'];
+    toggleBlock(elem);
+    initGame(false, elem.target.querySelector('.category-number').innerHTML);
+  }
 });
 
 

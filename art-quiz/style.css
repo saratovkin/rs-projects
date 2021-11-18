@@ -737,7 +737,7 @@ input[type=range]::-webkit-slider-thumb {
   background-color: #30537a;
 }
 
-.score-image:hover .score-image-info {
+.score-image.clicked .score-image-info {
   bottom: 0;
 }
 
