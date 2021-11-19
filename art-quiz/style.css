@@ -127,10 +127,10 @@ body {
   min-width: 250px;
   width: 40vw;
   cursor: pointer;
+  transition: .5s;
 }
 
 .select-type:hover {
-  transition: .5s;
   transform: scale(1.05, 1.05);
 }
 
