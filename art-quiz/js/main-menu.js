@@ -150,7 +150,6 @@ function initSettings() {
     document.getElementById('time-checkbox').setAttribute('checked', 'checked');
   } else {
     document.getElementById('time-checkbox').removeAttribute('checked');
-
   }
 
   setTimeInterval();
@@ -380,18 +379,23 @@ function getEmoji(elem) {
   let type;
   if (answersCounter < 2) {
     type = 'very-bad';
+    playAudio("assets/sound-effects/crickets.mp3");
   }
   if (answersCounter >= 2 && answersCounter < 4) {
     type = 'bad';
+    playAudio("assets/sound-effects/lose.mp3");
   }
   if (answersCounter >= 4 && answersCounter < 6) {
     type = 'normal';
+    playAudio("assets/sound-effects/win.mp3");
   }
   if (answersCounter >= 6 && answersCounter < 9) {
     type = 'good';
+    playAudio("assets/sound-effects/win.mp3");
   }
   if (answersCounter >= 9) {
     type = 'very-good';
+    playAudio("assets/sound-effects/win.mp3");
   }
   elem.classList.add(type);
 }
