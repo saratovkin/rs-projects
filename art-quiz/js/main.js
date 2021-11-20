@@ -1,3 +1,10 @@
+import MiscFunctions from './misc.js';
+
+
+
+
+const misc = new MiscFunctions();
+
 const volumeBar = document.getElementById('volume-bar');
 const timeBar = document.getElementById('time-bar');
 
@@ -42,24 +49,6 @@ let tempVolume;
 let soundEffect;
 
 let isAudioEnabled = true;
-
-function getRandomNum(min, max) {
-  return Math.floor(Math.random() * max) + min;
-}
-
-function shuffle(array) {
-  let currentIndex = array.length;
-  let randomIndex;
-  let temp;
-  while (currentIndex != 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-    temp = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temp;
-  }
-  return array;
-}
 
 function toggleBlock(elem) {
   elem.currentTarget.show.forEach(item => {
@@ -134,6 +123,10 @@ function saveSettings(elem) {
   localStorage.setItem('timeLimit', timeLimit);
   localStorage.setItem('timeMode', timeMode);
   localStorage.setItem('volume', volumeBar.value / 10);
+  document.querySelectorAll('.main-field').forEach(item => {
+    item.classList.remove('flip');
+  });
+  settingsBtn.classList.remove('slide-bottom');
   toggleBlock(elem);
 }
 
@@ -146,26 +139,18 @@ function setDefault() {
 }
 
 function initSettings() {
-  if (timeMode) {
-    document.getElementById('time-checkbox').setAttribute('checked', 'checked');
-  } else {
-    document.getElementById('time-checkbox').removeAttribute('checked');
-  }
-
+  document.getElementById('time-checkbox').checked = timeMode;
   setTimeInterval();
   setVolume();
   showTimeMode();
 }
 
-function getImageURL(index) {
-  return `https://raw.githubusercontent.com/irinainina/image-data/master/img/${index}.jpg`;
-}
 function displayPreviews() {
   let index = 0;
   document.querySelectorAll('.category').forEach(item => {
     item.querySelector('.category-number').innerHTML = (index >= 120) ? ((index - 120) / 10 + 1) : (index / 10 + 1);
     const img = new Image();
-    img.src = getImageURL(index);
+    img.src = misc.getImageURL(index);
     img.onload = () => {
       item.querySelector('.category-img').style.backgroundImage = `url(${img.src})`;
     };
@@ -174,6 +159,7 @@ function displayPreviews() {
 }
 
 function initGame(flag, card) {
+  document.querySelector('.icon').classList.remove('slide');
   cardNumber = flag ? card : (+card + 12);
   answersCounter = 0;
   questionNumber = (cardNumber - 1) * 10;
@@ -184,6 +170,7 @@ function initGame(flag, card) {
     item.classList.remove('wrong');
   });
   document.querySelector('.page-name').innerHTML = '';
+  document.querySelector('.page-name').style.opacity = '0';
   document.querySelector('.popup-next').classList.remove('hide');
   images.then((res) => {
     images = res;
@@ -203,13 +190,14 @@ async function getImageData() {
 }
 
 function showAristsQuestion(qNum) {
-  // longest is Николай Богданов-Бельский
   document.querySelectorAll('.answer').forEach(item => {
     item.classList.remove('correct');
     item.classList.remove('wrong');
   });
   document.querySelector('.artists-mode').classList.remove('blocked');
+  document.querySelector('.artists-mode').classList.add('slide-bottom');
   document.querySelector('.page-name').innerHTML = 'Кто автор данной картины?';
+  document.querySelector('.page-name').style.opacity = '1';
   let currentQuestion = images[qNum];
   showQuestionInfo(true, currentQuestion);
   correctAnswer = currentQuestion;
@@ -217,12 +205,12 @@ function showAristsQuestion(qNum) {
   let answers = [];
   answers.push(correctAnswer.author);
   while (answers.length != 4) {
-    randomAnswer = images[getRandomNum(0, 240)].author;
+    randomAnswer = images[misc.getRandomNum(240)].author;
     if (!answers.includes(randomAnswer)) {
       answers.push(randomAnswer);
     }
   }
-  shuffle(answers);
+  misc.shuffle(answers);
   document.querySelectorAll('.answer').forEach(item => {
     let temp = answers.pop();
     item.innerHTML = temp;
@@ -248,8 +236,10 @@ function showPicturesQuestion(qNum) {
     item.classList.remove('wrong');
   });
   let currentQuestion = images[qNum];
+  document.querySelector('.pictures-mode').classList.add('slide-bottom');
   document.querySelector('.pictures-mode').classList.remove('blocked');
-  document.querySelector('.page-name').innerHTML = `Какую картинку нарисовал ${currentQuestion.author}?`;
+  document.querySelector('.page-name').innerHTML = `Какую картину нарисовал ${currentQuestion.author}?`;
+  document.querySelector('.page-name').style.opacity = '1';
   showQuestionInfo(false, currentQuestion);
   correctAnswer = currentQuestion;
   let randomAnswer;
@@ -258,17 +248,17 @@ function showPicturesQuestion(qNum) {
   authors.push(correctAnswer.author);
   answers.push(currentQuestion);
   while (answers.length != 4) {
-    randomAnswer = images[getRandomNum(0, 240)];
+    randomAnswer = images[misc.getRandomNum(240)];
     if (!authors.includes(randomAnswer.author)) {
       authors.push(randomAnswer.author)
       answers.push(randomAnswer);
     }
   }
-  shuffle(answers);
+  misc.shuffle(answers);
   document.querySelectorAll('.picture-answer').forEach(item => {
     let temp = answers.pop();
     const img = new Image();
-    img.src = getImageURL(temp.imageNum);
+    img.src = misc.getImageURL(temp.imageNum);
     img.onload = () => {
       item.style.backgroundImage = `url(${img.src})`;
     };
@@ -291,7 +281,7 @@ function showPicturesQuestion(qNum) {
 
 function showQuestionInfo(flag, current) {
   const img = new Image();
-  img.src = getImageURL(current.imageNum);
+  img.src = misc.getImageURL(current.imageNum);
   img.onload = () => {
     if (flag) {
       document.querySelector('.image-question').style.backgroundImage = `url(${img.src})`;
@@ -416,13 +406,17 @@ function endGame(elem) {
   if (soundEffect) {
     soundEffect.pause();
   }
-  hidePictureInfo();
-  clearInterval(timerInterval);
-  clearTimeout(questionTimeOut);
   timerInfo.classList.remove('last-seconds');
   timerInfo.innerHTML = '';
   document.querySelector('.page-name').innerHTML = '';
+  document.querySelector('.page-name').style.opacity = '0';
+  clearAnimations();
+  hidePictureInfo();
+  clearInterval(timerInterval);
+  clearTimeout(questionTimeOut);
+  animateCategories(elem.currentTarget.hide[2].split('-')[0]);
   toggleBlock(elem);
+  showMainPage();
 }
 
 function playAudio(url) {
@@ -432,7 +426,6 @@ function playAudio(url) {
 }
 
 function displayScore(flag, elem) {
-  // longest is Сальвадор Дали - пчела вызванная полетом граната над пробуждением за секунду перед сном
   let images = getImageData();
   images.then((res) => {
     let results = JSON.parse(localStorage.getItem('attempted')) || [];
@@ -444,7 +437,7 @@ function displayScore(flag, elem) {
     document.querySelectorAll('.score-card').forEach((item, questionIndex) => {
       item.number = cardIndex;
       const img = new Image();
-      img.src = getImageURL(temp);
+      img.src = misc.getImageURL(temp);
       img.onload = () => {
         item.querySelector('.score-image').style.backgroundImage = `url(${img.src})`;
       };
@@ -457,6 +450,7 @@ function displayScore(flag, elem) {
           item.querySelector('.score-image').classList.remove('played');
         }
       }
+      setTimeout(() => { item.classList.add('jump-up') }, questionIndex * 70);
       temp++;
     });
   });
@@ -472,20 +466,53 @@ function hidePictureInfo() {
   });
 }
 
-settingsBtn.show = ['.settings-field', , '.button-container',];
-settingsBtn.hide = ['.select-type', '.main'];
-settingsBtn.addEventListener('click', toggleBlock);
+function showMainPage() {
+  document.querySelector('.icon').classList.add('slide');
+  let buttons = document.querySelectorAll('.main-field');
+  buttons[0].classList.add('slide-left');
+  buttons[1].classList.add('slide-right');
+  settingsBtn.classList.add('slide-bottom');
+}
 
-saveBtn.show = settingsBtn.hide;
-saveBtn.hide = settingsBtn.show;
+function animateCategories(category) {
+  document.querySelector('.pagination').classList.add('slide-left');
+  document.querySelectorAll(`.category${category}`).forEach((item, index) => {
+    setTimeout(() => { item.classList.add('jump-up') }, index * 70);
+  });
+}
+
+function animateSettings(elem) {
+  document.querySelectorAll('.main-field').forEach(item => {
+    item.classList.add('flip');
+  })
+  toggleBlock(elem);
+}
+
+function clearAnimations() {
+  document.querySelectorAll('.category.artists').forEach(item => {
+    item.classList.remove('jump-up');
+  });
+  document.querySelectorAll('.category.pictures').forEach(item => {
+    item.classList.remove('jump-up');
+  });
+  document.querySelector('.pagination').classList.remove('slide-left');
+}
+
+settingsBtn.show = ['.settings-field', , '.button-container'];
+settingsBtn.hide = ['.settings-btn.main'];
+settingsBtn.addEventListener('click', animateSettings);
+
+saveBtn.show = ['.settings-btn.main'];
+saveBtn.hide = ['.button-container'];
 saveBtn.addEventListener('click', saveSettings);
 
 artistsBtn.show = ['.categories-page.artists', '.pagination'];
 artistsBtn.hide = ['.main', '.main-container', '.settings-btn.main'];
 artistsBtn.addEventListener('click', (elem) => {
-  nextBtnPopup.show = ['.categories-page.artists', '.icon'];
-  nextBtnPopup.hide = ['.answer-popup', '.artists-mode', '.pagination-btn.back'];
-  backBtn.show = ['.categories-page.artists', '.icon'];
+  animateCategories('.artists');
+  nextBtnPopup.show = ['.categories-page.artists'];
+  nextBtnPopup.hide = ['.answer-popup', '.pagination-btn.back', '.artists-mode'];
+  backBtn.show = ['.categories-page.artists'];
   backBtn.hide = ['.category-score', '.pagination-btn.back', '.artists-mode'];
   toggleBlock(elem);
 });
@@ -493,20 +520,21 @@ artistsBtn.addEventListener('click', (elem) => {
 picturesBtn.show = ['.categories-page.pictures', '.pagination'];
 picturesBtn.hide = ['.main', '.main-container', '.settings-btn.main'];
 picturesBtn.addEventListener('click', (elem) => {
-  nextBtnPopup.show = ['.categories-page.pictures', '.icon'];
-  nextBtnPopup.hide = ['.answer-popup', '.pictures-mode', '.pagination-btn.back'];
-  backBtn.show = ['.categories-page.pictures', '.icon'];
+  animateCategories('.pictures');
+  nextBtnPopup.show = ['.categories-page.pictures'];
+  nextBtnPopup.hide = ['.answer-popup', '.pagination-btn.back', '.pictures-mode'];
+  backBtn.show = ['.categories-page.pictures'];
   backBtn.hide = ['.category-score', '.pagination-btn.back', '.pictures-mode'];
   toggleBlock(elem);
 });
 
-homeBtn.show = ['.main-container', '.select-type', '.main', '.icon'];
+homeBtn.show = ['.main-container', '.select-type', '.main'];
 homeBtn.hide = ['.categories-page.artists', '.categories-page.pictures', '.pagination', '.pagination-btn.back', '.artists-mode', '.pictures-mode', '.answer-popup', '.category-score'];
 homeBtn.addEventListener('click', endGame);
 
 homeBtnPopup.show = homeBtn.show;
 homeBtnPopup.hide = homeBtn.hide;
-homeBtnPopup.addEventListener('click', toggleBlock);
+homeBtnPopup.addEventListener('click', endGame);
 
 nextBtnPopup.addEventListener('click', endGame);
 backBtn.addEventListener('click', endGame);
@@ -519,7 +547,7 @@ artistsPage.addEventListener('click', (elem) => {
     displayScore(true, elem.target.parentElement.parentElement);
   } else {
     artistsPage.show = ['.artists-mode', '.pagination-btn.back'];
-    artistsPage.hide = ['.categories-page.artists', '.icon'];
+    artistsPage.hide = ['.categories-page.artists'];
     toggleBlock(elem);
     initGame(true, elem.target.querySelector('.category-number').innerHTML);
   }
@@ -533,7 +561,7 @@ picturesPage.addEventListener('click', (elem) => {
     displayScore(false, elem.target.parentElement.parentElement);
   } else {
     picturesPage.show = ['.pictures-mode', '.pagination-btn.back'];
-    picturesPage.hide = ['.categories-page.pictures', 'icon'];
+    picturesPage.hide = ['.categories-page.pictures'];
     toggleBlock(elem);
     initGame(false, elem.target.querySelector('.category-number').innerHTML);
   }
@@ -568,4 +596,5 @@ window.addEventListener('load', function () {
   displayPreviews();
   initSettings();
   displayAttemptedCategory();
+  showMainPage();
 });
