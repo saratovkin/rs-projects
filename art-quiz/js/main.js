@@ -7,12 +7,14 @@ const misc = new MiscFunctions();
 
 const volumeBar = document.getElementById('volume-bar');
 const timeBar = document.getElementById('time-bar');
+const musicBar = document.getElementById('music-bar');
 
 const settingsBtn = document.getElementById('settings-btn');
 const saveBtn = document.getElementById('save-btn');
 
 const artistsBtn = document.getElementById('artists-mode');
 const picturesBtn = document.getElementById('pictures-mode');
+const blitzBtn = document.getElementById('blitz-mode');
 
 const homeBtn = document.getElementById('home-btn');
 const backBtn = document.getElementById('back-btn');
@@ -24,6 +26,7 @@ const answerIndicators = document.querySelectorAll('.question-bullet');
 
 const artistsPage = document.querySelector('.categories-page.artists');
 const picturesPage = document.querySelector('.categories-page.pictures');
+const blitzPage = document.querySelector('.categories-page.blitz');
 
 const popupIcon = document.querySelector('.popup-icon');
 const popupBtn = document.querySelector('.popup-btn');
@@ -35,6 +38,7 @@ let timeLimit;
 
 let timerInterval;
 let questionTimeOut;
+let timeLeft;
 
 let questionNumber;
 let cardNumber;
@@ -47,6 +51,10 @@ let answersCounter;
 let volume;
 let tempVolume;
 let soundEffect;
+let bgMusic;
+
+let musicVolume;
+let tempMusicVolume;
 
 let isAudioEnabled = true;
 
@@ -86,14 +94,53 @@ function changeVolume() {
   }
 }
 
-function mute() {
+function muteEffects() {
   if (volume == 0) {
     volumeBar.value = tempVolume;
   } else {
-    tempVolume = volume.value;
+    tempVolume = volumeBar.value;
     volumeBar.value = 0;
   }
   changeVolume();
+}
+
+function displayMusicVolume() {
+  if (bgMusic) {
+    bgMusic.volume = musicVolume;
+  }
+  document.getElementById('music-sub').style.width = `${musicBar.value}%`;
+}
+
+function setMusicVolume() {
+  musicVolume = musicBar.value / 100;
+  if (musicVolume == 0) {
+    document.querySelector('.note-icon').style.backgroundImage = 'url("assets/svg/settings/music-mute-icon.svg")';
+  } else {
+    document.querySelector('.note-icon').style.backgroundImage = 'url("assets/svg/settings/music-icon.svg")';
+  }
+  displayMusicVolume();
+}
+
+function muteMusic() {
+  if (musicVolume == 0) {
+    musicBar.value = tempMusicVolume;
+  } else {
+    tempMusicVolume = musicBar.value;
+    musicBar.value = 0;
+  }
+  setMusicVolume();
+}
+
+function playAudio(url) {
+  soundEffect = new Audio(url);
+  soundEffect.volume = volume;
+  soundEffect.play();
+}
+
+function playBgMusic() {
+  bgMusic = new Audio("assets/sound-effects/bg-music.mp3");
+  bgMusic.volume = musicVolume;
+  bgMusic.play();
 }
 
 function showTimeMode() {
@@ -122,7 +169,8 @@ function setTimeInterval() {
 function saveSettings(elem) {
   localStorage.setItem('timeLimit', timeLimit);
   localStorage.setItem('timeMode', timeMode);
-  localStorage.setItem('volume', volumeBar.value / 10);
+  localStorage.setItem('volume', volumeBar.value / 100);
+  localStorage.setItem('music-volume', musicBar.value / 100);
   document.querySelectorAll('.main-field').forEach(item => {
     item.classList.remove('flip');
   });
@@ -134,7 +182,9 @@ function setDefault() {
   timeBar.value = 3;
   timeMode = false;
   volume = 0.8;
+  musicVolume = 0.2;
   volumeBar.value = 80;
+  musicBar.value = 20;
   initSettings();
 }
 
@@ -142,6 +192,7 @@ function initSettings() {
   document.getElementById('time-checkbox').checked = timeMode;
   setTimeInterval();
   setVolume();
+  setMusicVolume();
   showTimeMode();
 }
 
@@ -160,22 +211,31 @@ function displayPreviews() {
 
 function initGame(flag, card) {
   document.querySelector('.icon').classList.remove('slide');
-  cardNumber = flag ? card : (+card + 12);
-  answersCounter = 0;
-  questionNumber = (cardNumber - 1) * 10;
+  document.querySelector('.final-text').innerHTML = 'Вы ответили на все вопросы!';
   images = getImageData();
-  roundResults = [];
-  answerIndicators.forEach(item => {
-    item.classList.remove('correct');
-    item.classList.remove('wrong');
-  });
   document.querySelector('.page-name').innerHTML = '';
   document.querySelector('.page-name').style.opacity = '0';
   document.querySelector('.popup-next').classList.remove('hide');
-  images.then((res) => {
-    images = res;
-    flag ? showAristsQuestion(questionNumber) : showPicturesQuestion(questionNumber);
-  });
+  answersCounter = 0;
+  if (!flag && !card) {
+    images.then((res) => {
+      images = res;
+      showBlitzQuestion();
+    });
+
+  } else {
+    cardNumber = flag ? card : (+card + 12);
+    questionNumber = (cardNumber - 1) * 10;
+    roundResults = [];
+    answerIndicators.forEach(item => {
+      item.classList.remove('correct');
+      item.classList.remove('wrong');
+    });
+    images.then((res) => {
+      images = res;
+      flag ? showAristsQuestion(questionNumber) : showPicturesQuestion(questionNumber);
+    });
+  }
 }
 
 async function getImageData() {
@@ -354,6 +414,83 @@ function nextQuestion() {
   }
 }
 
+function showBlitzQuestion(time) {
+  if (timeLeft < 0) {
+    timeLeft = 0;
+  }
+  if (timeLeft != 0) {
+    timeLeft = time || 30;
+  }
+  clearInterval(timerInterval);
+  clearTimeout(questionTimeOut);
+  timerInfo.innerHTML = '00:' + (timeLeft + '').padStart(2, '0');
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    if (timeLeft == 3) {
+      playAudio("assets/sound-effects/timer.mp3");
+      timerInfo.classList.add('last-seconds');
+    }
+    timerInfo.innerHTML = '00:' + (timeLeft + '').padStart(2, '0');
+  }, 1000);
+  questionTimeOut = setTimeout(() => endBlitz(), timeLeft * 1000);
+  document.querySelector('.blitz-mode').classList.add('slide-bottom');
+  document.querySelector('.page-name').style.opacity = '1';
+  document.querySelectorAll('.answer.blitz').forEach(item => {
+    item.classList.remove('correct');
+    item.classList.remove('wrong');
+  });
+  let currentQuestion = images[misc.getRandomNum(240)];
+  correctAnswer = Math.random() < 0.5;
+  const img = new Image();
+  img.src = misc.getImageURL(currentQuestion.imageNum);
+  img.onload = () => {
+    document.querySelector('.image-question.blitz').style.backgroundImage = `url(${img.src})`;
+  };
+  if (correctAnswer) {
+    document.querySelector('.page-name').innerHTML = `Эту картину нарисовал <br>${currentQuestion.author}?`;
+  } else {
+    let randomIndex = misc.getRandomNum(240);
+    while (currentQuestion.imageNum == randomIndex) {
+      randomIndex = misc.getRandomNum(240);
+    }
+    let anotherQuestion = images[randomIndex];
+    document.querySelector('.page-name').innerHTML = `Эту картину нарисовал <br>${anotherQuestion.author}?`;
+  }
+}
+
+function blitzNext(elem) {
+  let answer = elem.target.innerHTML;
+  answer = (answer == 'Да') ? true : false;
+  if (answer == correctAnswer) {
+    playAudio("assets/sound-effects/right.mp3");
+    answersCounter++;
+    timeLeft += 1;
+    showBlitzQuestion(timeLeft);
+  } else {
+    playAudio("assets/sound-effects/wrong.mp3");
+    timeLeft -= 4;
+    showBlitzQuestion(timeLeft);
+  }
+}
+
+function endBlitz() {
+  timeLeft = 30;
+  timerInfo.innerHTML = '00:00';
+  clearInterval(timerInterval);
+  clearTimeout(questionTimeOut);
+  let finalPopup = document.querySelector('.popup-final');
+  document.querySelector('.final-text').innerHTML = 'Время вышло!<br>Ваши очки:';
+  document.querySelector('.artists-mode').classList.add('blocked');
+  document.querySelector('.answer-popup').classList.remove('hide');
+  document.querySelector('.popup-next').classList.add('hide');
+  finalPopup.querySelector('.final-score').innerHTML = answersCounter;
+  getEmoji(finalPopup.querySelector('.final-icon'));
+  let maxScore = JSON.parse(localStorage.getItem('blitz-max')) || 0;
+  maxScore = (answersCounter > maxScore) ? answersCounter : maxScore;
+  localStorage.setItem('blitz-max', JSON.stringify(maxScore));
+  displayAttemptedCategory();
+}
+
 function showRoundResult() {
   let finalPopup = document.querySelector('.popup-final');
   document.querySelector('.artists-mode').classList.add('blocked');
@@ -400,6 +537,13 @@ function displayAttemptedCategory() {
       temp.querySelector('.category-stats').innerHTML = `${item.answersCounter}/10`;
     }
   });
+  let blitzMax = JSON.parse(localStorage.getItem('blitz-max')) || null;
+  if (blitzMax != null) {
+    let blitzCard = document.querySelector('.category.blitz');
+    blitzCard.classList.add('attempted');
+    blitzCard.querySelector('.category-number').style.opacity = 1;
+    blitzCard.querySelector('.category-number').innerHTML = `best : ${blitzMax}`;
+  }
 }
 
 function endGame(elem) {
@@ -417,12 +561,6 @@ function endGame(elem) {
   animateCategories(elem.currentTarget.hide[2].split('-')[0]);
   toggleBlock(elem);
   showMainPage();
-}
-
-function playAudio(url) {
-  soundEffect = new Audio(url);
-  soundEffect.volume = volume;
-  soundEffect.play();
 }
 
 function displayScore(flag, elem) {
@@ -467,10 +605,12 @@ function hidePictureInfo() {
 }
 
 function showMainPage() {
+  document.body.style.opacity = 1;
   document.querySelector('.icon').classList.add('slide');
   let buttons = document.querySelectorAll('.main-field');
   buttons[0].classList.add('slide-left');
-  buttons[1].classList.add('slide-right');
+  buttons[1].classList.add('slide-from-top');
+  buttons[2].classList.add('slide-right');
   settingsBtn.classList.add('slide-bottom');
 }
 
@@ -507,7 +647,7 @@ saveBtn.hide = ['.button-container'];
 saveBtn.addEventListener('click', saveSettings);
 
 artistsBtn.show = ['.categories-page.artists', '.pagination'];
-artistsBtn.hide = ['.main', '.main-container', '.settings-btn.main'];
+artistsBtn.hide = ['.main', '.main-page', '.settings-btn.main'];
 artistsBtn.addEventListener('click', (elem) => {
   animateCategories('.artists');
   nextBtnPopup.show = ['.categories-page.artists'];
@@ -518,7 +658,7 @@ artistsBtn.addEventListener('click', (elem) => {
 });
 
 picturesBtn.show = ['.categories-page.pictures', '.pagination'];
-picturesBtn.hide = ['.main', '.main-container', '.settings-btn.main'];
+picturesBtn.hide = ['.main', '.main-page', '.settings-btn.main'];
 picturesBtn.addEventListener('click', (elem) => {
   animateCategories('.pictures');
   nextBtnPopup.show = ['.categories-page.pictures'];
@@ -528,8 +668,20 @@ picturesBtn.addEventListener('click', (elem) => {
   toggleBlock(elem);
 });
 
-homeBtn.show = ['.main-container', '.select-type', '.main'];
-homeBtn.hide = ['.categories-page.artists', '.categories-page.pictures', '.pagination', '.pagination-btn.back', '.artists-mode', '.pictures-mode', '.answer-popup', '.category-score'];
+blitzBtn.show = ['.categories-page.blitz', '.pagination'];
+blitzBtn.hide = ['.main', '.main-page', '.settings-btn.main'];
+blitzBtn.addEventListener('click', (elem) => {
+  animateCategories('.blitz');
+  nextBtnPopup.show = ['.categories-page.blitz'];
+  nextBtnPopup.hide = ['.answer-popup', '.pagination-btn.back', '.blitz-mode'];
+  backBtn.show = ['.categories-page.blitz'];
+  backBtn.hide = ['.category-score', '.pagination-btn.back', '.blitz-mode'];
+  toggleBlock(elem);
+});
+
+homeBtn.show = ['.main-page', '.select-type', '.main'];
+homeBtn.hide = ['.categories-page.artists', '.categories-page.pictures', '.categories-page.blitz', '.pagination',
+  '.pagination-btn.back', '.artists-mode', '.pictures-mode', '.blitz-mode', '.answer-popup', '.category-score'];
 homeBtn.addEventListener('click', endGame);
 
 homeBtnPopup.show = homeBtn.show;
@@ -567,34 +719,48 @@ picturesPage.addEventListener('click', (elem) => {
   }
 });
 
+blitzPage.addEventListener('click', (elem) => {
+  if (elem.target.classList.contains('category-results')) {
+    blitzPage.show = ['.category-score', '.pagination-btn.back'];
+    blitzPage.hide = ['.categories-page.blitz'];
+    toggleBlock(elem);
+    displayScore(false, elem.target.parentElement.parentElement);
+  } else {
+    blitzPage.show = ['.blitz-mode', '.pagination-btn.back'];
+    blitzPage.hide = ['.categories-page.blitz'];
+    toggleBlock(elem);
+    initGame();
+  }
+});
+
 volumeBar.addEventListener('input', changeVolume);
 timeBar.addEventListener('input', setTimeInterval);
+musicBar.addEventListener('input', setMusicVolume);
 saveBtn.addEventListener('click', saveSettings);
 popupBtn.addEventListener('click', nextQuestion);
 
-document.querySelector('.mute-icon').addEventListener('click', mute);
+document.querySelector('.mute-icon').addEventListener('click', muteEffects);
+document.querySelector('.note-icon').addEventListener('click', muteMusic);
 document.getElementById('time-mode').addEventListener('click', toggleTimeMode);
 document.getElementById('default-btn').addEventListener('click', setDefault);
 document.querySelector('.answers').addEventListener('click', checkAnswer);
 document.querySelector('.picture-answers').addEventListener('click', checkAnswer);
+document.querySelector('.blitz-answers').addEventListener('click', blitzNext);
 
 document.querySelectorAll('.score-image').forEach(item => {
   item.addEventListener('click', showPictureInfo);
 });
-
 window.addEventListener('load', function () {
   timeLimit = +localStorage.getItem('timeLimit') || 25;
   timeBar.value = timeLimit / 5 - 1;
   timeMode = JSON.parse(localStorage.getItem('timeMode'));
-  volume = localStorage.getItem('volume');
-  if (volume == null) {
-    volume = .8;
-  } else {
-    volume = +volume;
-  }
-  volumeBar.value = volume * 10;
+  volume = localStorage.getItem('volume') || 0.8;
+  musicVolume = localStorage.getItem('music-volume') || 0.2;
+  volumeBar.value = volume * 100;
+  musicBar.value = musicVolume * 100;
   displayPreviews();
   initSettings();
   displayAttemptedCategory();
   showMainPage();
+  playBgMusic();
 });
