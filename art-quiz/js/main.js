@@ -107,7 +107,6 @@ function muteEffects() {
 function displayMusicVolume() {
   if (bgMusic) {
     bgMusic.volume = musicVolume;
-    console.log(bgMusic);
     bgMusic.addEventListener('ended', playBgMusic);
     bgMusic.play();
   }
