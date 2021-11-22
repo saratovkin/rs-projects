@@ -107,6 +107,9 @@ function muteEffects() {
 function displayMusicVolume() {
   if (bgMusic) {
     bgMusic.volume = musicVolume;
+    console.log(bgMusic);
+    bgMusic.addEventListener('ended', playBgMusic);
+    bgMusic.play();
   }
   document.getElementById('music-sub').style.width = `${musicBar.value}%`;
 }
@@ -138,8 +141,10 @@ function playAudio(url) {
 }
 
 function playBgMusic() {
-  bgMusic = new Audio("assets/sound-effects/bg-music.mp3");
-  bgMusic.volume = musicVolume;
+  if (!bgMusic) {
+    bgMusic = new Audio("assets/sound-effects/bg-music.mp3");
+    bgMusic.volume = musicVolume;
+  }
   bgMusic.play();
 }
 
@@ -207,6 +212,7 @@ function displayPreviews() {
     };
     index += 10;
   });
+  document.querySelector('.category.blitz').querySelector('.category-number').innerHTML = 'Blitz';
 }
 
 function initGame(flag, card) {
@@ -746,10 +752,12 @@ document.getElementById('default-btn').addEventListener('click', setDefault);
 document.querySelector('.answers').addEventListener('click', checkAnswer);
 document.querySelector('.picture-answers').addEventListener('click', checkAnswer);
 document.querySelector('.blitz-answers').addEventListener('click', blitzNext);
+document.addEventListener('click', playBgMusic);
 
 document.querySelectorAll('.score-image').forEach(item => {
   item.addEventListener('click', showPictureInfo);
 });
+
 window.addEventListener('load', function () {
   timeLimit = +localStorage.getItem('timeLimit') || 25;
   timeBar.value = timeLimit / 5 - 1;
@@ -762,5 +770,4 @@ window.addEventListener('load', function () {
   initSettings();
   displayAttemptedCategory();
   showMainPage();
-  playBgMusic();
 });
