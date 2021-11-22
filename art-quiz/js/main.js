@@ -420,6 +420,13 @@ function nextQuestion() {
 }
 
 function showBlitzQuestion(time) {
+  isAudioEnabled = true;
+  setTimeout(() => {
+    document.querySelectorAll('.blitz-answer').forEach(item => {
+      item.classList.remove('correct');
+      item.classList.remove('wrong');
+    });
+  }, 300);
   if (timeLeft < 0) {
     timeLeft = 0;
   }
@@ -432,7 +439,6 @@ function showBlitzQuestion(time) {
   timerInterval = setInterval(() => {
     timeLeft--;
     if (timeLeft == 3) {
-      playAudio("assets/sound-effects/timer.mp3");
       timerInfo.classList.add('last-seconds');
     }
     timerInfo.innerHTML = '00:' + (timeLeft + '').padStart(2, '0');
@@ -467,11 +473,13 @@ function blitzNext(elem) {
   let answer = elem.target.innerHTML;
   answer = (answer == 'Да') ? true : false;
   if (answer == correctAnswer) {
+    elem.target.classList.add('correct');
     playAudio("assets/sound-effects/right.mp3");
     answersCounter++;
     timeLeft += 1;
     showBlitzQuestion(timeLeft);
   } else {
+    elem.target.classList.add('wrong');
     playAudio("assets/sound-effects/wrong.mp3");
     timeLeft -= 4;
     showBlitzQuestion(timeLeft);

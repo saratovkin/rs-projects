@@ -603,13 +603,17 @@ input[type=range]::-webkit-slider-thumb {
 
 .question-bullet.correct,
 .answer.correct,
-.answer.correct:hover {
+.answer.correct:hover,
+.blitz-answer.correct,
+.blitz-answer.correct:hover {
   background-color: #006635;
 }
 
 .question-bullet.wrong,
 .answer.wrong,
-.answer.wrong:hover {
+.answer.wrong:hover,
+.blitz-answer.wrong,
+.blitz-answer.wrong:hover {
   background-color: #cc0000;
 }
 
