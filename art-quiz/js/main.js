@@ -107,6 +107,8 @@ function muteEffects() {
 function displayMusicVolume() {
   if (bgMusic) {
     bgMusic.volume = musicVolume;
+    bgMusic.addEventListener('ended', playBgMusic);
+    bgMusic.play();
   }
   document.getElementById('music-sub').style.width = `${musicBar.value}%`;
 }
@@ -138,8 +140,10 @@ function playAudio(url) {
 }
 
 function playBgMusic() {
-  bgMusic = new Audio("assets/sound-effects/bg-music.mp3");
-  bgMusic.volume = musicVolume;
+  if (!bgMusic) {
+    bgMusic = new Audio("assets/sound-effects/bg-music.mp3");
+    bgMusic.volume = musicVolume;
+  }
   bgMusic.play();
 }
 
@@ -207,6 +211,7 @@ function displayPreviews() {
     };
     index += 10;
   });
+  document.querySelector('.category.blitz').querySelector('.category-number').innerHTML = 'Blitz';
 }
 
 function initGame(flag, card) {
@@ -415,6 +420,13 @@ function nextQuestion() {
 }
 
 function showBlitzQuestion(time) {
+  isAudioEnabled = true;
+  setTimeout(() => {
+    document.querySelectorAll('.blitz-answer').forEach(item => {
+      item.classList.remove('correct');
+      item.classList.remove('wrong');
+    });
+  }, 300);
   if (timeLeft < 0) {
     timeLeft = 0;
   }
@@ -427,7 +439,6 @@ function showBlitzQuestion(time) {
   timerInterval = setInterval(() => {
     timeLeft--;
     if (timeLeft == 3) {
-      playAudio("assets/sound-effects/timer.mp3");
       timerInfo.classList.add('last-seconds');
     }
     timerInfo.innerHTML = '00:' + (timeLeft + '').padStart(2, '0');
@@ -462,11 +473,13 @@ function blitzNext(elem) {
   let answer = elem.target.innerHTML;
   answer = (answer == 'Да') ? true : false;
   if (answer == correctAnswer) {
+    elem.target.classList.add('correct');
     playAudio("assets/sound-effects/right.mp3");
     answersCounter++;
     timeLeft += 1;
     showBlitzQuestion(timeLeft);
   } else {
+    elem.target.classList.add('wrong');
     playAudio("assets/sound-effects/wrong.mp3");
     timeLeft -= 4;
     showBlitzQuestion(timeLeft);
@@ -638,6 +651,36 @@ function clearAnimations() {
   document.querySelector('.pagination').classList.remove('slide-left');
 }
 
+function logScore() {
+  console.log(`
+
+                        Самооценка: 234/220
+
+  -Стартовая страница и навигация 20/20
+  -Настройки 40/40
+  -Страница категорий 30/30
+  -Страница с вопросами 50/50
+  -Страница с результатами 50/50
+  -Одновременная загрузка и плавная смена изображений 10/10
+  -Анимация 20/20, 4 уникальные анимации:
+    • анимация отображения главной страницы
+    • анимация отображения настроек
+    • анимация отображения карточек категорий
+    • анимация отображения страницы самой викторины
+  -Дополнительный функционал 14/20
+    • меняется звук завершения раунда и смайлик в зависимости от результа (0-1, 2-3, 4-5, 6-8, 9-10) +2 балла
+    • есть фоновая музыка, громкость которой можно менять в отдельном пункте настроек. 
+  громкость по умолчанию 20%, при открытии страницы музыка начинает играть только после первого 
+  взаимодействия со страницей (иначе воспроизведение блокируется) +2 балла
+    • добавлен третий игровой режим: блиц. изначально дается 30 секунд, 
+  за каждый правильный ответ +1 секунда, за каждый неправильный -4 секунды.
+  итоговый результат - общее количество правильных ответов за отведенное время. +10 баллов.
+
+  Если вы обнаружили какой-либо баг или у вас есть вопросы по работе викторины - мой дискорд:
+                                      @saratovkin
+  `)
+}
+
 settingsBtn.show = ['.settings-field', , '.button-container'];
 settingsBtn.hide = ['.settings-btn.main'];
 settingsBtn.addEventListener('click', animateSettings);
@@ -746,10 +789,12 @@ document.getElementById('default-btn').addEventListener('click', setDefault);
 document.querySelector('.answers').addEventListener('click', checkAnswer);
 document.querySelector('.picture-answers').addEventListener('click', checkAnswer);
 document.querySelector('.blitz-answers').addEventListener('click', blitzNext);
+document.addEventListener('click', playBgMusic);
 
 document.querySelectorAll('.score-image').forEach(item => {
   item.addEventListener('click', showPictureInfo);
 });
+
 window.addEventListener('load', function () {
   timeLimit = +localStorage.getItem('timeLimit') || 25;
   timeBar.value = timeLimit / 5 - 1;
@@ -762,5 +807,5 @@ window.addEventListener('load', function () {
   initSettings();
   displayAttemptedCategory();
   showMainPage();
-  playBgMusic();
+  logScore();
 });
