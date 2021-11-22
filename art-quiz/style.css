@@ -988,12 +988,12 @@ input[type=range]::-webkit-slider-thumb {
     height: calc(100vw - 20px);
     margin: 0 auto;
   }
+  .type-name {
+    font-size: 30px;
+  }
 }
 
 @media (max-width: 768px) {
-  .type-name {
-    font-size: 28px;
-  }
   .answer,
   .page-name {
     font-size: 18px;
