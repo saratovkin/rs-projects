@@ -620,6 +620,10 @@ function hidePictureInfo() {
 function showMainPage() {
   document.body.style.opacity = 1;
   document.querySelector('.icon').classList.add('slide');
+  setTimeout(() => {
+    document.querySelector('.footer-container').classList.add('fade');
+  }, 500);
+
   let buttons = document.querySelectorAll('.main-field');
   buttons[0].classList.add('slide-left');
   buttons[1].classList.add('slide-from-top');

@@ -21,6 +21,7 @@ header {
   max-width: 1440px;
   width: calc(100% - 20px);
   margin: 0 auto;
+  position: relative;
 }
 
 .main-page {
@@ -434,11 +435,10 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .button-container {
-  margin-top: 95px;
+  margin: 100px auto;
   display: flex;
   justify-content: center;
   column-gap: 50px;
-  margin-bottom: 50px;
 }
 
 .categories-page {
@@ -970,6 +970,28 @@ input[type=range]::-webkit-slider-thumb {
 
 .hide {
   display: none;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  opacity: 0;
+}
+
+.footer-container.fade {
+  animation: fade 1.5s forwards;
+}
+
+.footer-container a {
+  text-decoration: none;
+  color: #30537a;
+  transition: .5s;
+}
+
+.footer-container a:hover {
+  transform: scale(1.1);
 }
 
 @media (max-width: 1024px) {
