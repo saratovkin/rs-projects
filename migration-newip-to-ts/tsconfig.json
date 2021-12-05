@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
+    "outDir": "./dist/",
     "module": "system",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "outFile": "../../built/local/tsc.js",
     "sourceMap": true
   },
   "include": ["src/**/*"],
