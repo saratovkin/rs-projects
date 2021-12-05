@@ -1,18 +1,18 @@
 import AppController from '../controller/controller';
-import { AppView } from '../view/appView';
+import AppView from '../view/appView';
 import ISourcesArray from '../../interfaces/ISourcesArray';
 import IArticlesArray from '../../interfaces/IArticlesArray';
 
 
 class App {
-    controller: AppController;
-    view: AppView;
-    constructor() {
+    private controller: AppController;
+    private view: AppView;
+    public constructor() {
         this.controller = new AppController();
         this.view = new AppView();
     }
 
-    start() {
+    public start(): void {
         document
             .querySelector('.sources')
             .addEventListener('click', (e) => this.controller.getNews(e, (data: IArticlesArray) => this.view.drawNews(data)));
