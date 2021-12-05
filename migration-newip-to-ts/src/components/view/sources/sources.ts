@@ -1,27 +1,12 @@
 import './sources.css';
-
-interface ISource {
-    id: string;
-    name: string;
-    description: string;
-    url: string;
-    category: string;
-    language: string;
-    country: string;
-}
-
-interface ISourceArray {
-    status: string;
-    sources: ISource[];
-    length: number;
-}
+import ISource from '../../../interfaces/ISource';
 
 class Sources {
-    draw(data:ISource[]) {
+    draw(data: ISource[]) {
         const fragment = document.createDocumentFragment();
         const sourceItemTemp = <HTMLTemplateElement>document.querySelector('#sourceItemTemp');
 
-        data.forEach((item:ISource) => {
+        data.forEach((item: ISource) => {
             const sourceClone = (sourceItemTemp.content.cloneNode(true) as HTMLElement);
 
             sourceClone.querySelector('.source__item-name').textContent = item.name;

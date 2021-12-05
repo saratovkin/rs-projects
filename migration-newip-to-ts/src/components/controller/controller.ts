@@ -1,39 +1,9 @@
 import AppLoader from './appLoader';
-
-interface IArticle {
-    source: { id: string, name: string };
-    author: string;
-    title: string;
-    description: string;
-    url: string;
-    urlToImage: string;
-    publishedAt: string;
-    content: string;
-}
-
-interface IAtricleArray {
-    status: string;
-    totalResults: number;
-    articles: IArticle[];
-}
-
-interface ISource {
-    id: string;
-    name: string;
-    description: string;
-    url: string;
-    category: string;
-    language: string;
-    country: string;
-}
-
-interface ISourceArray {
-    status: string;
-    sources: ISource[];
-}
+import ISourcesArray from '../../interfaces/ISourcesArray';
+import IArticlesArray from '../../interfaces/IArticlesArray';
 
 class AppController extends AppLoader {
-    getSources(callback: (data: ISourceArray | IAtricleArray) => void) {
+    getSources(callback: (data: ISourcesArray | IArticlesArray) => void) {
         super.getResp(
             {
                 endpoint: 'sources',
@@ -43,7 +13,7 @@ class AppController extends AppLoader {
         );
     }
 
-    getNews(e: Event, callback: (data: ISourceArray | IAtricleArray) => void) {
+    getNews(e: Event, callback: (data: ISourcesArray | IArticlesArray) => void) {
         let target = <HTMLElement>e.target;
         const newsContainer = <HTMLElement>e.currentTarget;
 

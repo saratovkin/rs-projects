@@ -1,21 +1,5 @@
 import './news.css';
-
-interface IArticle {
-    source: { id: string, name: string };
-    author: string;
-    title: string;
-    description: string;
-    url: string;
-    urlToImage: string;
-    publishedAt: string;
-    content: string;
-}
-
-interface IAtricleArray {
-    status: string;
-    totalResults: number;
-    articles: IArticle[];
-}
+import IArticle from '../../../interfaces/IArticle';
 
 class News {
     draw(data: IArticle[]) {

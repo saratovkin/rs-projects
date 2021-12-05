@@ -1,42 +1,11 @@
-interface IArticle {
-    source: { id: string, name: string };
-    author: string;
-    title: string;
-    description: string;
-    url: string;
-    urlToImage: string;
-    publishedAt: string;
-    content: string;
-}
-
-interface IArticleArray {
-    status: string;
-    totalResults: number;
-    articles: IArticle[];
-    length: number;
-}
-
-
-interface ISource {
-    id: string;
-    name: string;
-    description: string;
-    url: string;
-    category: string;
-    language: string;
-    country: string;
-}
-
-interface ISourceArray {
-    status: string;
-    sources: ISource[];
-}
+import ISourcesArray from '../../interfaces/ISourcesArray';
+import IArticlesArray from '../../interfaces/IArticlesArray';
 
 interface IRes {
     ok: boolean;
     status: number;
     statusText: string;
-    json: () => Promise<IArticleArray>;
+    json: () => Promise<IArticlesArray>;
 }
 
 interface IOptions {
@@ -58,7 +27,7 @@ class Loader {
 
     getResp(
         { endpoint, options = {} }: IResp,
-        callback = (data: ISourceArray | IArticleArray) => {
+        callback = (data: ISourcesArray | IArticlesArray) => {
             console.error('No callback for GET response');
         }
     ): void {
@@ -86,7 +55,7 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    load(method: string, endpoint: string, callback: (data: IArticleArray) => void, options = {}): void {
+    load(method: string, endpoint: string, callback: (data: IArticlesArray) => void, options = {}): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json())
