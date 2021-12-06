@@ -1,7 +1,7 @@
 body {
-    color: #fff;
-    background: #17181c;
-    font-family: sans-serif;
+    color: #17252a;
+    background: #feffff;
+    font-family: 'Lato', sans-serif;
 }
 
 header {
@@ -10,7 +10,7 @@ header {
 
 header h1 {
     font-size: 40px;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 footer {
@@ -21,14 +21,14 @@ footer {
 }
 footer .copyright {
     font-size: 14px;
-    color: #333;
+    color: #17252a;
     text-align: center;
 }
 footer .copyright a {
-    color: #444;
+    color: #17252a;
 }
 footer .copyright a:hover {
-    color: #555;
+    color: #2b7a78;
 }
 footer .copyright:before {
     content: '©';
