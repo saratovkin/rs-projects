@@ -14,7 +14,7 @@
     font: inherit;
     line-height: 1;
     margin: 0.5em;
-    padding: 1em 2em;
+    padding: 0.5em;
     color: #464646;
     transition: 0.25s;
     cursor: pointer;
@@ -22,10 +22,10 @@
 
 .source__item:hover,
 .source__item:focus {
-    border-color: #3aafa9;
-    color: #3aafa9;
-    box-shadow: 0 0.5em 0.5em -0.4em #3aafa9;
-    transform: translateY(-0.25em);
+    border-color: #def2f1;
+    color: #def2f1;
+    background-color: #3aafa9;
+    transform: scale(1.1);
 }
 
 .source__item-name {

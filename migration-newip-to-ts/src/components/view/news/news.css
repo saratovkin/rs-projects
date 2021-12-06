@@ -13,7 +13,7 @@
 }
 
 .news__item:hover .news__meta-photo {
-    transform: scale(1.3) rotate(3deg);
+    transform: scale(1.1) rotate(2deg);
 }
 
 .news__item .news__meta {
@@ -29,7 +29,7 @@
     left: 0;
     background-size: cover;
     background-position: center;
-    transition: transform 0.2s;
+    transition: transform 0.1s;
 }
 
 .news__item .news__meta-details,
@@ -116,6 +116,11 @@
     width: 35px;
     top: -0.75rem;
     border-radius: 3px;
+    transition: .3s;
+}
+
+.news__item:hover p:first-of-type:before {
+    width: 105px;
 }
 
 .news__item:hover .news__meta-details {
