@@ -46,7 +46,7 @@ class Loader {
 
     private makeUrl(options: IOptions, endpoint: string): string {
         const urlOptions: { [key: string]: string } = { ...this.options, ...options };
-        let url: string = `${this.baseLink}${endpoint}?`;
+        let url = `${this.baseLink}${endpoint}?`;
 
         Object.keys(urlOptions).forEach((key: string) => {
             url += `${key}=${urlOptions[key]}&`;
@@ -55,7 +55,7 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    private load(method: string, endpoint: string, callback: (data: IArticlesArray) => void, options = {}): void {
+    private load(method: string, endpoint: string, callback: (data: ISourcesArray | IArticlesArray) => void, options = {}): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json())
