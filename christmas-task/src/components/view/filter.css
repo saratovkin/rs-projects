@@ -36,10 +36,12 @@
   transition: filter .2s;
 }
 
-.color-option {
+.color-option,
+.fav-option {
   width: 16px;
   height: 16px;
   border: 1px solid #fff;
+  background-color: #fff;
   transition: transform .2s;
   position: relative;
 }
@@ -49,7 +51,8 @@
   filter: brightness(0.8);
 }
 
-.color-option:hover {
+.color-option:hover,
+.fav-option:hover {
   transform: scale(1.2);
 }
 
@@ -66,11 +69,13 @@
   filter: invert(55%) sepia(11%) saturate(767%) hue-rotate(9deg) brightness(91%) contrast(86%);
 }
 
-.color-option.clicked {
+.color-option.clicked,
+.fav-option.clicked {
   border: 1px solid #8a8266;
 }
 
-.color-option.clicked::after {
+.color-option.clicked::after,
+.fav-option.clicked::after {
   content: '';
   display: block;
   position: absolute;
@@ -82,4 +87,3 @@
   border-width: 0 3px 3px 0;
   transform: rotate(45deg);
 }
-
