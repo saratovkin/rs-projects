@@ -1,0 +1,85 @@
+.filter-option {
+  width: calc(100% - 20px);
+  margin: 0 auto;
+  background: linear-gradient(90deg, rgba(132,150,151,1) 0%, rgba(132,150,151,1) 2%, rgba(122,147,150,1) 95%);
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.filter-option p {
+  font-family: 'Neucha';
+  text-transform: uppercase;
+}
+
+.shape-filters,
+.color-filters,
+.size-filters,
+.fav-filters {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  margin: 10px 0;
+}
+
+.shape-option,
+.color-option,
+.size-option,
+.fav-option {
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  background-size: 20px 20px;
+  background-position: center;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: filter .2s;
+}
+
+.color-option {
+  width: 16px;
+  height: 16px;
+  border: 1px solid #fff;
+  transition: transform .2s;
+  position: relative;
+}
+
+.shape-option:hover,
+.size-option:hover {
+  filter: brightness(0.8);
+}
+
+.color-option:hover {
+  transform: scale(1.2);
+}
+
+.size-option:first-of-type  {
+  transform: scale(0.8, 0.8);
+}
+
+.size-option:last-of-type {
+  transform: scale(1.2, 1.2);
+}
+
+.shape-option.clicked,
+.size-option.clicked {
+  filter: invert(55%) sepia(11%) saturate(767%) hue-rotate(9deg) brightness(91%) contrast(86%);
+}
+
+.color-option.clicked {
+  border: 1px solid #8a8266;
+}
+
+.color-option.clicked::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 4px;
+  width: 4px;
+  height: 9px;
+  border: solid #8a8266;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+

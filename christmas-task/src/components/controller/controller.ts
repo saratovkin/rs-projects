@@ -1,9 +1,13 @@
 import DataLoader from './dataLoader';
 
+
 class AppController extends DataLoader {
-  
-  public getData(callback: (data: any) => void) {
-    super.load(callback);
+
+  private data:any[];
+
+  public async getData() {
+    this.data = await super.load();
+    return this.data;
   }
 
 }
