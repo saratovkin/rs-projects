@@ -22,7 +22,7 @@ class AppView {
       decorationCardClone.querySelector('.decoration-is-fav').textContent = item.favorite ? 'Любимая: Да' : 'Любимая: Нет';
       fragment.append(decorationCardClone);
     });
-    
+
     document.querySelector('.decorations-container').appendChild(fragment);
   }
 
@@ -42,6 +42,8 @@ class AppView {
         return ['желтый', 'зелёный', 'красный', 'белый', 'синий'];
       case 'size':
         return ['малый', 'средний', 'большой'];
+      case 'fav':
+        return ['false'];
     }
   }
 
@@ -86,6 +88,8 @@ class AppView {
         return 'Цвет';
       case 'size':
         return 'Размер';
+      case 'fav':
+        return 'Только любимые';
     }
   }
 
@@ -111,7 +115,7 @@ class AppView {
       if (type == 'color') {
         newType.style.backgroundColor = this.getColor(index);
       }
-      if(type == 'size') {
+      if (type == 'size') {
         newType.style.backgroundImage = `url("svg/ball.svg")`;
       }
 
@@ -123,7 +127,7 @@ class AppView {
 
   public showFilters() {
 
-    ['shape', 'color', 'size'].forEach(item => {
+    ['shape', 'color', 'size', 'fav'].forEach(item => {
       this.addFilterNode(item);
     });
   }

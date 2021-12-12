@@ -42,7 +42,17 @@ class App {
         let filtered;
         if (param) {
             e.target.classList.toggle('clicked');
-            filtered = this.data.filter(word => word[type] == param);
+            if (param === 'false' || param === 'true') {
+                if (param === 'true') {
+                    e.target.setAttribute('filter', 'false');
+                    filtered = this.data;
+                } else {
+                    e.target.setAttribute('filter', 'true');
+                    filtered = this.data.filter(word => word[type] == Boolean(param));
+                }
+            } else {
+                filtered = this.data.filter(word => word[type] == param);
+            }
             this.view.clear();
             this.view.draw(filtered);
         }
@@ -55,8 +65,8 @@ class App {
             addEventListener('click', (e) => this.filter('color', e));
         document.querySelector('.size-filters').
             addEventListener('click', (e) => this.filter('size', e));
-        // document.querySelector('.fav-filters').
-        //     addEventListener('click', (e) => this.filter('favorite', e));
+        document.querySelector('.fav-filters').
+            addEventListener('click', (e) => this.filter('favorite', e));
     }
 }
 
