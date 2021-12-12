@@ -10,30 +10,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Roboto:wght@300&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <header class="header">
     <div class="header-container">
       <div class="header-nav">
-        <div class="sound-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 0 24 24" width="36px" fill="#fff">
-            <path d="M0 0h24v24H0V0z" fill="none" />
-            <path
-              d="M3 9v6h4l5 5V4L7 9H3zm7-.17v6.34L7.83 13H5v-2h2.83L10 8.83zM16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77 0-4.28-2.99-7.86-7-8.77z" />
-          </svg>
-        </div>
-        <div class="snow-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 0 24 24" width="36px" fill="#fff">
-            <path d="M0 0h24v24H0V0z" fill="none" />
-            <path
-              d="M22 11h-4.17l3.24-3.24-1.41-1.42L15 11h-2V9l4.66-4.66-1.42-1.41L13 6.17V2h-2v4.17L7.76 2.93 6.34 4.34 11 9v2H9L4.34 6.34 2.93 7.76 6.17 11H2v2h4.17l-3.24 3.24 1.41 1.42L9 13h2v2l-4.66 4.66 1.42 1.41L11 17.83V22h2v-4.17l3.24 3.24 1.42-1.41L13 15v-2h2l4.66 4.66 1.41-1.42L17.83 13H22v-2z" />
-          </svg>
-        </div>
-        <div class="search-input">
-          <span>Поиск</span> 
-        </div>
       </div>
       <div class="header-name">
         <span>Игрушки</span>
@@ -44,7 +26,13 @@
   <main class=main>
     <div class="main-container">
       <aside class="filter-options">
-
+        <section class="filter-option">
+          <p>Фильтры по значению</p>
+         <!--  <div class="fav-filters"> -->
+            <span>Только любимые:</span>
+            <div class="fav-option" data="true"></div>
+          <!-- </div> -->
+        </section>
       </aside>
       <div class="decorations-container">
         <template id="decorationTemplate">
