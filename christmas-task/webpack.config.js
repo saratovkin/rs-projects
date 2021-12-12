@@ -46,15 +46,15 @@ const getPages = (dir, n) => {
   return pages;
 };
 
-const getEntryPoints = (pages) => pages.reduce((entry, {name, dir, script, style}) => Object.assign(entry,
+const getEntryPoints = (pages) => pages.reduce((entry, { name, dir, script, style }) => Object.assign(entry,
   script ? { [name]: makePath(path.join(dir, script)) } : {},
   style ? { [`${name}-styles`]: makePath(path.join(dir, style)) } : {},
 ), {});
 
-const getHtmlPlugins = (pages) => pages.map(({html, name, script, style}) => new HtmlWebpackPlugin({
+const getHtmlPlugins = (pages) => pages.map(({ html, name, script, style }) => new HtmlWebpackPlugin({
   template: html,
   filename: html,
-  chunks: [ script ? name : null, style ? `${name}-styles` : null ].filter(c => !!c),
+  chunks: [script ? name : null, style ? `${name}-styles` : null].filter(c => !!c),
 }));
 
 module.exports = ({ development }) => {
@@ -91,11 +91,11 @@ module.exports = ({ development }) => {
         },
         {
           test: /\.css$/i,
-          use: [{loader: MiniCssExtractPlugin.loader, options: { publicPath: '../' }}, 'css-loader'],
+          use: [{ loader: MiniCssExtractPlugin.loader, options: { publicPath: '../' } }, 'css-loader'],
         },
         {
           test: /\.s[ac]ss$/i,
-          use: [{loader: MiniCssExtractPlugin.loader, options: { publicPath: '../' }}, 'css-loader', 'sass-loader']
+          use: [{ loader: MiniCssExtractPlugin.loader, options: { publicPath: '../' } }, 'css-loader', 'sass-loader']
         }
       ],
     },
@@ -119,6 +119,16 @@ module.exports = ({ development }) => {
             noErrorOnMissing: true,
             force: true,
           }
+        ],
+        patterns: [
+          {
+            from: path.resolve(__dirname, 'src/assets/svg'),
+            to: path.resolve(__dirname, 'dist/svg')
+          },
+          {
+            from: path.resolve(__dirname, 'src/assets/toys'),
+            to: path.resolve(__dirname, 'dist/toys')
+          },
         ],
       }),
       new CleanWebpackPlugin(),
