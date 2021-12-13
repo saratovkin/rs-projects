@@ -29,6 +29,27 @@
         <section class="filter-option">
           <p>Фильтры по значению</p>
         </section>
+        <section class="filter-option">
+          <p>Фильтры по диапозону</p>
+          <div class="count-slider">
+            <span>Количество экземпляров:</span>
+            <div class="slider" id="count-slider"></div>
+          </div>
+          <div class="year-slider">
+            <span>Год приобретения:</span>
+            <div class="slider" id="year-slider"></div>
+          </div>
+        </section>
+        <section class="filter-option">
+          <p>Сортировка</p>
+          <select class="sort-select">
+            <option selected="" value="name">По названию от «А» до «Я»</option>
+            <option value="name-desc">По названию от «Я» до «А»</option>
+            <option value="year">По году приобретения по возрастанию</option>
+            <option value="year-desc">По году приобретения по убыванию</option>
+          </select>
+          <button class="reset-filter">Сбросить</button>
+        </section>
       </aside>
       <div class="decorations-container">
         <template id="decorationTemplate">
