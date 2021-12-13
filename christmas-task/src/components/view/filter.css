@@ -1,3 +1,8 @@
+.filter-options {
+  width: 30%;
+  height: 200px;
+}
+
 .filter-option {
   width: calc(100% - 20px);
   margin: 0 auto;
@@ -5,6 +10,7 @@
   border-radius: 10px;
   padding: 10px;
   box-sizing: border-box;
+  margin-bottom: 50px;
 }
 
 .filter-option p {

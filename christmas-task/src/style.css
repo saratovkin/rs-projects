@@ -54,7 +54,10 @@ body {
   column-gap: 50px;
 }
 
-.filter-options {
-  width: 30%;
-  height: 200px;
+
+.slider {
+  height: 10px;
+  width: calc(100% - 30px);
+  margin: 0 auto;
+  margin-top: 15px;
 }
