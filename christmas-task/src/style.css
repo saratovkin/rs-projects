@@ -24,11 +24,24 @@ body {
   width: 30%;
 }
 
-.search-input {
-  width: 250px;
-  border: 1px solid #24c5db;
+.search {
+  height: 40px;
+  width: calc(100% - 20px);
+  padding: 5px 25px;
+  margin: 0 auto;
   border-radius: 20px;
-  text-align: left;
+  border: 1px solid #278D9F;
+  color: #fff;
+  font-size: 18px;
+  background-color: rgba(31, 112, 127, .3);
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: 330px center;
+  outline: none;
+}
+
+.search::placeholder {
+  color: #fff;
   opacity: .5;
 }
 
@@ -53,7 +66,6 @@ body {
   margin-top: 50px;
   column-gap: 50px;
 }
-
 
 .slider {
   height: 10px;
