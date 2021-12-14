@@ -4,7 +4,6 @@ import './filter.css';
 class DataView {
 
   private drawDecorations(data: any): void {
-
     const decorations: any = data;
     const fragment: DocumentFragment = document.createDocumentFragment();
     const decorationCard: HTMLTemplateElement = <HTMLTemplateElement>document.querySelector('#decorationTemplate');

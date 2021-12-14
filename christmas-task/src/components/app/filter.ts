@@ -33,17 +33,19 @@ class Filter {
 
   public constructor(data: any[]) {
     this.data = data;
+    this.filteredData = this.data;
     this.condition = {
       count: [],
       year: [],
       shape: [],
       color: [],
       size: [],
-      favorite: 'false',
+      favorite: 'false'
     }
     this.slider = new Slider();
     this.filterView = new FilterView();
     this.dataView = new DataView();
+    this.sortType = 'name';
   }
 
   private updateCondition(type: string, param: string | string[]) {
@@ -67,7 +69,7 @@ class Filter {
     }
   }
 
-  private filterFunc(e: any) {
+  private compareFunc(e: any) {
     let res = true;
     if (this.condition.shape.length != 0) {
       res = this.condition.shape.includes(e.shape);
@@ -102,7 +104,7 @@ class Filter {
     return res;
   }
 
-  private getSorted(data: any[], e: Event) {
+  private getSorted(data: any[], e?: Event) {
     let args: string | string[];
     if (e) {
       args = (e.currentTarget as HTMLInputElement).value;
@@ -111,17 +113,18 @@ class Filter {
     }
     args = args.split('-');
     if (args[0] === 'name') {
-      this.sortType = 'name-asc';
+      this.sortType = 'name';
       data.sort((a, b) => a.name.localeCompare(b.name));
     }
     if (args[0] === 'year') {
-      this.sortType = 'year-asc';
+      this.sortType = 'year';
       data.sort((a, b) => (a.year - b.year));
     }
     if (args[1]) {
-      this.sortType = this.sortType === 'name-asc' ? 'name-desc' : 'year-desc';
+      this.sortType = this.sortType === 'name' ? 'name-desc' : 'year-desc';
       data = data.reverse();
     }
+    this.filteredData = data;
     this.dataView.updateDecorations(this.filteredData);
   }
 
@@ -131,15 +134,19 @@ class Filter {
     if (param) {
       this.updateCondition(type, param);
       e.target.classList.toggle('clicked');
-      this.filteredData = this.data.filter(e => this.filterFunc(e));
-      this.dataView.updateDecorations(this.filteredData);
+      this.filteredData = this.data.filter(e => this.compareFunc(e));
+      this.getSorted(this.filteredData);
     }
   }
 
   private getFilteredByRange(type: string, param: string[]) {
     this.updateCondition(type, param);
-    this.filteredData = this.data.filter(e => this.filterFunc(e));
-    this.dataView.updateDecorations(this.filteredData);
+    this.dataView.updateDecorations(this.filteredData.filter(e => this.compareFunc(e)));
+  }
+
+  private search(e: Event) {
+    let searchStr = (e.target as HTMLInputElement).value.toLowerCase();
+    this.dataView.updateDecorations(this.filteredData.filter(elem => elem.name.toLowerCase().indexOf(searchStr) != -1));
   }
 
   private clearFilters() {
@@ -155,6 +162,7 @@ class Filter {
       favorite: 'false',
     }
     this.dataView.updateDecorations(this.data);
+    (document.querySelector('.search') as HTMLInputElement).value = '';
   }
 
   public initFilters() {
@@ -171,6 +179,7 @@ class Filter {
     });
     document.querySelector('.sort-select').addEventListener('change', (e: Event) => this.getSorted(this.filteredData, e));
     document.querySelector('.reset-filter').addEventListener('click', () => { this.clearFilters() });
+    document.querySelector('.search').addEventListener('input', (e) => this.search(e));
   }
 
 }
