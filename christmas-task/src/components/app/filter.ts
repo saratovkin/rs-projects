@@ -8,8 +8,9 @@ interface ICondition {
   shape: string[];
   color: string[];
   size: string[];
-  favorite: string;
-
+  favorite: boolean;
+  sortType: string;
+  searchKey: string;
 }
 
 function toggle(arr: any[], item: any) {
@@ -25,7 +26,6 @@ class Filter {
 
   private data: any[];
   private condition: ICondition;
-  private sortType: string;
   private slider: Slider;
   private filteredData: any[];
   private filterView: FilterView;
@@ -40,35 +40,15 @@ class Filter {
       shape: [],
       color: [],
       size: [],
-      favorite: 'false'
+      favorite: false,
+      sortType: 'name',
+      searchKey: ''
     }
     this.slider = new Slider();
     this.filterView = new FilterView();
     this.dataView = new DataView();
-    this.sortType = 'name';
-  }
 
-  private updateCondition(type: string, param: string | string[]) {
-    if (type === 'count') {
-      this.condition.count = param as string[];
-    }
-    if (type === 'year') {
-      this.condition.year = param as string[];
-    }
-    if (type === 'shape') {
-      toggle(this.condition.shape, param);
-    }
-    if (type === 'color') {
-      toggle(this.condition.color, param);
-    }
-    if (type === 'size') {
-      toggle(this.condition.size, param);
-    }
-    if (type === 'favorite') {
-      this.condition.favorite = param as string;
-    }
   }
-
   private compareFunc(e: any) {
     let res = true;
     if (this.condition.shape.length != 0) {
@@ -101,52 +81,95 @@ class Filter {
         return false;
       }
     }
+    if (this.condition.favorite) {
+      res = Boolean(e.favorite);
+    }
     return res;
   }
 
-  private getSorted(data: any[], e?: Event) {
-    let args: string | string[];
-    if (e) {
-      args = (e.currentTarget as HTMLInputElement).value;
-    } else {
-      args = this.sortType;
+  private updateCondition(type: string, param: string | string[]) {
+    if (type === 'count') {
+      this.condition.count = param as string[];
     }
-    args = args.split('-');
-    if (args[0] === 'name') {
-      this.sortType = 'name';
-      data.sort((a, b) => a.name.localeCompare(b.name));
+    if (type === 'year') {
+      this.condition.year = param as string[];
     }
-    if (args[0] === 'year') {
-      this.sortType = 'year';
-      data.sort((a, b) => (a.year - b.year));
+    if (type === 'shape') {
+      toggle(this.condition.shape, param);
     }
-    if (args[1]) {
-      this.sortType = this.sortType === 'name' ? 'name-desc' : 'year-desc';
-      data = data.reverse();
+    if (type === 'color') {
+      toggle(this.condition.color, param);
     }
-    this.filteredData = data;
-    this.dataView.updateDecorations(this.filteredData);
+    if (type === 'size') {
+      toggle(this.condition.size, param);
+    }
+    if (type === 'fav') {
+      this.condition.favorite = !this.condition.favorite
+    }
+    if (type === 'sort') {
+      this.condition.sortType = param as string;
+    }
+    if (type === 'search') {
+      this.condition.searchKey = param as string;
+    }
   }
 
-  // TODO merge into one function
-  private getFilteredByView(type: string, e: any) {
+  private setSortType(e: Event) {
+    if (e) {
+      this.updateCondition('sort', (e.currentTarget as HTMLInputElement).value);
+    }
+    this.showFiltered();
+  }
+
+  private setShape(type: string, e: any) {
+
     const param = e.target.getAttribute('filter');
     if (param) {
       this.updateCondition(type, param);
       e.target.classList.toggle('clicked');
-      this.filteredData = this.data.filter(e => this.compareFunc(e));
-      this.getSorted(this.filteredData);
+    }
+    this.showFiltered();
+  }
+
+  private setRange(type: string, param: string[]) {
+    this.updateCondition(type, param);
+    this.dataView.updateDecorations(this.filteredData.filter(e => this.compareFunc(e)));
+    this.showFiltered();
+  }
+
+  private setSearchKey(e: Event) {
+    let searchStr = (e.target as HTMLInputElement).value.toLowerCase();
+    this.updateCondition('search', searchStr);
+    this.showFiltered();
+  }
+
+  private showFiltered() {
+    this.toggleSearchAlert(false);
+    this.filteredData = this.data.filter(e => this.compareFunc(e));
+    this.filteredData = this.filteredData.filter(elem => elem.name.toLowerCase().indexOf(this.condition.searchKey) != -1);
+    let sortTemp: string[] = this.condition.sortType.split('-');
+    if (sortTemp[0] === 'name') {
+      this.filteredData.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    if (sortTemp[0] === 'year') {
+      this.filteredData.sort((a, b) => (a.year - b.year));
+    }
+    if (sortTemp[1]) {
+      this.filteredData = this.filteredData.reverse();
+    }
+    this.dataView.updateDecorations(this.filteredData);
+    if (this.filteredData.length === 0) {
+      this.toggleSearchAlert(true);
     }
   }
 
-  private getFilteredByRange(type: string, param: string[]) {
-    this.updateCondition(type, param);
-    this.dataView.updateDecorations(this.filteredData.filter(e => this.compareFunc(e)));
-  }
+  private toggleSearchAlert(flag: boolean) {
+    if (flag) {
+      document.querySelector('.search-alert').classList.remove('hide');
+    } else {
+      document.querySelector('.search-alert').classList.add('hide');
 
-  private search(e: Event) {
-    let searchStr = (e.target as HTMLInputElement).value.toLowerCase();
-    this.dataView.updateDecorations(this.filteredData.filter(elem => elem.name.toLowerCase().indexOf(searchStr) != -1));
+    }
   }
 
   private clearFilters() {
@@ -159,7 +182,9 @@ class Filter {
       shape: [],
       color: [],
       size: [],
-      favorite: 'false',
+      favorite: false,
+      sortType: 'name',
+      searchKey: ''
     }
     this.dataView.updateDecorations(this.data);
     (document.querySelector('.search') as HTMLInputElement).value = '';
@@ -169,17 +194,17 @@ class Filter {
     this.filterView.drawFilters();
     ['shape', 'color', 'size', 'fav'].forEach(item => {
       document.querySelector(`.${item}-filters`).
-        addEventListener('click', (e: Event) => this.getFilteredByView(item, e));
+        addEventListener('click', (e: Event) => this.setShape(item, e));
     });
     (this.slider.countSlider as any).noUiSlider.on('update', () => {
-      this.getFilteredByRange('count', ((this.slider.countSlider as any).noUiSlider.get()))
+      this.setRange('count', ((this.slider.countSlider as any).noUiSlider.get()))
     });
     (this.slider.yearSlider as any).noUiSlider.on('update', () => {
-      this.getFilteredByRange('year', ((this.slider.yearSlider as any).noUiSlider.get()))
+      this.setRange('year', ((this.slider.yearSlider as any).noUiSlider.get()))
     });
-    document.querySelector('.sort-select').addEventListener('change', (e: Event) => this.getSorted(this.filteredData, e));
+    document.querySelector('.sort-select').addEventListener('change', (e: Event) => this.setSortType(e));
     document.querySelector('.reset-filter').addEventListener('click', () => { this.clearFilters() });
-    document.querySelector('.search').addEventListener('input', (e) => this.search(e));
+    document.querySelector('.search').addEventListener('input', (e) => this.setSearchKey(e));
   }
 
 }
