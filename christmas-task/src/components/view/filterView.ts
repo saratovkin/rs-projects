@@ -32,7 +32,7 @@ class FilterView {
     if (condition.sortType == 'name-desc') index = 1;
     if (condition.sortType == 'year') index = 2;
     if (condition.sortType == 'year-desc') index = 3;
-    ['shape', 'color', 'size', 'fav'].forEach(item => {
+    ['shape', 'color', 'size'].forEach(item => {
       document.querySelectorAll(`.${item}-option`).forEach(node => {
         if (condition.shape.includes(node.getAttribute('filter'))) {
           node.classList.add('clicked');
@@ -43,12 +43,11 @@ class FilterView {
         if (condition.size.includes(node.getAttribute('filter'))) {
           node.classList.add('clicked');
         }
-        if (node.getAttribute('filter')==='false') {
-          node.classList.add('clicked');
-        }
       })
     });
-
+    if (condition.favorite) {
+      document.querySelector('.fav-option').classList.add('clicked');
+    }
     (document.querySelector('.sort-select') as any).selectedIndex = index;
   }
 

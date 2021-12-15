@@ -91,7 +91,7 @@ class Filter {
       toggle(this.condition.size, param as string);
     }
     if (type === 'fav') {
-      this.condition.favorite = !this.condition.favorite
+      this.condition.favorite = !this.condition.favorite;
     }
     if (type === 'sort') {
       this.condition.sortType = param as string;
