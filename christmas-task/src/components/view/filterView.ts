@@ -43,7 +43,7 @@ class FilterView {
         if (condition.size.includes(node.getAttribute('filter'))) {
           node.classList.add('clicked');
         }
-        if (condition.favorite === Boolean(node.getAttribute('filter'))) {
+        if (node.getAttribute('filter')==='false') {
           node.classList.add('clicked');
         }
       })

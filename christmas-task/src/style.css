@@ -71,13 +71,6 @@ body {
   column-gap: 50px;
 }
 
-.slider {
-  height: 10px;
-  width: calc(100% - 30px);
-  margin: 0 auto;
-  margin-top: 15px;
-}
-
 .search-alert {
   width: 50%;
   min-width: 300px;

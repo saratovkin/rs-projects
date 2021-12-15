@@ -94,3 +94,23 @@
   border-width: 0 3px 3px 0;
   transform: rotate(45deg);
 }
+
+.slider-container {
+  display: flex;
+  flex-wrap: nowrap;
+  column-gap: 10px;
+  align-items: baseline;
+  margin: 10px 0;
+}
+
+.slider-container span {
+  width: 60px;
+  text-align: center;
+}
+
+.slider {
+  height: 8px;
+  width: calc(100% - 30px);
+  margin: 0 auto;
+}
+

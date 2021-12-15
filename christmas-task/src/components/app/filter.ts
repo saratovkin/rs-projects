@@ -35,6 +35,7 @@ class Filter {
     this.SavedSettings = new SavedSettings();
     this.condition = this.SavedSettings.savedCondition;
   }
+
   private compareFunc(e: any) {
     let res = true;
     if (this.condition.shape.length != 0) {
@@ -118,7 +119,13 @@ class Filter {
     this.showFiltered();
   }
 
+  private showSliderRanges(type: string, param: string[]) {
+    document.querySelector(`.${type}-from`).textContent = param[0].split('.')[0];
+    document.querySelector(`.${type}-to`).textContent = param[1].split('.')[0];
+  }
+
   private setRange(type: string, param: string[]) {
+    this.showSliderRanges(type, param);
     this.updateCondition(type, param);
     this.showFiltered();
   }
@@ -176,7 +183,7 @@ class Filter {
     (document.querySelector('.search') as HTMLInputElement).value = '';
   }
 
-  private showFilters() {
+  private showFilterValues() {
     this.filterView.showSelectedFilters(this.condition);
     (this.slider.countSlider as any).noUiSlider.set(this.condition.count);
     (this.slider.yearSlider as any).noUiSlider.set(this.condition.year);
@@ -202,11 +209,9 @@ class Filter {
 
   public start() {
     this.initFilters();
-    this.showFilters();
+    this.showFilterValues();
     this.showFiltered();
   }
 }
 
 export default Filter;
-
-
