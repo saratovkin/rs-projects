@@ -5,10 +5,8 @@ import FavToys from '../app/favToys'
 class DataView {
 
   private favToys: FavToys;
-  public constructor() {
-    this.favToys = new FavToys();
-  }
   private drawDecorations(data: any): void {
+    this.favToys = new FavToys();
     const decorations: any = data;
     const fragment: DocumentFragment = document.createDocumentFragment();
     const decorationCard: HTMLTemplateElement = <HTMLTemplateElement>document.querySelector('#decorationTemplate');
@@ -27,7 +25,6 @@ class DataView {
       decorationCardClone.querySelector('.decoration-color').textContent = `Цвет игрушки: ${item.color}`;
       decorationCardClone.querySelector('.decoration-size').textContent = `Размер игрушки: ${item.size}`;
       decorationCardClone.querySelector('.decoration-is-fav').textContent = item.favorite ? 'Любимая: да' : 'Любимая: нет';
-
       if (this.favToys.favList.includes(item.num)) {
         decorationCardClone.querySelector('.decoration').classList.add('fav-toy');
       }
@@ -38,7 +35,6 @@ class DataView {
   }
 
   private clearDecorations() {
-
     document.querySelectorAll('.decoration').forEach(item => {
       item.remove();
     });

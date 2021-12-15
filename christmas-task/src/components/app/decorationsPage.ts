@@ -15,7 +15,7 @@ class decorationsPage {
     public async start() {
         this.data = await this.controller.getData();
         this.filter = new Filter(this.data);
-        this.filter.initFilters();
+        this.filter.start();
     }
 
 }

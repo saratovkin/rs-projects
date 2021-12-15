@@ -1,3 +1,14 @@
+interface ICondition {
+  count: string[];
+  year: string[];
+  shape: string[];
+  color: string[];
+  size: string[];
+  favorite: boolean;
+  sortType: string;
+  searchKey: string;
+}
+
 class FilterView {
 
   public drawFilters() {
@@ -6,13 +17,39 @@ class FilterView {
     });
   }
 
-  public defaultFilters() {
+  public showDefaultFilters() {
     ['shape', 'color', 'size', 'fav'].forEach(item => {
       document.querySelectorAll(`.${item}-option`).forEach(node => {
         node.classList.remove('clicked');
       })
     });
     (document.querySelector('.sort-select') as any).selectedIndex = 0;
+  }
+
+  public showSelectedFilters(condition: ICondition) {
+    let index;
+    if (condition.sortType == 'name') index = 0;
+    if (condition.sortType == 'name-desc') index = 1;
+    if (condition.sortType == 'year') index = 2;
+    if (condition.sortType == 'year-desc') index = 3;
+    ['shape', 'color', 'size', 'fav'].forEach(item => {
+      document.querySelectorAll(`.${item}-option`).forEach(node => {
+        if (condition.shape.includes(node.getAttribute('filter'))) {
+          node.classList.add('clicked');
+        }
+        if (condition.color.includes(node.getAttribute('filter'))) {
+          node.classList.add('clicked');
+        }
+        if (condition.size.includes(node.getAttribute('filter'))) {
+          node.classList.add('clicked');
+        }
+        if (condition.favorite === Boolean(node.getAttribute('filter'))) {
+          node.classList.add('clicked');
+        }
+      })
+    });
+
+    (document.querySelector('.sort-select') as any).selectedIndex = index;
   }
 
   private getAttributes(type: string): string[] {

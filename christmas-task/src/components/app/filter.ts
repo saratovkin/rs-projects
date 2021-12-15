@@ -3,6 +3,7 @@ import toggle from '../misc/toggle'
 import Slider from "../nouislider/sliderInit";
 import FilterView from '../view/filterView';
 import DataView from '../view/dataView'
+import SavedSettings from './savedSettings';
 
 interface ICondition {
   count: string[];
@@ -23,24 +24,16 @@ class Filter {
   private filteredData: any[];
   private filterView: FilterView;
   private dataView: DataView;
+  private SavedSettings: SavedSettings;
 
   public constructor(data: any[]) {
     this.data = data;
     this.filteredData = this.data;
-    this.condition = {
-      count: [],
-      year: [],
-      shape: [],
-      color: [],
-      size: [],
-      favorite: false,
-      sortType: 'name',
-      searchKey: ''
-    }
     this.slider = new Slider();
     this.filterView = new FilterView();
     this.dataView = new DataView();
-
+    this.SavedSettings = new SavedSettings();
+    this.condition = this.SavedSettings.savedCondition;
   }
   private compareFunc(e: any) {
     let res = true;
@@ -105,6 +98,7 @@ class Filter {
     if (type === 'search') {
       this.condition.searchKey = param as string;
     }
+    this.SavedSettings.setCondition(this.condition);
   }
 
   private setSortType(e: Event) {
@@ -164,7 +158,7 @@ class Filter {
   }
 
   private clearFilters() {
-    this.filterView.defaultFilters();
+    this.filterView.showDefaultFilters();
     (this.slider.countSlider as any).noUiSlider.reset();
     (this.slider.yearSlider as any).noUiSlider.reset();
     this.condition = {
@@ -177,20 +171,28 @@ class Filter {
       sortType: 'name',
       searchKey: ''
     }
-    this.dataView.updateDecorations(this.data);
+    this.SavedSettings.setDefault();
+    this.showFiltered();
     (document.querySelector('.search') as HTMLInputElement).value = '';
   }
 
-  public initFilters() {
+  private showFilters() {
+    this.filterView.showSelectedFilters(this.condition);
+    (this.slider.countSlider as any).noUiSlider.set(this.condition.count);
+    (this.slider.yearSlider as any).noUiSlider.set(this.condition.year);
+    (document.querySelector('.search') as HTMLInputElement).value = this.condition.searchKey;
+  }
+
+  private initFilters() {
     this.filterView.drawFilters();
     ['shape', 'color', 'size', 'fav'].forEach(item => {
       document.querySelector(`.${item}-filters`).
         addEventListener('click', (e: Event) => this.setShape(item, e));
     });
-    (this.slider.countSlider as any).noUiSlider.on('update', () => {
+    (this.slider.countSlider as any).noUiSlider.on('slide', () => {
       this.setRange('count', ((this.slider.countSlider as any).noUiSlider.get()))
     });
-    (this.slider.yearSlider as any).noUiSlider.on('update', () => {
+    (this.slider.yearSlider as any).noUiSlider.on('slide', () => {
       this.setRange('year', ((this.slider.yearSlider as any).noUiSlider.get()))
     });
     document.querySelector('.sort-select').addEventListener('change', (e: Event) => this.setSortType(e));
@@ -198,6 +200,11 @@ class Filter {
     document.querySelector('.search').addEventListener('input', (e) => this.setSearchKey(e));
   }
 
+  public start() {
+    this.initFilters();
+    this.showFilters();
+    this.showFiltered();
+  }
 }
 
 export default Filter;
