@@ -1,3 +1,5 @@
+import toggle from '../misc/toggle'
+
 import Slider from "../nouislider/sliderInit";
 import FilterView from '../view/filterView';
 import DataView from '../view/dataView'
@@ -11,15 +13,6 @@ interface ICondition {
   favorite: boolean;
   sortType: string;
   searchKey: string;
-}
-
-function toggle(arr: any[], item: any) {
-  if (!arr.includes(item)) {
-    arr.push(item);
-  } else {
-    arr.splice(arr.indexOf(item), 1);
-  }
-  return arr;
 }
 
 class Filter {
@@ -95,13 +88,13 @@ class Filter {
       this.condition.year = param as string[];
     }
     if (type === 'shape') {
-      toggle(this.condition.shape, param);
+      toggle(this.condition.shape, param as string);
     }
     if (type === 'color') {
-      toggle(this.condition.color, param);
+      toggle(this.condition.color, param as string);
     }
     if (type === 'size') {
-      toggle(this.condition.size, param);
+      toggle(this.condition.size, param as string);
     }
     if (type === 'fav') {
       this.condition.favorite = !this.condition.favorite
@@ -133,7 +126,6 @@ class Filter {
 
   private setRange(type: string, param: string[]) {
     this.updateCondition(type, param);
-    this.dataView.updateDecorations(this.filteredData.filter(e => this.compareFunc(e)));
     this.showFiltered();
   }
 
@@ -168,7 +160,6 @@ class Filter {
       document.querySelector('.search-alert').classList.remove('hide');
     } else {
       document.querySelector('.search-alert').classList.add('hide');
-
     }
   }
 
