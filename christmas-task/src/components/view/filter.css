@@ -1,6 +1,7 @@
 .filter-options {
-  width: 30%;
   height: 200px;
+  position: sticky;
+  top: 15px;
 }
 
 .filter-option {

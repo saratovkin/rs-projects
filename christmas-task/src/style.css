@@ -7,6 +7,10 @@ body {
   color: #fff;
 }
 
+.main {
+  position: relative;
+}
+
 .header-container {
   width: 100%;
   max-width: 1280px;

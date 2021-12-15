@@ -3,14 +3,21 @@
   display: flex;
   gap: 20px 20px;
   flex-wrap: wrap;
+  margin-bottom: 50px;
 }
 
 .decoration,
 .decoration-specs {
+  border: 2px solid transparent;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   row-gap: 10px;
+}
+
+.decoration.fav-toy {
+  border: 2px solid gold;
 }
 
 .decoration {
@@ -39,4 +46,11 @@
 .decoration-image {
   width: 60px;
   margin: 0 auto;
+  cursor: pointer;
+  transition: transform .5s;
+  user-select: none;
+}
+
+.decoration-image:hover {
+  transform: scale(1.1);
 }
