@@ -16,6 +16,7 @@
   <header class="header">
     <div class="header-container">
       <div class="header-nav">
+        <input type="search" class="search" placeholder="Поиск">
       </div>
       <div class="header-name">
         <span>Игрушки</span>
@@ -51,7 +52,12 @@
           <button class="reset-filter">Сбросить</button>
         </section>
       </aside>
-      <div class="decorations-container">
+      <section class="decorations-container">
+        <div class="search-alert hide">
+         <span> К сожалению, по вашему запросу совпадений не найдено. <br>
+           Измените запрос и попробуйте ещё раз.
+         </span>
+        </div>
         <template id="decorationTemplate">
           <div class="decoration">
             <div class="decoration-name"></div>
@@ -66,7 +72,7 @@
             </div>
           </div>
         </template>
-      </div>
+      </section>
     </div>
   </main>
   <footer class="footer">
