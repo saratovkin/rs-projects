@@ -6,32 +6,35 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Christmas Tree</title>
-  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Roboto:wght@300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500&family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <header class="header">
     <div class="header-container">
       <div class="header-nav">
-        <input type="search" class="search" placeholder="Поиск" autofocus="autofocus ">
+        <input type="search" class="search" placeholder="Поиск" autofocus="autofocus" autocomplete="off">
       </div>
       <div class="header-name">
         <span>Игрушки</span>
       </div>
-      <div class="fav-counter">0</div>
+      <div class="fav-counter">
+        <span class="fav-count">
+            0
+        </span>
+      </div>
     </div>
 
   </header>
   <main class=main>
     <div class="main-container">
       <aside class="filter-options">
-        <section class="filter-option">
+        <div class="filter-option">
           <p>Фильтры по значению</p>
-        </section>
-        <section class="filter-option">
+        </div>
+        <div class="filter-option">
           <p>Фильтры по диапозону</p>
           <div class="count-slider">
             <span>Количество экземпляров:</span>
@@ -50,8 +53,8 @@
               <span class="year-to">2020</span>
             </div>
           </div>
-        </section>
-        <section class="filter-option">
+        </div>
+        <div class="filter-option">
           <p>Сортировка</p>
           <select class="sort-select">
             <option selected="" value="name">По названию от «А» до «Я»</option>
@@ -60,9 +63,9 @@
             <option value="year-desc">По году приобретения по убыванию</option>
           </select>
           <button class="reset-filter">Сбросить</button>
-        </section>
+        </div>
       </aside>
-      <section class="decorations-container">
+      <div class="decorations-container">
         <div class="search-alert hide">
          <span> К сожалению, по вашему запросу совпадений не найдено. <br>
            Измените запрос и попробуйте ещё раз.
@@ -70,6 +73,10 @@
         </div>
         <template id="decorationTemplate">
           <div class="decoration">
+            <div class="fav-limit hide">
+              <span> Лимит игрушек - 20 шт.
+              </span>
+            </div>
             <div class="decoration-name"></div>
             <img class="decoration-image" src="" alt="">
             <div class="decoration-specs">
@@ -82,7 +89,7 @@
             </div>
           </div>
         </template>
-      </section>
+      </div>
     </div>
   </main>
   <footer class="footer">
