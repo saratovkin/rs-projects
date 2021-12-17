@@ -1,19 +1,10 @@
-interface ICondition {
-  count: string[];
-  year: string[];
-  shape: string[];
-  color: string[];
-  size: string[];
-  favorite: boolean;
-  sortType: string;
-  searchKey: string;
-}
+import ICondition from '../interfaces/ICondition';
 
 class savedSettings {
   public savedCondition: ICondition;
   public favList: string[];
   constructor() {
-    this.savedCondition = JSON.parse(localStorage.getItem('condition')) || {
+    this.savedCondition = JSON.parse(localStorage.getItem('condition') as string) || {
       count: [],
       year: [],
       shape: [],
@@ -23,14 +14,14 @@ class savedSettings {
       sortType: 'name',
       searchKey: ''
     }
-    this.favList = JSON.parse(localStorage.getItem('favList')) || [];
+    this.favList = JSON.parse(localStorage.getItem('favList') as string) || [];
   }
 
-  public setCondition(condition: ICondition) {
+  public setCondition(condition: ICondition): void {
     localStorage.setItem('condition', JSON.stringify(condition));
   }
 
-  public setDefault() {
+  public setDefault(): void {
     this.savedCondition = {
       count: [],
       year: [],
@@ -45,7 +36,7 @@ class savedSettings {
     this.setFavToys([]);
   }
 
-  public setFavToys(favList: string[]) {
+  public setFavToys(favList: string[]): void {
     localStorage.setItem('favList', JSON.stringify(favList));
   }
 

@@ -5,71 +5,68 @@ import FilterView from '../view/filterView';
 import DataView from '../view/dataView'
 import SavedSettings from './savedSettings';
 
-interface ICondition {
-  count: string[];
-  year: string[];
-  shape: string[];
-  color: string[];
-  size: string[];
-  favorite: boolean;
-  sortType: string;
-  searchKey: string;
-}
+import IToy from '../interfaces/IToy';
+import ICondition from '../interfaces/ICondition';
 
 class Filter {
 
-  private data: any[];
+  private data: IToy[];
   private condition: ICondition;
   private slider: Slider;
-  private filteredData: any[];
+  private filteredData: IToy[];
   private filterView: FilterView;
   private dataView: DataView;
   private SavedSettings: SavedSettings;
 
-  public constructor(data: any[]) {
-    this.data = data;
-    this.filteredData = this.data;
+  public constructor() {
     this.slider = new Slider();
     this.filterView = new FilterView();
     this.dataView = new DataView();
     this.SavedSettings = new SavedSettings();
     this.condition = this.SavedSettings.savedCondition;
+    this.data = [];
+    this.filteredData = [];
   }
 
-  private compareFunc(e: any) {
+  public setData(data: IToy[]) {
+    this.data = data;
+    this.filteredData = this.data;
+  }
+
+  private compareFunc(toy: IToy) {
     let res = true;
     if (this.condition.shape.length != 0) {
-      res = this.condition.shape.includes(e.shape);
+      res = this.condition.shape.includes(toy.shape);
       if (!res) {
         return false;
       }
     }
     if (this.condition.color.length != 0) {
-      res = this.condition.color.includes(e.color);
+      res = this.condition.color.includes(toy.color);
       if (!res) {
         return false;
       }
     }
     if (this.condition.size.length != 0) {
-      res = this.condition.size.includes(e.size);
+      res = this.condition.size.includes(toy.size);
       if (!res) {
         return false;
       }
     }
     if (this.condition.count.length != 0) {
-      res = +this.condition.count[0] <= +e.count && +this.condition.count[1] >= +e.count;
+      res = +this.condition.count[0] <= +toy.count && +this.condition.count[1] >= +toy.count;
       if (!res) {
         return false;
       }
     }
     if (this.condition.year.length != 0) {
-      res = +this.condition.year[0] <= +e.year && +this.condition.year[1] >= +e.year;
+      res = +this.condition.year[0] <= +toy.year && +this.condition.year[1] >= +toy.year;
       if (!res) {
         return false;
       }
     }
     if (this.condition.favorite) {
-      res = Boolean(e.favorite);
+      res = Boolean(toy.favorite);
     }
     return res;
   }
@@ -109,19 +106,25 @@ class Filter {
     this.showFiltered();
   }
 
-  private setShape(type: string, e: any) {
+  private setShape(type: string, e: Event) {
 
-    const param = e.target.getAttribute('filter');
+    const param = (e.target as HTMLElement).getAttribute('filter');
     if (param) {
       this.updateCondition(type, param);
-      e.target.classList.toggle('clicked');
+      (e.target as HTMLElement).classList.toggle('clicked');
     }
     this.showFiltered();
   }
 
   private showSliderRanges(type: string, param: string[]) {
-    document.querySelector(`.${type}-from`).textContent = param[0].split('.')[0];
-    document.querySelector(`.${type}-to`).textContent = param[1].split('.')[0];
+    let leftRange: Node | null = document.querySelector(`.${type}-from`);
+    let rightRange: Node | null = document.querySelector(`.${type}-to`);
+    if (leftRange !== null) {
+      leftRange.textContent = param[0].split('.')[0];
+    }
+    if (rightRange !== null) {
+      rightRange.textContent = param[1].split('.')[0];
+    }
   }
 
   private setRange(type: string, param: string[]) {
@@ -145,7 +148,7 @@ class Filter {
       this.filteredData.sort((a, b) => a.name.localeCompare(b.name));
     }
     if (sortTemp[0] === 'year') {
-      this.filteredData.sort((a, b) => (a.year - b.year));
+      this.filteredData.sort((a, b) => (+a.year - +b.year));
     }
     if (sortTemp[1]) {
       this.filteredData = this.filteredData.reverse();
@@ -157,10 +160,14 @@ class Filter {
   }
 
   private toggleSearchAlert(flag: boolean) {
-    if (flag) {
-      document.querySelector('.search-alert').classList.remove('hide');
-    } else {
-      document.querySelector('.search-alert').classList.add('hide');
+    let node: Element | null = document.querySelector('.search-alert');
+    if (node !== null) {
+      if (flag) {
+        node.classList.remove('hide');
+      }
+      else {
+        node.classList.add('hide');
+      }
     }
   }
 
@@ -193,7 +200,7 @@ class Filter {
   private initFilters() {
     this.filterView.drawFilters();
     ['shape', 'color', 'size', 'fav'].forEach(item => {
-      document.querySelector(`.${item}-filters`).
+      document.querySelector(`.${item}-filters`)?.
         addEventListener('click', (e: Event) => this.setShape(item, e));
     });
     (this.slider.countSlider as any).noUiSlider.on('slide', () => {
@@ -202,9 +209,9 @@ class Filter {
     (this.slider.yearSlider as any).noUiSlider.on('slide', () => {
       this.setRange('year', ((this.slider.yearSlider as any).noUiSlider.get()))
     });
-    document.querySelector('.sort-select').addEventListener('change', (e: Event) => this.setSortType(e));
-    document.querySelector('.reset-filter').addEventListener('click', () => { this.clearFilters() });
-    document.querySelector('.search').addEventListener('input', (e) => this.setSearchKey(e));
+    document.querySelector('.sort-select')?.addEventListener('change', (e: Event) => this.setSortType(e));
+    document.querySelector('.reset-filter')?.addEventListener('click', () => { this.clearFilters() });
+    document.querySelector('.search')?.addEventListener('input', (e) => this.setSearchKey(e));
   }
 
   public start() {

@@ -5,7 +5,6 @@ const favLimit: number = 20;
 class FavToys {
 
   public favList: string[];
-  private timer: NodeJS.Timer;
   private savedSettings: SavedSettings;
   constructor() {
     this.savedSettings = new SavedSettings;
@@ -23,20 +22,24 @@ class FavToys {
       this.favList.push(index);
       ((e.target as HTMLElement).parentNode as HTMLElement).classList.add('fav-toy');
     } else {
-      this.showAlertMessage(e);
+      this.showAlertMessage(((e.target as HTMLElement).parentNode));
     }
     this.savedSettings.setFavToys(this.favList);
     this.updateCounter();
   }
 
-  private showAlertMessage(e: Event) {
-    (e.target as HTMLElement).parentElement.querySelector('.fav-limit').classList.remove('hide');
-    this.timer = setTimeout(() =>
-      (e.target as HTMLElement).parentElement.querySelector('.fav-limit').classList.add('hide'), 1500);
+  private showAlertMessage(node: ParentNode | null) {
+    if (node !== null) {
+      node.querySelector('.fav-limit')?.classList.remove('hide');
+      setTimeout(() => node.querySelector('.fav-limit')?.classList.add('hide'), 1500);
+    }
   }
 
   private updateCounter() {
-    document.querySelector('.fav-count').textContent = this.favList.length.toString();
+    let node: Element | null = document.querySelector('.fav-count');
+    if (node != null) {
+      node.textContent = this.favList.length.toString();
+    }
   }
 }
 

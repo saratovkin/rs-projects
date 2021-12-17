@@ -1,13 +1,4 @@
-interface ICondition {
-  count: string[];
-  year: string[];
-  shape: string[];
-  color: string[];
-  size: string[];
-  favorite: boolean;
-  sortType: string;
-  searchKey: string;
-}
+import ICondition from '../interfaces/ICondition';
 
 class FilterView {
 
@@ -23,32 +14,32 @@ class FilterView {
         node.classList.remove('clicked');
       })
     });
-    (document.querySelector('.sort-select') as any).selectedIndex = 0;
+    (document.querySelector('.sort-select') as HTMLSelectElement).selectedIndex = 0;
   }
 
   public showSelectedFilters(condition: ICondition) {
-    let index;
+    let index = 0;
     if (condition.sortType == 'name') index = 0;
     if (condition.sortType == 'name-desc') index = 1;
     if (condition.sortType == 'year') index = 2;
     if (condition.sortType == 'year-desc') index = 3;
     ['shape', 'color', 'size'].forEach(item => {
       document.querySelectorAll(`.${item}-option`).forEach(node => {
-        if (condition.shape.includes(node.getAttribute('filter'))) {
+        if (condition.shape.includes(node.getAttribute('filter') as string)) {
           node.classList.add('clicked');
         }
-        if (condition.color.includes(node.getAttribute('filter'))) {
+        if (condition.color.includes(node.getAttribute('filter') as string)) {
           node.classList.add('clicked');
         }
-        if (condition.size.includes(node.getAttribute('filter'))) {
+        if (condition.size.includes(node.getAttribute('filter') as string)) {
           node.classList.add('clicked');
         }
       })
     });
     if (condition.favorite) {
-      document.querySelector('.fav-option').classList.add('clicked');
+      document.querySelector('.fav-option')?.classList.add('clicked');
     }
-    (document.querySelector('.sort-select') as any).selectedIndex = index;
+    (document.querySelector('.sort-select') as HTMLSelectElement).selectedIndex = index as number;
   }
 
   private getAttributes(type: string): string[] {
@@ -62,6 +53,7 @@ class FilterView {
       case 'fav':
         return ['false'];
     }
+    return [];
   }
 
   private getBg(index: number) {
@@ -108,6 +100,7 @@ class FilterView {
       case 'fav':
         return 'Только любимые';
     }
+    return '';
   }
 
   private addFilterNode(type: string) {
@@ -130,7 +123,7 @@ class FilterView {
         newType.style.backgroundImage = `url("svg/${this.getBg(index)}")`;
       }
       if (type == 'color') {
-        newType.style.backgroundColor = this.getColor(index);
+        newType.style.backgroundColor = this.getColor(index) as string;
       }
       if (type == 'size') {
         newType.style.backgroundImage = `url("svg/ball.svg")`;
@@ -139,7 +132,7 @@ class FilterView {
       newNode.appendChild(newType);
     });
 
-    document.querySelector('.filter-option').appendChild(newNode);
+    document.querySelector('.filter-option')?.appendChild(newNode);
   }
 
 }

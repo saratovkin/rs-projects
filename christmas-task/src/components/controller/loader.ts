@@ -1,3 +1,5 @@
+import IToy from '../interfaces/IToy';
+
 class Loader {
     private link: string;
 

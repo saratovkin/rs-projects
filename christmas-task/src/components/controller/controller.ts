@@ -1,13 +1,11 @@
 import DataLoader from './dataLoader';
-
+import IToy from '../interfaces/IToy';
 
 class AppController extends DataLoader {
 
-  private data:any[];
-
   public async getData() {
-    this.data = await super.load();
-    return this.data;
+    let data: IToy[] = await super.load();
+    return data;
   }
 
 }

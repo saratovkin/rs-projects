@@ -8,8 +8,8 @@ class Slider {
 
   constructor() {
 
-    this.countSlider = document.getElementById('count-slider');
-    this.yearSlider = document.getElementById('year-slider');
+    this.countSlider = document.getElementById('count-slider') as HTMLElement;
+    this.yearSlider = document.getElementById('year-slider') as HTMLElement;
     noUiSlider.create(this.countSlider, {
       animate: false,
       start: [1, 12],
