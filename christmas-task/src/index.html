@@ -8,22 +8,22 @@
   <title>Christmas Tree</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500&family=Roboto:wght@300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500&family=Roboto:wght@300&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
   <header class="header">
     <div class="header-container">
       <div class="header-nav">
-        <input type="search" class="search" placeholder="Поиск" autofocus="autofocus" autocomplete="off">
+        <span class="name">Игрушки</span>
       </div>
       <div class="header-name">
-        <span>Игрушки</span>
-      </div>
-      <div class="fav-counter">
-        <span class="fav-count">
+        <div class="fav-counter">
+          <span class="fav-count">
             0
-        </span>
+          </span>
+        </div>
       </div>
     </div>
 
@@ -31,6 +31,7 @@
   <main class=main>
     <div class="main-container">
       <aside class="filter-options">
+        <input type="search" class="search" placeholder="Поиск" autofocus="autofocus" autocomplete="off">
         <div class="filter-option">
           <p>Фильтры по значению</p>
         </div>
@@ -43,7 +44,7 @@
               <div class="slider" id="count-slider"></div>
               <span class="count-to">12</span>
             </div>
-           
+
           </div>
           <div class="year-slider">
             <span>Год приобретения:</span>
@@ -67,9 +68,9 @@
       </aside>
       <div class="decorations-container">
         <div class="search-alert hide">
-         <span> К сожалению, по вашему запросу совпадений не найдено. <br>
-           Измените запрос и попробуйте ещё раз.
-         </span>
+          <span> К сожалению, по вашему запросу совпадений не найдено. <br>
+            Измените запрос и попробуйте ещё раз.
+          </span>
         </div>
         <template id="decorationTemplate">
           <div class="decoration">
