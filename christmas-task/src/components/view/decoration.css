@@ -5,6 +5,8 @@
   flex-wrap: wrap;
   margin-bottom: 50px;
   position: relative;
+  margin-right: 10px;
+
 }
 
 .decoration,
@@ -66,32 +68,6 @@
 
 .decoration-image:hover {
   transform: scale(1.1);
-}
-
-.fav-counter {
-  width: 48px;
-  height: 60px;
-  background-image: url("/assets/svg/ball-2.svg");
-  background-size: 50px 62px;
-  background-position: left -8px;
-  background-repeat: no-repeat;
-  transition: .3s;
-  margin-right: -5px;
-}
-
-.fav-count {
-  display: inline-block;
-  min-width: 42px;
-  height: 42px;
-  margin-top: 10px;
-  margin-left: 4px;
-  margin-right: 2px;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 40px;
-  font-size: 20px;
-  background-color: #2c7272;
-  color: #fff;
 }
 
 .fav-limit {
