@@ -32,6 +32,8 @@ body {
 
 .header-name {
   width: 70%;
+  min-width: 350px;
+  margin-right: 50px;
   display: flex;
   justify-content: flex-end;
 }

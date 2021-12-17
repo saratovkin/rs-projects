@@ -1,12 +1,12 @@
 .decorations-container {
   width: 70%;
+  min-width: 350px;
   display: flex;
   gap: 20px 20px;
   flex-wrap: wrap;
   margin-bottom: 50px;
   position: relative;
   margin-right: 10px;
-
 }
 
 .decoration,
@@ -91,4 +91,19 @@
 
 .fav-limit.hide {
   opacity: 0;
+}
+
+@media (max-width: 950px) {
+  .decoration {
+    width: 160px;
+    height: 250px;
+    row-gap: 5px;
+  }
+  .decoration-specs {
+    row-gap: 5px;
+    font-size: 10px;
+  }
+  .decoration-name {
+    font-size: 14px;
+  }
 }
