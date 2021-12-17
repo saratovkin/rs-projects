@@ -1,12 +1,23 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "target": "es6",
     "module": "commonjs",
-    "noImplicitAny": true,
     "removeComments": true,
-    "preserveConstEnums": true,
-    "sourceMap": true
+    "downlevelIteration": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }
