@@ -12,7 +12,7 @@ class decorationsPage {
         this.data = [];
     }
 
-    public async start() {
+    public async start(): Promise<void> {
         this.data = await this.controller.getData();
         const filter = new Filter();
         filter.setData(this.data);

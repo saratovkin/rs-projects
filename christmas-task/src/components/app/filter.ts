@@ -28,12 +28,12 @@ class Filter {
     this.filteredData = [];
   }
 
-  public setData(data: IToy[]) {
+  public setData(data: IToy[]): void {
     this.data = data;
     this.filteredData = this.data;
   }
 
-  private compareFunc(toy: IToy) {
+  private compareFunc(toy: IToy): boolean {
     let res = true;
     if (this.condition.shape.length != 0) {
       res = this.condition.shape.includes(toy.shape);
@@ -71,7 +71,7 @@ class Filter {
     return res;
   }
 
-  private updateCondition(type: string, param: string | string[]) {
+  private updateCondition(type: string, param: string | string[]): void {
     if (type === 'count') {
       this.condition.count = param as string[];
     }
@@ -99,14 +99,14 @@ class Filter {
     this.SavedSettings.setCondition(this.condition);
   }
 
-  private setSortType(e: Event) {
+  private setSortType(e: Event): void {
     if (e) {
       this.updateCondition('sort', (e.currentTarget as HTMLInputElement).value);
     }
     this.showFiltered();
   }
 
-  private setShape(type: string, e: Event) {
+  private setShape(type: string, e: Event): void {
 
     const param = (e.target as HTMLElement).getAttribute('filter');
     if (param) {
@@ -116,7 +116,7 @@ class Filter {
     this.showFiltered();
   }
 
-  private showSliderRanges(type: string, param: string[]) {
+  private showSliderRanges(type: string, param: string[]): void {
     let leftRange: Node | null = document.querySelector(`.${type}-from`);
     let rightRange: Node | null = document.querySelector(`.${type}-to`);
     if (leftRange !== null) {
@@ -127,20 +127,19 @@ class Filter {
     }
   }
 
-  private setRange(type: string, param: string[]) {
+  private setRange(type: string, param: string[]): void {
     this.showSliderRanges(type, param);
     this.updateCondition(type, param);
     this.showFiltered();
   }
 
-  private setSearchKey(e: Event) {
+  private setSearchKey(e: Event): void {
     let searchStr = (e.target as HTMLInputElement).value.toLowerCase();
     this.updateCondition('search', searchStr);
     this.showFiltered();
   }
 
-  private showFiltered() {
-    this.toggleSearchAlert(false);
+  private getFilteredData(): void {
     this.filteredData = this.data.filter(e => this.compareFunc(e));
     this.filteredData = this.filteredData.filter(elem => elem.name.toLowerCase().indexOf(this.condition.searchKey) != -1);
     let sortTemp: string[] = this.condition.sortType.split('-');
@@ -153,13 +152,18 @@ class Filter {
     if (sortTemp[1]) {
       this.filteredData = this.filteredData.reverse();
     }
+  }
+
+  private showFiltered(): void {
+    this.toggleSearchAlert(false);
+    this.getFilteredData();
     this.dataView.updateDecorations(this.filteredData);
     if (this.filteredData.length === 0) {
       this.toggleSearchAlert(true);
     }
   }
 
-  private toggleSearchAlert(flag: boolean) {
+  private toggleSearchAlert(flag: boolean): void {
     let node: Element | null = document.querySelector('.search-alert');
     if (node !== null) {
       if (flag) {
@@ -171,7 +175,7 @@ class Filter {
     }
   }
 
-  private clearFilters() {
+  private clearFilters(): void {
     this.filterView.showDefaultFilters();
     (this.slider.countSlider as any).noUiSlider.reset();
     (this.slider.yearSlider as any).noUiSlider.reset();
@@ -190,14 +194,14 @@ class Filter {
     (document.querySelector('.search') as HTMLInputElement).value = '';
   }
 
-  private showFilterValues() {
+  private showFilterValues(): void {
     this.filterView.showSelectedFilters(this.condition);
     (this.slider.countSlider as any).noUiSlider.set(this.condition.count);
     (this.slider.yearSlider as any).noUiSlider.set(this.condition.year);
     (document.querySelector('.search') as HTMLInputElement).value = this.condition.searchKey;
   }
 
-  private initFilters() {
+  private initFilters(): void {
     this.filterView.drawFilters();
     ['shape', 'color', 'size', 'fav'].forEach(item => {
       document.querySelector(`.${item}-filters`)?.
@@ -214,7 +218,7 @@ class Filter {
     document.querySelector('.search')?.addEventListener('input', (e) => this.setSearchKey(e));
   }
 
-  public start() {
+  public start(): void {
     this.initFilters();
     this.showFilterValues();
     this.showFiltered();

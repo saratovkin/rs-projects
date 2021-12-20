@@ -2,13 +2,13 @@ import ICondition from '../interfaces/ICondition';
 
 class FilterView {
 
-  public drawFilters() {
+  public drawFilters(): void {
     ['shape', 'color', 'size', 'fav'].forEach(item => {
       this.addFilterNode(item);
     });
   }
 
-  public showDefaultFilters() {
+  public showDefaultFilters(): void {
     ['shape', 'color', 'size', 'fav'].forEach(item => {
       document.querySelectorAll(`.${item}-option`).forEach(node => {
         node.classList.remove('clicked');
@@ -17,7 +17,7 @@ class FilterView {
     (document.querySelector('.sort-select') as HTMLSelectElement).selectedIndex = 0;
   }
 
-  public showSelectedFilters(condition: ICondition) {
+  public showSelectedFilters(condition: ICondition): void {
     let index = 0;
     if (condition.sortType == 'name') index = 0;
     if (condition.sortType == 'name-desc') index = 1;
@@ -56,7 +56,7 @@ class FilterView {
     return [];
   }
 
-  private getBg(index: number) {
+  private getBg(index: number): string {
 
     switch (index) {
       case 0:
@@ -70,9 +70,10 @@ class FilterView {
       case 4:
         return 'snowflake.svg';
     }
+    return '';
   }
 
-  private getColor(index: number) {
+  private getColor(index: number): string {
 
     switch (index) {
       case 0:
@@ -86,6 +87,7 @@ class FilterView {
       case 4:
         return '#2299eb';
     }
+    return '#fdd700';
   }
 
   private getTitle(type: string): string {
@@ -103,7 +105,7 @@ class FilterView {
     return '';
   }
 
-  private addFilterNode(type: string) {
+  private addFilterNode(type: string): void {
 
     const newNode = document.createElement('div');
     newNode.className = `${type}-filters`;

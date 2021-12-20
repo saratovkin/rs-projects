@@ -3,8 +3,8 @@ import IToy from '../interfaces/IToy';
 
 class AppController extends DataLoader {
 
-  public async getData() {
-    let data: IToy[] = await super.load();
+  public async getData(): Promise<IToy[]> {
+    let data: IToy[] = await super.load() as IToy[];
     return data;
   }
 

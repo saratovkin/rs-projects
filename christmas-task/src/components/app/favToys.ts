@@ -12,7 +12,7 @@ class FavToys {
     this.updateCounter();
   }
 
-  public toggleFav(e: Event) {
+  public toggleFav(e: Event): void {
 
     let index: string = (e.target as HTMLImageElement).alt;
     if (this.favList.includes(index)) {
@@ -28,18 +28,24 @@ class FavToys {
     this.updateCounter();
   }
 
-  private showAlertMessage(node: ParentNode | null) {
+  private showAlertMessage(node: ParentNode | null): void {
     if (node !== null) {
       node.querySelector('.fav-limit')?.classList.remove('hide');
       setTimeout(() => node.querySelector('.fav-limit')?.classList.add('hide'), 1500);
     }
   }
 
-  private updateCounter() {
+  private updateCounter(): void {
     let node: Element | null = document.querySelector('.fav-count');
     if (node != null) {
       node.textContent = this.favList.length.toString();
     }
+  }
+
+  public clearFav(): void {
+    document.querySelectorAll('.fav-toy').forEach(item => {
+      item.classList.remove('fav-toy');
+    });
   }
 }
 

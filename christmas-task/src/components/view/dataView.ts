@@ -39,13 +39,14 @@ class DataView {
     document.querySelector('.decorations-container')?.appendChild(fragment);
   }
 
-  private clearDecorations() {
+  private clearDecorations(): void {
+    this.favToys.clearFav();
     document.querySelectorAll('.decoration').forEach(item => {
       item.remove();
     });
   }
 
-  public updateDecorations(data: any) {
+  public updateDecorations(data: any): void {
     this.clearDecorations();
     this.drawDecorations(data);
   }
