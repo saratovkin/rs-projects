@@ -44,7 +44,6 @@
   margin: 0 15px;
 }
 
-
 .decoration-name {
   margin-top: 15px;
   height: 40px;
@@ -104,6 +103,10 @@
     font-size: 10px;
   }
   .decoration-name {
+    margin-top: 8px;
     font-size: 14px;
+  }
+  .decoration-image {
+    width: 50px;
   }
 }
