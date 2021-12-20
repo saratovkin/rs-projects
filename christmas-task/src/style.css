@@ -10,6 +10,7 @@ body {
 
 .main {
   position: relative;
+  min-height: 80vh;
 }
 
 .header-container {
@@ -95,4 +96,30 @@ body {
 
 .search-alert.hide {
   display: none;
+}
+
+.footer {
+  max-width: 1280px;
+  width: 100%;
+  min-width: 700px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.footer-container {
+  width: calc(100% - 60px);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-container a {
+  color: #333;
+  text-decoration: none;
+  transition: transform .2s;
+}
+
+.footer-container a:hover {
+  transform: scale(1.05);
 }

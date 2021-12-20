@@ -1,9 +1,10 @@
 .filter-options {
-  height: 200px;
+  height: 100%;
   position: sticky;
   top: 15px;
   width: 30%;
   min-width: 250px;
+  overflow-y: scroll;
 }
 
 .filter-option,
