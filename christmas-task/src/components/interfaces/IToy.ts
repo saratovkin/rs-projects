@@ -9,5 +9,4 @@ interface IToy {
   favorite: boolean;
 }
 
-
 export default IToy;

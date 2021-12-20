@@ -1,30 +1,29 @@
 import ICondition from '../interfaces/ICondition';
 
 class FilterView {
-
-  public drawFilters(): void {
-    ['shape', 'color', 'size', 'fav'].forEach(item => {
-      this.addFilterNode(item);
+  public static drawFilters(): void {
+    ['shape', 'color', 'size', 'fav'].forEach((item) => {
+      FilterView.addFilterNode(item);
     });
   }
 
-  public showDefaultFilters(): void {
-    ['shape', 'color', 'size', 'fav'].forEach(item => {
-      document.querySelectorAll(`.${item}-option`).forEach(node => {
+  public static showDefaultFilters(): void {
+    ['shape', 'color', 'size', 'fav'].forEach((item) => {
+      document.querySelectorAll(`.${item}-option`).forEach((node) => {
         node.classList.remove('clicked');
-      })
+      });
     });
     (document.querySelector('.sort-select') as HTMLSelectElement).selectedIndex = 0;
   }
 
-  public showSelectedFilters(condition: ICondition): void {
+  public static showSelectedFilters(condition: ICondition): void {
     let index = 0;
-    if (condition.sortType == 'name') index = 0;
-    if (condition.sortType == 'name-desc') index = 1;
-    if (condition.sortType == 'year') index = 2;
-    if (condition.sortType == 'year-desc') index = 3;
-    ['shape', 'color', 'size'].forEach(item => {
-      document.querySelectorAll(`.${item}-option`).forEach(node => {
+    if (condition.sortType === 'name') index = 0;
+    if (condition.sortType === 'name-desc') index = 1;
+    if (condition.sortType === 'year') index = 2;
+    if (condition.sortType === 'year-desc') index = 3;
+    ['shape', 'color', 'size'].forEach((item) => {
+      document.querySelectorAll(`.${item}-option`).forEach((node) => {
         if (condition.shape.includes(node.getAttribute('filter') as string)) {
           node.classList.add('clicked');
         }
@@ -34,7 +33,7 @@ class FilterView {
         if (condition.size.includes(node.getAttribute('filter') as string)) {
           node.classList.add('clicked');
         }
-      })
+      });
     });
     if (condition.favorite) {
       document.querySelector('.fav-option')?.classList.add('clicked');
@@ -42,7 +41,7 @@ class FilterView {
     (document.querySelector('.sort-select') as HTMLSelectElement).selectedIndex = index as number;
   }
 
-  private getAttributes(type: string): string[] {
+  private static getAttributes(type: string): string[] {
     switch (type) {
       case 'shape':
         return ['шар', 'фигурка', 'колокольчик', 'шишка', 'снежинка'];
@@ -52,12 +51,12 @@ class FilterView {
         return ['малый', 'средний', 'большой'];
       case 'fav':
         return ['false'];
+      default:
+        return [''];
     }
-    return [];
   }
 
-  private getBg(index: number): string {
-
+  private static getBg(index: number): string {
     switch (index) {
       case 0:
         return 'ball.svg';
@@ -69,12 +68,12 @@ class FilterView {
         return 'cone.svg';
       case 4:
         return 'snowflake.svg';
+      default:
+        return '';
     }
-    return '';
   }
 
-  private getColor(index: number): string {
-
+  private static getColor(index: number): string {
     switch (index) {
       case 0:
         return '#fdd700';
@@ -86,12 +85,12 @@ class FilterView {
         return '#fff';
       case 4:
         return '#2299eb';
+      default:
+        return '';
     }
-    return '#fdd700';
   }
 
-  private getTitle(type: string): string {
-
+  private static getTitle(type: string): string {
     switch (type) {
       case 'shape':
         return 'Форма';
@@ -101,41 +100,35 @@ class FilterView {
         return 'Размер';
       case 'fav':
         return 'Только любимые';
+      default:
+        return '';
     }
-    return '';
   }
 
-  private addFilterNode(type: string): void {
-
+  private static addFilterNode(type: string): void {
     const newNode = document.createElement('div');
     newNode.className = `${type}-filters`;
-
     const nodeTitle = document.createElement('span');
-    nodeTitle.textContent = this.getTitle(type) + ':';
+    nodeTitle.textContent = `${FilterView.getTitle(type)}:`;
     newNode.appendChild(nodeTitle);
-
-    const attributes = this.getAttributes(type);
+    const attributes = FilterView.getAttributes(type);
     attributes.forEach((item, index) => {
-
       const newType = document.createElement('div');
       newType.className = `${type}-option`;
       newType.setAttribute('filter', item);
-
-      if (type == 'shape') {
-        newType.style.backgroundImage = `url("svg/${this.getBg(index)}")`;
+      if (type === 'shape') {
+        newType.style.backgroundImage = `url("svg/${FilterView.getBg(index)}")`;
       }
-      if (type == 'color') {
-        newType.style.backgroundColor = this.getColor(index) as string;
+      if (type === 'color') {
+        newType.style.backgroundColor = FilterView.getColor(index) as string;
       }
-      if (type == 'size') {
-        newType.style.backgroundImage = `url("svg/ball.svg")`;
+      if (type === 'size') {
+        newType.style.backgroundImage = 'url("svg/ball.svg")';
       }
-
       newNode.appendChild(newType);
     });
-
     document.querySelector('.filter-option')?.appendChild(newNode);
   }
-
 }
+
 export default FilterView;
