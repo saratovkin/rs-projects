@@ -7,13 +7,14 @@ class Loader {
         this.link = link;
     }
 
-    public load() {
-        return fetch(this.link)
-            .then((res) => res.json())
-            .then((data) => {
-                return data;
-            })
-            .catch((err) => console.error(err));
+    public async load(): Promise<IToy[] | void> {
+        try {
+            const res = await fetch(this.link);
+            const data = await res.json();
+            return (data as IToy[]);
+        } catch (err) {
+            return console.error(err);
+        }
     }
 }
 
