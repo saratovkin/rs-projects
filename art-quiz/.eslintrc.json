@@ -27,19 +27,20 @@
             "error",
             "ignorePackages",
             {
-                "js": "never",
-                "jsx": "never",
-                "ts": "never",
-                "tsx": "never",
-                "mjs": "never"
+              "js": "never",
+              "jsx": "never",
+              "ts": "never",
+              "tsx": "never",
+              "mjs": "never"
             }
-        ],
+          ],
         "no-param-reassign": [
             2,
             {
                 "props": false
             }
         ],
-        "no-console": "off"
+        "no-console": "off",
+        "no-unused-expressions": "off"
     }
 }

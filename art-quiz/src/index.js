@@ -1,18 +1,7 @@
-import MiscFunctions from './js/misc';
-
-const volumeBar = document.getElementById('volume-bar');
-const timeBar = document.getElementById('time-bar');
-const musicBar = document.getElementById('music-bar');
-
-const rightSoundUrl = 'assets/sound-effects/right.mp3';
-const wrongSoundUrl = 'assets/sound-effects/wrong.mp3';
-const bgMusicUrl = 'assets/sound-effects/bg-music.mp3';
-const winSoundUrl = 'assets/sound-effects/win.mp3';
-const loseSoundUrl = 'assets/sound-effects/lose.mp3';
-const cricketsSoundUrl = 'assets/sound-effects/crickets.mp3';
-
-const settingsBtn = document.getElementById('settings-btn');
-const saveBtn = document.getElementById('save-btn');
+import MiscFunctions from './components/misc';
+import AudioEffects from './components/settings/audioEffects';
+import SoundUrls from './components/settings/soundUrls';
+import GameSettings from './components/settings/gameSettings';
 
 const artistsBtn = document.getElementById('artists-mode');
 const picturesBtn = document.getElementById('pictures-mode');
@@ -33,11 +22,6 @@ const blitzPage = document.querySelector('.categories-page.blitz');
 const popupIcon = document.querySelector('.popup-icon');
 const popupBtn = document.querySelector('.popup-btn');
 
-const timerInfo = document.querySelector('.pagination-timer');
-
-let timeMode;
-let timeLimit;
-
 let timerInterval;
 let questionTimeOut;
 let timeLeft;
@@ -50,157 +34,8 @@ let roundResults;
 
 let answersCounter;
 
-let volume;
-let tempVolume;
-let soundEffect;
-let bgMusic;
-
-let musicVolume;
-let tempMusicVolume;
-
-let isAudioEnabled = true;
-
-function toggleBlock(elem) {
-  elem.currentTarget.show.forEach((item) => {
-    document.querySelectorAll((item)).forEach((obj) => {
-      obj.classList.remove('hide');
-    });
-  });
-  elem.currentTarget.hide.forEach((item) => {
-    document.querySelectorAll(item).forEach((obj) => {
-      obj.classList.add('hide');
-    });
-  });
-}
-
-function displayVolume() {
-  document.getElementById('volume-sub').style.width = `${volumeBar.value}%`;
-}
-
-function setVolume() {
-  volume = volumeBar.value / 100;
-  if (volume === 0) {
-    document.querySelector('.mute-icon').style.backgroundImage = 'url("assets/svg/settings/mute.svg")';
-  } else {
-    document.querySelector('.mute-icon').style.backgroundImage = 'url("assets/svg/settings/unmute.svg")';
-  }
-  displayVolume();
-}
-
-function playAudio(url) {
-  soundEffect = new Audio(url);
-  soundEffect.volume = volume;
-  soundEffect.play();
-}
-
-function changeVolume() {
-  setVolume();
-  if (isAudioEnabled) {
-    isAudioEnabled = false;
-    playAudio(rightSoundUrl);
-    setTimeout(() => { (isAudioEnabled = true); }, 600);
-  }
-}
-
-function muteEffects() {
-  if (volume === 0) {
-    volumeBar.value = tempVolume;
-  } else {
-    tempVolume = volumeBar.value;
-    volumeBar.value = 0;
-  }
-  changeVolume();
-}
-
-function playBgMusic() {
-  if (!bgMusic) {
-    bgMusic = new Audio(bgMusicUrl);
-    bgMusic.volume = musicVolume;
-  }
-  bgMusic.play();
-}
-
-function displayMusicVolume() {
-  if (bgMusic) {
-    bgMusic.volume = musicVolume;
-    bgMusic.addEventListener('ended', playBgMusic);
-    bgMusic.play();
-  }
-  document.getElementById('music-sub').style.width = `${musicBar.value}%`;
-}
-
-function setMusicVolume() {
-  musicVolume = musicBar.value / 100;
-  if (musicVolume === 0) {
-    document.querySelector('.note-icon').style.backgroundImage = 'url("assets/svg/settings/music-mute-icon.svg")';
-  } else {
-    document.querySelector('.note-icon').style.backgroundImage = 'url("assets/svg/settings/music-icon.svg")';
-  }
-  displayMusicVolume();
-}
-
-function muteMusic() {
-  if (musicVolume === 0) {
-    musicBar.value = tempMusicVolume;
-  } else {
-    tempMusicVolume = musicBar.value;
-    musicBar.value = 0;
-  }
-  setMusicVolume();
-}
-
-function showTimeMode() {
-  if (timeMode === true) {
-    document.querySelector('.time-range').classList.remove('blocked');
-  } else {
-    document.querySelector('.time-range').classList.add('blocked');
-  }
-}
-
-function toggleTimeMode() {
-  timeMode = !timeMode;
-  showTimeMode();
-}
-
-function displayTimeInterval() {
-  document.getElementById('time-sub').style.width = `${timeBar.value * 20}%`;
-  document.getElementById('time-selected').innerHTML = timeLimit;
-}
-
-function setTimeInterval() {
-  timeLimit = (+timeBar.value + 1) * 5;
-  displayTimeInterval();
-}
-
-function saveSettings(elem) {
-  localStorage.setItem('timeLimit', timeLimit);
-  localStorage.setItem('timeMode', timeMode);
-  localStorage.setItem('volume', volumeBar.value / 100);
-  localStorage.setItem('music-volume', musicBar.value / 100);
-  document.querySelectorAll('.main-field').forEach((item) => {
-    item.classList.remove('flip');
-  });
-  settingsBtn.classList.remove('slide-bottom');
-  toggleBlock(elem);
-}
-
-function initSettings() {
-  document.getElementById('time-checkbox').checked = timeMode;
-  setTimeInterval();
-  setVolume();
-  setMusicVolume();
-  showTimeMode();
-}
-
-function setDefault() {
-  timeBar.value = 3;
-  timeMode = false;
-  volume = 0.8;
-  musicVolume = 0.2;
-  volumeBar.value = 80;
-  musicBar.value = 20;
-  initSettings();
-}
+let audioEffects;
+let gameSettings;
 
 function displayPreviews() {
   let index = 0;
@@ -246,23 +81,23 @@ function getEmoji(elem) {
   elem.classList.add('final-icon');
   if (answersCounter < 2) {
     type = 'very-bad';
-    playAudio(cricketsSoundUrl);
+    audioEffects.playAudio(SoundUrls.cricketsSoundUrl);
   }
   if (answersCounter >= 2 && answersCounter < 4) {
     type = 'bad';
-    playAudio(loseSoundUrl);
+    audioEffects.playAudio(SoundUrls.loseSoundUrl);
   }
   if (answersCounter >= 4 && answersCounter < 6) {
     type = 'normal';
-    playAudio(winSoundUrl);
+    audioEffects.playAudio(SoundUrls.winSoundUrl);
   }
   if (answersCounter >= 6 && answersCounter < 9) {
     type = 'good';
-    playAudio(winSoundUrl);
+    audioEffects.playAudio(SoundUrls.winSoundUrl);
   }
   if (answersCounter >= 9) {
     type = 'very-good';
-    playAudio(winSoundUrl);
+    audioEffects.playAudio(SoundUrls.winSoundUrl);
   }
   elem.classList.add(type);
 }
@@ -278,15 +113,15 @@ function showRoundResult() {
 
 function checkAnswer(elem) {
   let answer;
-  if (soundEffect) {
-    soundEffect.pause();
+  if (audioEffects.soundEffect) {
+    audioEffects.soundEffect.pause();
   }
   if (elem) {
     answer = elem.target;
   }
   clearInterval(timerInterval);
   clearTimeout(questionTimeOut);
-  timerInfo.classList.remove('last-seconds');
+  gameSettings.timerInfo.classList.remove('last-seconds');
   if ((answer && answer.innerHTML === correctAnswer.author)
     || (answer && answer.num === correctAnswer.imageNum)) {
     roundResults.push(true);
@@ -298,7 +133,7 @@ function checkAnswer(elem) {
       answerIndicators[10 + questionNumber - (cardNumber - 1) * 10].classList.add('correct');
     }
     popupIcon.classList.remove('wrong');
-    playAudio(rightSoundUrl);
+    audioEffects.playAudio(SoundUrls.rightSoundUrl);
   } else {
     roundResults.push(false);
     if (answer) {
@@ -310,7 +145,7 @@ function checkAnswer(elem) {
       answerIndicators[10 + questionNumber - (cardNumber - 1) * 10].classList.add('wrong');
     }
     popupIcon.classList.add('wrong');
-    playAudio(wrongSoundUrl);
+    audioEffects.playAudio(SoundUrls.wrongSoundUrl);
   }
   document.querySelector('.artists-mode').classList.add('blocked');
   document.querySelector('.pictures-mode').classList.add('blocked');
@@ -344,18 +179,18 @@ function showAristsQuestion(qNum) {
     const temp = answers.pop();
     item.innerHTML = temp;
   });
-  if (timeMode) {
-    tempTime = timeLimit;
-    timerInfo.innerHTML = `00:${(tempTime.toString()).padStart(2, '0')}`;
+  if (gameSettings.timeMode) {
+    tempTime = gameSettings.timeLimit;
+    gameSettings.timerInfo.innerHTML = `00:${(tempTime.toString()).padStart(2, '0')}`;
     timerInterval = setInterval(() => {
       tempTime -= 1;
       if (tempTime === 3) {
-        playAudio('assets/sound-effects/timer.mp3');
-        timerInfo.classList.add('last-seconds');
+        audioEffects.playAudio('assets/sound-effects/timer.mp3');
+        gameSettings.timerInfo.classList.add('last-seconds');
       }
-      timerInfo.innerHTML = `00:${(tempTime.toString()).padStart(2, '0')}`;
+      gameSettings.timerInfo.innerHTML = `00:${(tempTime.toString()).padStart(2, '0')}`;
     }, 1000);
-    questionTimeOut = setTimeout(() => checkAnswer(), timeLimit * 1000);
+    questionTimeOut = setTimeout(() => checkAnswer(), gameSettings.timeLimit * 1000);
   }
 }
 
@@ -394,18 +229,18 @@ function showPicturesQuestion(qNum) {
     };
     item.num = temp.imageNum;
   });
-  if (timeMode) {
-    tempTime = timeLimit;
-    timerInfo.textContent = `00:${(tempTime.toString()).padStart(2, '0')}`;
+  if (gameSettings.timeMode) {
+    tempTime = gameSettings.timeLimit;
+    gameSettings.timerInfo.textContent = `00:${(tempTime.toString()).padStart(2, '0')}`;
     timerInterval = setInterval(() => {
       tempTime -= 1;
       if (tempTime === 3) {
-        playAudio('assets/sound-effects/timer.mp3');
-        timerInfo.classList.add('last-seconds');
+        audioEffects.playAudio('assets/sound-effects/timer.mp3');
+        gameSettings.timerInfo.classList.add('last-seconds');
       }
-      timerInfo.textContent = `00:${(tempTime.toString()).padStart(2, '0')}`;
+      gameSettings.timerInfo.textContent = `00:${(tempTime.toString()).padStart(2, '0')}`;
     }, 1000);
-    questionTimeOut = setTimeout(() => checkAnswer(), timeLimit * 1000);
+    questionTimeOut = setTimeout(() => checkAnswer(), gameSettings.timeLimit * 1000);
   }
 }
 
@@ -449,7 +284,7 @@ function nextQuestion() {
 function endBlitz() {
   let maxScore = JSON.parse(localStorage.getItem('blitz-max')) || 0;
   timeLeft = 30;
-  timerInfo.textContent = '00:00';
+  gameSettings.timerInfo.textContent = '00:00';
   clearInterval(timerInterval);
   clearTimeout(questionTimeOut);
   const finalPopup = document.querySelector('.popup-final');
@@ -465,7 +300,7 @@ function endBlitz() {
 }
 
 function showBlitzQuestion(time) {
-  isAudioEnabled = true;
+  audioEffects.audioParams.isAudioEnabled = true;
   setTimeout(() => {
     document.querySelectorAll('.blitz-answer').forEach((item) => {
       item.classList.remove('correct');
@@ -480,13 +315,13 @@ function showBlitzQuestion(time) {
   }
   clearInterval(timerInterval);
   clearTimeout(questionTimeOut);
-  timerInfo.textContent = `00:${(timeLeft.toString()).padStart(2, '0')}`;
+  gameSettings.timerInfo.textContent = `00:${(timeLeft.toString()).padStart(2, '0')}`;
   timerInterval = setInterval(() => {
     timeLeft -= 1;
     if (timeLeft === 3) {
-      timerInfo.classList.add('last-seconds');
+      gameSettings.timerInfo.classList.add('last-seconds');
     }
-    timerInfo.textContent = `00:${(timeLeft.toString()).padStart(2, '0')}`;
+    gameSettings.timerInfo.textContent = `00:${(timeLeft.toString()).padStart(2, '0')}`;
   }, 1000);
   questionTimeOut = setTimeout(() => endBlitz(), timeLeft * 1000);
   document.querySelector('.blitz-mode').classList.add('slide-bottom');
@@ -519,13 +354,13 @@ function blitzNext(elem) {
   answer = (answer === 'Да');
   if (answer === correctAnswer) {
     elem.target.classList.add('correct');
-    playAudio(rightSoundUrl);
+    audioEffects.playAudio(SoundUrls.rightSoundUrl);
     answersCounter += 1;
     timeLeft += 1;
     showBlitzQuestion(timeLeft);
   } else {
     elem.target.classList.add('wrong');
-    playAudio(wrongSoundUrl);
+    audioEffects.playAudio(SoundUrls.wrongSoundUrl);
     timeLeft -= 4;
     showBlitzQuestion(timeLeft);
   }
@@ -597,15 +432,15 @@ function showMainPage() {
   buttons[0].classList.add('slide-left');
   buttons[1].classList.add('slide-from-top');
   buttons[2].classList.add('slide-right');
-  settingsBtn.classList.add('slide-bottom');
+  gameSettings.settingsBtn.classList.add('slide-bottom');
 }
 
 function endGame(elem) {
-  if (soundEffect) {
-    soundEffect.pause();
+  if (audioEffects.soundEffect) {
+    audioEffects.soundEffect.pause();
   }
-  timerInfo.classList.remove('last-seconds');
-  timerInfo.innerHTML = '';
+  gameSettings.timerInfo.classList.remove('last-seconds');
+  gameSettings.timerInfo.innerHTML = '';
   document.querySelector('.page-name').innerHTML = '';
   document.querySelector('.page-name').style.opacity = '0';
   clearAnimations();
@@ -613,7 +448,7 @@ function endGame(elem) {
   clearInterval(timerInterval);
   clearTimeout(questionTimeOut);
   animateCategories(elem.currentTarget.hide[2].split('-')[0]);
-  toggleBlock(elem);
+  MiscFunctions.toggleBlock(elem);
   showMainPage();
 }
 
@@ -652,50 +487,10 @@ function showPictureInfo(elem) {
   elem.target.classList.toggle('clicked');
 }
 
-function animateSettings(elem) {
-  document.querySelectorAll('.main-field').forEach((item) => {
-    item.classList.add('flip');
-  });
-  toggleBlock(elem);
+function setDefault() {
+  gameSettings.setDefault();
+  audioEffects.setDefault();
 }
-
-function logScore() {
-  console.log(`
-
-                        Самооценка: 234/220
-
-  -Стартовая страница и навигация 20/20
-  -Настройки 40/40
-  -Страница категорий 30/30
-  -Страница с вопросами 50/50
-  -Страница с результатами 50/50
-  -Одновременная загрузка и плавная смена изображений 10/10
-  -Анимация 20/20, 4 уникальные анимации:
-    • анимация отображения главной страницы
-    • анимация отображения настроек
-    • анимация отображения карточек категорий
-    • анимация отображения страницы самой викторины
-  -Дополнительный функционал 14/20
-    • меняется звук завершения раунда и смайлик в зависимости от результа (0-1, 2-3, 4-5, 6-8, 9-10) +2 балла
-    • есть фоновая музыка, громкость которой можно менять в отдельном пункте настроек. 
-  громкость по умолчанию 20%, при открытии страницы музыка начинает играть только после первого 
-  взаимодействия со страницей (иначе воспроизведение блокируется) +2 балла
-    • добавлен третий игровой режим: блиц. изначально дается 30 секунд, 
-  за каждый правильный ответ +1 секунда, за каждый неправильный -4 секунды.
-  итоговый результат - общее количество правильных ответов за отведенное время. +10 баллов.
-
-  Если вы обнаружили какой-либо баг или у вас есть вопросы по работе викторины - мой дискорд:
-                                      @saratovkin
-  `);
-}
-
-settingsBtn.show = ['.settings-field', '.button-container'];
-settingsBtn.hide = ['.settings-btn.main'];
-settingsBtn.addEventListener('click', animateSettings);
-
-saveBtn.show = ['.settings-btn.main'];
-saveBtn.hide = ['.button-container'];
-saveBtn.addEventListener('click', saveSettings);
 
 artistsBtn.show = ['.categories-page.artists', '.pagination'];
 artistsBtn.hide = ['.main', '.main-page', '.settings-btn.main'];
@@ -705,7 +500,7 @@ artistsBtn.addEventListener('click', (elem) => {
   nextBtnPopup.hide = ['.answer-popup', '.pagination-btn.back', '.artists-mode'];
   backBtn.show = ['.categories-page.artists'];
   backBtn.hide = ['.category-score', '.pagination-btn.back', '.artists-mode'];
-  toggleBlock(elem);
+  MiscFunctions.toggleBlock(elem);
 });
 
 picturesBtn.show = ['.categories-page.pictures', '.pagination'];
@@ -716,7 +511,7 @@ picturesBtn.addEventListener('click', (elem) => {
   nextBtnPopup.hide = ['.answer-popup', '.pagination-btn.back', '.pictures-mode'];
   backBtn.show = ['.categories-page.pictures'];
   backBtn.hide = ['.category-score', '.pagination-btn.back', '.pictures-mode'];
-  toggleBlock(elem);
+  MiscFunctions.toggleBlock(elem);
 });
 
 blitzBtn.show = ['.categories-page.blitz', '.pagination'];
@@ -727,7 +522,7 @@ blitzBtn.addEventListener('click', (elem) => {
   nextBtnPopup.hide = ['.answer-popup', '.pagination-btn.back', '.blitz-mode'];
   backBtn.show = ['.categories-page.blitz'];
   backBtn.hide = ['.category-score', '.pagination-btn.back', '.blitz-mode'];
-  toggleBlock(elem);
+  MiscFunctions.toggleBlock(elem);
 });
 
 homeBtn.show = ['.main-page', '.select-type', '.main'];
@@ -746,12 +541,12 @@ artistsPage.addEventListener('click', (elem) => {
   if (elem.target.classList.contains('category-results')) {
     artistsPage.show = ['.category-score', '.pagination-btn.back'];
     artistsPage.hide = ['.categories-page.artists'];
-    toggleBlock(elem);
+    MiscFunctions.toggleBlock(elem);
     displayScore(true, elem.target.parentElement.parentElement);
   } else {
     artistsPage.show = ['.artists-mode', '.pagination-btn.back'];
     artistsPage.hide = ['.categories-page.artists'];
-    toggleBlock(elem);
+    MiscFunctions.toggleBlock(elem);
     initGame(true, elem.target.querySelector('.category-number').innerHTML);
   }
 });
@@ -760,12 +555,12 @@ picturesPage.addEventListener('click', (elem) => {
   if (elem.target.classList.contains('category-results')) {
     picturesPage.show = ['.category-score', '.pagination-btn.back'];
     picturesPage.hide = ['.categories-page.pictures'];
-    toggleBlock(elem);
+    MiscFunctions.toggleBlock(elem);
     displayScore(false, elem.target.parentElement.parentElement);
   } else {
     picturesPage.show = ['.pictures-mode', '.pagination-btn.back'];
     picturesPage.hide = ['.categories-page.pictures'];
-    toggleBlock(elem);
+    MiscFunctions.toggleBlock(elem);
     initGame(false, elem.target.querySelector('.category-number').innerHTML);
   }
 });
@@ -774,46 +569,33 @@ blitzPage.addEventListener('click', (elem) => {
   if (elem.target.classList.contains('category-results')) {
     blitzPage.show = ['.category-score', '.pagination-btn.back'];
     blitzPage.hide = ['.categories-page.blitz'];
-    toggleBlock(elem);
+    MiscFunctions.toggleBlock(elem);
     displayScore(false, elem.target.parentElement.parentElement);
   } else {
     blitzPage.show = ['.blitz-mode', '.pagination-btn.back'];
     blitzPage.hide = ['.categories-page.blitz'];
-    toggleBlock(elem);
+    MiscFunctions.toggleBlock(elem);
     initGame();
   }
 });
 
-volumeBar.addEventListener('input', changeVolume);
-timeBar.addEventListener('input', setTimeInterval);
-musicBar.addEventListener('input', setMusicVolume);
-saveBtn.addEventListener('click', saveSettings);
 popupBtn.addEventListener('click', nextQuestion);
-
-document.querySelector('.mute-icon').addEventListener('click', muteEffects);
-document.querySelector('.note-icon').addEventListener('click', muteMusic);
-document.getElementById('time-mode').addEventListener('click', toggleTimeMode);
+document.getElementById('time-mode').addEventListener('click', () => { gameSettings.toggleTimeMode(); });
 document.getElementById('default-btn').addEventListener('click', setDefault);
 document.querySelector('.answers').addEventListener('click', checkAnswer);
 document.querySelector('.picture-answers').addEventListener('click', checkAnswer);
 document.querySelector('.blitz-answers').addEventListener('click', blitzNext);
-document.addEventListener('click', playBgMusic);
 
 document.querySelectorAll('.score-image').forEach((item) => {
   item.addEventListener('click', showPictureInfo);
 });
 
 window.addEventListener('load', () => {
-  timeLimit = +localStorage.getItem('timeLimit') || 25;
-  timeBar.value = timeLimit / 5 - 1;
-  timeMode = JSON.parse(localStorage.getItem('timeMode'));
-  volume = localStorage.getItem('volume') || 0.8;
-  musicVolume = localStorage.getItem('music-volume') || 0.2;
-  volumeBar.value = volume * 100;
-  musicBar.value = musicVolume * 100;
+  audioEffects = new AudioEffects();
+  gameSettings = new GameSettings();
+  audioEffects.initAudioListeners();
+  gameSettings.initGameListeners();
   displayPreviews();
-  initSettings();
   displayAttemptedCategory();
   showMainPage();
-  logScore();
 });
