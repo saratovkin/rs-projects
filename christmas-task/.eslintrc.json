@@ -31,15 +31,16 @@
     },
     "rules": {
         "import/extensions": [
-          "error",
-          "ignorePackages",
-          {
-            "js": "never",
-            "jsx": "never",
-            "ts": "never",
-            "tsx": "never",
-            "mjs": "never"
-          }
-        ]
-      }
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never",
+                "mjs": "never"
+            }
+        ],
+        "@typescript-eslint/no-non-null-assertion": "off"
+    }
 }
