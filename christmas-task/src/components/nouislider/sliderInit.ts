@@ -1,5 +1,6 @@
 import * as noUiType from 'nouislider';
 import noUiSlider from './nouislider';
+import constValues from '../misc/constValues';
 
 class Slider {
   public countSlider: noUiType.target;
@@ -11,22 +12,22 @@ class Slider {
     this.yearSlider = document.getElementById('year-slider') as noUiType.target;
     noUiSlider.create(this.countSlider, {
       animate: false,
-      start: [1, 12],
+      start: [+constValues.minCount, +constValues.maxCount],
       step: 1,
       connect: true,
       range: {
-        min: 1,
-        max: 12,
+        min: +constValues.minCount,
+        max: +constValues.maxCount,
       },
     });
     noUiSlider.create(this.yearSlider, {
       animate: false,
-      start: [1940, 2020],
+      start: [+constValues.minYear, +constValues.maxYear],
       step: 10,
       connect: true,
       range: {
-        min: 1940,
-        max: 2020,
+        min: +constValues.minYear,
+        max: +constValues.maxYear,
       },
     });
   }

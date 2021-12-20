@@ -1,4 +1,5 @@
 import toggle from '../misc/toggle';
+import constValues from '../misc/constValues';
 
 import Slider from '../nouislider/sliderInit';
 import FilterView from '../view/filterView';
@@ -183,8 +184,8 @@ class Filter {
     this.slider.countSlider!.noUiSlider!.reset();
     this.slider.yearSlider!.noUiSlider!.reset();
     this.condition = {
-      count: ['1', '12'],
-      year: ['1940', '2020'],
+      count: [constValues.minCount, constValues.maxCount],
+      year: [constValues.minYear, constValues.maxYear],
       shape: [],
       color: [],
       size: [],

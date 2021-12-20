@@ -1,4 +1,5 @@
 import ICondition from '../interfaces/ICondition';
+import constValues from '../misc/constValues';
 
 class savedSettings {
   public savedCondition: ICondition;
@@ -7,8 +8,8 @@ class savedSettings {
 
   constructor() {
     this.savedCondition = JSON.parse(localStorage.getItem('condition') as string) || {
-      count: ['1', '12'],
-      year: ['1940', '2020'],
+      count: [constValues.minCount, constValues.maxCount],
+      year: [constValues.minYear, constValues.maxYear],
       shape: [],
       color: [],
       size: [],
@@ -25,8 +26,8 @@ class savedSettings {
 
   public setDefault(): void {
     this.savedCondition = {
-      count: ['1', '12'],
-      year: ['1940', '2020'],
+      count: [constValues.minCount, constValues.maxCount],
+      year: [constValues.minYear, constValues.maxYear],
       shape: [],
       color: [],
       size: [],
