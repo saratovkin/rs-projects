@@ -122,15 +122,12 @@ module.exports = ({ development }) => {
         ],
         patterns: [
           {
-            from: path.resolve(__dirname, 'src/assets/svg'),
-            to: path.resolve(__dirname, 'dist/svg')
-          },
-          {
-            from: path.resolve(__dirname, 'src/assets/toys'),
-            to: path.resolve(__dirname, 'dist/toys')
+            from: path.resolve(__dirname, 'src/assets'),
+            to: path.resolve(__dirname, 'dist')
           },
         ],
       }),
+      
       new CleanWebpackPlugin(),
       new RemoveEmptyScriptsPlugin(),
     ],
