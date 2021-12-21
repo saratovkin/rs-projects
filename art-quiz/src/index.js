@@ -103,7 +103,7 @@ function checkAnswer(elem) {
   clearInterval(timerInterval);
   clearTimeout(questionTimeOut);
   gameSettings.timerInfo.classList.remove('last-seconds');
-  if ((answer && answer.innerHTML === correctAnswer.author)
+  if ((answer && answer.textContent === correctAnswer.author)
     || (answer && answer.num === correctAnswer.imageNum)) {
     roundResults.push(true);
     answersCounter += 1;
@@ -142,7 +142,7 @@ function showAristsQuestion(qNum) {
   });
   document.querySelector('.artists-mode').classList.remove('blocked');
   document.querySelector('.artists-mode').classList.add('slide-bottom');
-  document.querySelector('.page-name').innerHTML = 'Кто автор данной картины?';
+  document.querySelector('.page-name').textContent = 'Кто автор данной картины?';
   document.querySelector('.page-name').classList.remove('transparent');
   const currentQuestion = images[qNum];
   showQuestionInfo(true, currentQuestion);
@@ -158,18 +158,18 @@ function showAristsQuestion(qNum) {
   MiscFunctions.shuffle(answers);
   document.querySelectorAll('.answer').forEach((item) => {
     const temp = answers.pop();
-    item.innerHTML = temp;
+    item.textContent = temp;
   });
   if (gameSettings.timeMode) {
     tempTime = gameSettings.timeLimit;
-    gameSettings.timerInfo.innerHTML = `00:${(tempTime.toString()).padStart(2, '0')}`;
+    gameSettings.timerInfo.textContent = `00:${(tempTime.toString()).padStart(2, '0')}`;
     timerInterval = setInterval(() => {
       tempTime -= 1;
       if (tempTime === 3) {
-        audioEffects.playAudio('assets/sound-effects/timer.mp3');
+        audioEffects.playAudio(SoundUrls.timerSoundUrl);
         gameSettings.timerInfo.classList.add('last-seconds');
       }
-      gameSettings.timerInfo.innerHTML = `00:${(tempTime.toString()).padStart(2, '0')}`;
+      gameSettings.timerInfo.textContent = `00:${(tempTime.toString()).padStart(2, '0')}`;
     }, gameConst.timerDelay);
     questionTimeOut = setTimeout(() => {
       checkAnswer();
@@ -189,7 +189,7 @@ function showPicturesQuestion(qNum) {
   const currentQuestion = images[qNum];
   document.querySelector('.pictures-mode').classList.add('slide-bottom');
   document.querySelector('.pictures-mode').classList.remove('blocked');
-  document.querySelector('.page-name').innerHTML = `Какую картину нарисовал ${currentQuestion.author}?`;
+  document.querySelector('.page-name').textContent = `Какую картину нарисовал ${currentQuestion.author}?`;
   document.querySelector('.page-name').classList.remove('transparent');
   showQuestionInfo(false, currentQuestion);
   correctAnswer = currentQuestion;
@@ -218,7 +218,7 @@ function showPicturesQuestion(qNum) {
     timerInterval = setInterval(() => {
       tempTime -= 1;
       if (tempTime === 3) {
-        audioEffects.playAudio('assets/sound-effects/timer.mp3');
+        audioEffects.playAudio(SoundUrls.timerSoundUrl);
         gameSettings.timerInfo.classList.add('last-seconds');
       }
       gameSettings.timerInfo.textContent = `00:${(tempTime.toString()).padStart(2, '0')}`;
@@ -369,8 +369,8 @@ function endGame(elem) {
     audioEffects.soundEffect.pause();
   }
   gameSettings.timerInfo.classList.remove('last-seconds');
-  gameSettings.timerInfo.innerHTML = '';
-  document.querySelector('.page-name').innerHTML = '';
+  gameSettings.timerInfo.textContent = '';
+  document.querySelector('.page-name').textContent = '';
   document.querySelector('.page-name').classList.add('transparent');
   clearInterval(timerInterval);
   clearTimeout(questionTimeOut);
@@ -385,10 +385,10 @@ function displayScore(flag, elem) {
   images = loader.getImageData();
   images.then((res) => {
     const results = JSON.parse(localStorage.getItem('attempted')) || [];
-    let cardIndex = elem.querySelector('.category-number').innerHTML;
+    let cardIndex = elem.querySelector('.category-number').textContent;
     cardIndex = flag ? cardIndex : (+cardIndex + gameConst.amountOfRounds);
     let temp = (cardIndex - 1) * gameConst.amountOfQuestions;
-    const catName = elem.querySelector('.category-name').innerHTML;
+    const catName = elem.querySelector('.category-name').textContent;
     const cards = res.slice(temp, temp + gameConst.amountOfQuestions);
     document.querySelectorAll('.score-card').forEach((item, questionIndex) => {
       item.number = cardIndex;
@@ -397,7 +397,7 @@ function displayScore(flag, elem) {
       img.onload = () => {
         item.querySelector('.score-image').style.backgroundImage = `url(${img.src})`;
       };
-      item.querySelector('.score-title').innerHTML = catName;
+      item.querySelector('.score-title').textContent = catName;
       item.querySelector('.score-image-info').innerHTML = `${cards[questionIndex].name} <br>${cards[questionIndex].author}<br>${cards[questionIndex].year}`;
       if (results[cardIndex - 1]) {
         if (results[cardIndex - 1].roundResults[questionIndex]) {
@@ -467,7 +467,7 @@ artistsPage.addEventListener('click', (elem) => {
     artistsPage.show = ['.artists-mode', '.pagination-btn.back'];
     artistsPage.hide = ['.categories-page.artists'];
     MiscFunctions.toggleBlock(elem);
-    initGame(true, elem.target.querySelector('.category-number').innerHTML);
+    initGame(true, elem.target.querySelector('.category-number').textContent);
   }
 });
 
@@ -481,7 +481,7 @@ picturesPage.addEventListener('click', (elem) => {
     picturesPage.show = ['.pictures-mode', '.pagination-btn.back'];
     picturesPage.hide = ['.categories-page.pictures'];
     MiscFunctions.toggleBlock(elem);
-    initGame(false, elem.target.querySelector('.category-number').innerHTML);
+    initGame(false, elem.target.querySelector('.category-number').textContent);
   }
 });
 
