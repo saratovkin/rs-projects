@@ -4,6 +4,7 @@ const bgMusicUrl = 'assets/sound-effects/bg-music.mp3';
 const winSoundUrl = 'assets/sound-effects/win.mp3';
 const loseSoundUrl = 'assets/sound-effects/lose.mp3';
 const cricketsSoundUrl = 'assets/sound-effects/crickets.mp3';
+const timerSoundUrl = 'assets/sound-effects/timer.mp3';
 
 export default {
   rightSoundUrl,
@@ -12,4 +13,5 @@ export default {
   winSoundUrl,
   loseSoundUrl,
   cricketsSoundUrl,
+  timerSoundUrl,
 };
