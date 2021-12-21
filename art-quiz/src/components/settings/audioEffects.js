@@ -22,12 +22,21 @@ class AudioEffects {
     document.getElementById('volume-sub').style.width = `${this.volumeBar.value}%`;
   }
 
+  displayMusicVolume() {
+    if (this.bgMusic) {
+      this.bgMusic.volume = this.audioParams.musicVolume;
+      this.bgMusic.addEventListener('ended', this.playBgMusic);
+      this.bgMusic.play();
+    }
+    document.getElementById('music-sub').style.width = `${this.musicBar.value}%`;
+  }
+
   getVolume() {
     this.audioParams.volume = this.volumeBar.value / 100;
     if (this.audioParams.volume === 0) {
-      document.querySelector('.mute-icon').style.backgroundImage = 'url("assets/svg/settings/mute.svg")';
+      document.querySelector('.mute-icon').classList.add('mute');
     } else {
-      document.querySelector('.mute-icon').style.backgroundImage = 'url("assets/svg/settings/unmute.svg")';
+      document.querySelector('.mute-icon').classList.remove('mute');
     }
     this.displayVolume();
   }
@@ -65,21 +74,12 @@ class AudioEffects {
     this.bgMusic.play();
   }
 
-  displayMusicVolume() {
-    if (this.bgMusic) {
-      this.bgMusic.volume = this.audioParams.musicVolume;
-      this.bgMusic.addEventListener('ended', this.playBgMusic);
-      this.bgMusic.play();
-    }
-    document.getElementById('music-sub').style.width = `${this.musicBar.value}%`;
-  }
-
   getMusicVolume() {
     this.audioParams.musicVolume = this.musicBar.value / 100;
     if (this.audioParams.musicVolume === 0) {
-      document.querySelector('.note-icon').style.backgroundImage = 'url("assets/svg/settings/music-mute-icon.svg")';
+      document.querySelector('.note-icon').classList.add('mute');
     } else {
-      document.querySelector('.note-icon').style.backgroundImage = 'url("assets/svg/settings/music-icon.svg")';
+      document.querySelector('.note-icon').classList.remove('mute');
     }
     this.displayMusicVolume();
   }

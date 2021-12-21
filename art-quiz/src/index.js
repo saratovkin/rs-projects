@@ -3,6 +3,10 @@ import AudioEffects from './components/settings/audioEffects';
 import SoundUrls from './components/settings/soundUrls';
 import GameSettings from './components/settings/gameSettings';
 import Settings from './components/settings/settings';
+import Loader from './components/loader';
+import View from './components/view';
+
+const loader = new Loader('https://raw.githubusercontent.com/saratovkin/art-quiz-json/main/images.json');
 
 const artistsBtn = document.getElementById('artists-mode');
 const picturesBtn = document.getElementById('pictures-mode');
@@ -38,32 +42,6 @@ let answersCounter;
 let audioEffects;
 let gameSettings;
 let settings;
-
-function displayPreviews() {
-  let index = 0;
-  document.querySelectorAll('.category').forEach((item) => {
-    item.querySelector('.category-number').innerHTML = (index >= 120) ? ((index - 120) / 10 + 1) : (index / 10 + 1);
-    const img = new Image();
-    img.src = MiscFunctions.getImageURL(index);
-    img.onload = () => {
-      item.querySelector('.category-img').style.backgroundImage = `url(${img.src})`;
-    };
-    index += 10;
-  });
-  document.querySelector('.category.blitz').querySelector('.category-number').innerHTML = 'Blitz';
-}
-
-async function getImageData() {
-  try {
-    const url = 'https://raw.githubusercontent.com/saratovkin/art-quiz-json/main/images.json';
-    const res = await fetch(url);
-    const data = await res.json();
-    return data;
-  } catch (e) {
-    console.log('an error has occurred');
-    return null;
-  }
-}
 
 function showQuestionInfo(flag, current) {
   const img = new Image();
@@ -246,25 +224,6 @@ function showPicturesQuestion(qNum) {
   }
 }
 
-function displayAttemptedCategory() {
-  const attempted = JSON.parse(localStorage.getItem('attempted')) || [];
-  const blitzMax = JSON.parse(localStorage.getItem('blitz-max')) || null;
-  let temp;
-  attempted.forEach((item, index) => {
-    if (item !== null) {
-      temp = document.querySelectorAll('.category')[index];
-      temp.classList.add('attempted');
-      temp.querySelector('.category-stats').innerHTML = `${item.answersCounter}/10`;
-    }
-  });
-  if (blitzMax !== null) {
-    const blitzCard = document.querySelector('.category.blitz');
-    blitzCard.classList.add('attempted');
-    blitzCard.querySelector('.category-number').style.opacity = 1;
-    blitzCard.querySelector('.category-number').innerHTML = `best : ${blitzMax}`;
-  }
-}
-
 function nextQuestion() {
   questionNumber += 1;
   document.querySelector('.answer-popup').classList.add('hide');
@@ -279,7 +238,7 @@ function nextQuestion() {
     results[cardNumber - 1] = { answersCounter, roundResults };
     localStorage.setItem('attempted', JSON.stringify(results));
     showRoundResult();
-    displayAttemptedCategory();
+    View.displayAttemptedCategory();
   }
 }
 
@@ -298,7 +257,7 @@ function endBlitz() {
   getEmoji(finalPopup.querySelector('.final-icon'));
   maxScore = (answersCounter > maxScore) ? answersCounter : maxScore;
   localStorage.setItem('blitz-max', JSON.stringify(maxScore));
-  displayAttemptedCategory();
+  View.displayAttemptedCategory();
 }
 
 function showBlitzQuestion(time) {
@@ -371,7 +330,7 @@ function blitzNext(elem) {
 function initGame(flag, card) {
   document.querySelector('.icon').classList.remove('slide');
   document.querySelector('.final-text').textContent = 'Вы ответили на все вопросы!';
-  images = getImageData();
+  images = loader.getImageData();
   document.querySelector('.page-name').textContent = '';
   document.querySelector('.page-name').style.opacity = '0';
   document.querySelector('.popup-next').classList.remove('hide');
@@ -400,43 +359,6 @@ function initGame(flag, card) {
   }
 }
 
-function clearAnimations() {
-  document.querySelectorAll('.category.artists').forEach((item) => {
-    item.classList.remove('jump-up');
-  });
-  document.querySelectorAll('.category.pictures').forEach((item) => {
-    item.classList.remove('jump-up');
-  });
-  document.querySelector('.pagination').classList.remove('slide-left');
-}
-
-function hidePictureInfo() {
-  document.querySelectorAll('.score-image').forEach((item) => {
-    item.classList.remove('clicked');
-  });
-}
-
-function animateCategories(category) {
-  document.querySelector('.pagination').classList.add('slide-left');
-  document.querySelectorAll(`.category${category}`).forEach((item, index) => {
-    setTimeout(() => { item.classList.add('jump-up'); }, index * 70);
-  });
-}
-
-function showMainPage() {
-  document.body.style.opacity = 1;
-  document.querySelector('.icon').classList.add('slide');
-  setTimeout(() => {
-    document.querySelector('.footer-container').classList.add('fade');
-  }, 500);
-
-  const buttons = document.querySelectorAll('.main-field');
-  buttons[0].classList.add('slide-left');
-  buttons[1].classList.add('slide-from-top');
-  buttons[2].classList.add('slide-right');
-  settings.settingsBtn.classList.add('slide-bottom');
-}
-
 function endGame(elem) {
   if (audioEffects.soundEffect) {
     audioEffects.soundEffect.pause();
@@ -445,17 +367,17 @@ function endGame(elem) {
   gameSettings.timerInfo.innerHTML = '';
   document.querySelector('.page-name').innerHTML = '';
   document.querySelector('.page-name').style.opacity = '0';
-  clearAnimations();
-  hidePictureInfo();
   clearInterval(timerInterval);
   clearTimeout(questionTimeOut);
-  animateCategories(elem.currentTarget.hide[2].split('-')[0]);
+  View.clearAnimations();
+  View.hidePictureInfo();
+  View.animateCategories(elem.currentTarget.hide[2].split('-')[0]);
+  View.showMainPage();
   MiscFunctions.toggleBlock(elem);
-  showMainPage();
 }
 
 function displayScore(flag, elem) {
-  images = getImageData();
+  images = loader.getImageData();
   images.then((res) => {
     const results = JSON.parse(localStorage.getItem('attempted')) || [];
     let cardIndex = elem.querySelector('.category-number').innerHTML;
@@ -485,14 +407,10 @@ function displayScore(flag, elem) {
   });
 }
 
-function showPictureInfo(elem) {
-  elem.target.classList.toggle('clicked');
-}
-
 artistsBtn.show = ['.categories-page.artists', '.pagination'];
 artistsBtn.hide = ['.main', '.main-page', '.settings-btn.main'];
 artistsBtn.addEventListener('click', (elem) => {
-  animateCategories('.artists');
+  View.animateCategories('.artists');
   nextBtnPopup.show = ['.categories-page.artists'];
   nextBtnPopup.hide = ['.answer-popup', '.pagination-btn.back', '.artists-mode'];
   backBtn.show = ['.categories-page.artists'];
@@ -503,7 +421,7 @@ artistsBtn.addEventListener('click', (elem) => {
 picturesBtn.show = ['.categories-page.pictures', '.pagination'];
 picturesBtn.hide = ['.main', '.main-page', '.settings-btn.main'];
 picturesBtn.addEventListener('click', (elem) => {
-  animateCategories('.pictures');
+  View.animateCategories('.pictures');
   nextBtnPopup.show = ['.categories-page.pictures'];
   nextBtnPopup.hide = ['.answer-popup', '.pagination-btn.back', '.pictures-mode'];
   backBtn.show = ['.categories-page.pictures'];
@@ -514,7 +432,7 @@ picturesBtn.addEventListener('click', (elem) => {
 blitzBtn.show = ['.categories-page.blitz', '.pagination'];
 blitzBtn.hide = ['.main', '.main-page', '.settings-btn.main'];
 blitzBtn.addEventListener('click', (elem) => {
-  animateCategories('.blitz');
+  View.animateCategories('.blitz');
   nextBtnPopup.show = ['.categories-page.blitz'];
   nextBtnPopup.hide = ['.answer-popup', '.pagination-btn.back', '.blitz-mode'];
   backBtn.show = ['.categories-page.blitz'];
@@ -582,7 +500,7 @@ document.querySelector('.picture-answers').addEventListener('click', checkAnswer
 document.querySelector('.blitz-answers').addEventListener('click', blitzNext);
 
 document.querySelectorAll('.score-image').forEach((item) => {
-  item.addEventListener('click', showPictureInfo);
+  item.addEventListener('click', (e) => { View.showPictureInfo(e); });
 });
 
 window.addEventListener('load', () => {
@@ -590,7 +508,5 @@ window.addEventListener('load', () => {
   gameSettings = new GameSettings();
   settings = new Settings(audioEffects, gameSettings);
   settings.initGameListeners();
-  displayPreviews();
-  displayAttemptedCategory();
-  showMainPage();
+  View.initApp();
 });
