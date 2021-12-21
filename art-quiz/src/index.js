@@ -1,6 +1,7 @@
 import MiscFunctions from './components/misc';
 import AudioEffects from './components/settings/audioEffects';
 import SoundUrls from './components/settings/soundUrls';
+import gameConst from './components/gameConst';
 import GameSettings from './components/settings/gameSettings';
 import Settings from './components/settings/settings';
 import Loader from './components/loader';
@@ -107,10 +108,10 @@ function checkAnswer(elem) {
     roundResults.push(true);
     answersCounter += 1;
     answer.classList.add('correct');
-    if (cardNumber <= 12) {
-      answerIndicators[questionNumber - (cardNumber - 1) * 10].classList.add('correct');
+    if (cardNumber <= gameConst.amountOfRounds) {
+      answerIndicators[questionNumber - (cardNumber - 1) * gameConst.amountOfQuestions].classList.add('correct');
     } else {
-      answerIndicators[10 + questionNumber - (cardNumber - 1) * 10].classList.add('correct');
+      answerIndicators[gameConst.amountOfQuestions + questionNumber - (cardNumber - 1) * gameConst.amountOfQuestions].classList.add('correct');
     }
     popupIcon.classList.remove('wrong');
     audioEffects.playAudio(SoundUrls.rightSoundUrl);
@@ -119,10 +120,10 @@ function checkAnswer(elem) {
     if (answer) {
       answer.classList.add('wrong');
     }
-    if (cardNumber <= 12) {
-      answerIndicators[questionNumber - (cardNumber - 1) * 10].classList.add('wrong');
+    if (cardNumber <= gameConst.amountOfRounds) {
+      answerIndicators[questionNumber - (cardNumber - 1) * gameConst.amountOfQuestions].classList.add('wrong');
     } else {
-      answerIndicators[10 + questionNumber - (cardNumber - 1) * 10].classList.add('wrong');
+      answerIndicators[gameConst.amountOfQuestions + questionNumber - (cardNumber - 1) * gameConst.amountOfQuestions].classList.add('wrong');
     }
     popupIcon.classList.add('wrong');
     audioEffects.playAudio(SoundUrls.wrongSoundUrl);
@@ -149,7 +150,7 @@ function showAristsQuestion(qNum) {
   const answers = [];
   answers.push(correctAnswer.author);
   while (answers.length !== 4) {
-    randomAnswer = images[MiscFunctions.getRandomNum(240)].author;
+    randomAnswer = images[MiscFunctions.getRandomNum(gameConst.amountOfImages)].author;
     if (!answers.includes(randomAnswer)) {
       answers.push(randomAnswer);
     }
@@ -169,8 +170,10 @@ function showAristsQuestion(qNum) {
         gameSettings.timerInfo.classList.add('last-seconds');
       }
       gameSettings.timerInfo.innerHTML = `00:${(tempTime.toString()).padStart(2, '0')}`;
-    }, 1000);
-    questionTimeOut = setTimeout(() => checkAnswer(), gameSettings.timeLimit * 1000);
+    }, gameConst.timerDelay);
+    questionTimeOut = setTimeout(() => {
+      checkAnswer();
+    }, gameSettings.timeLimit * gameConst.timerDelay);
   }
 }
 
@@ -193,7 +196,7 @@ function showPicturesQuestion(qNum) {
   authors.push(correctAnswer.author);
   answers.push(currentQuestion);
   while (answers.length !== 4) {
-    randomAnswer = images[MiscFunctions.getRandomNum(240)];
+    randomAnswer = images[MiscFunctions.getRandomNum(gameConst.amountOfQuestions)];
     if (!authors.includes(randomAnswer.author)) {
       authors.push(randomAnswer.author);
       answers.push(randomAnswer);
@@ -219,16 +222,18 @@ function showPicturesQuestion(qNum) {
         gameSettings.timerInfo.classList.add('last-seconds');
       }
       gameSettings.timerInfo.textContent = `00:${(tempTime.toString()).padStart(2, '0')}`;
-    }, 1000);
-    questionTimeOut = setTimeout(() => checkAnswer(), gameSettings.timeLimit * 1000);
+    }, gameConst.timerDelay);
+    questionTimeOut = setTimeout(() => {
+      checkAnswer();
+    }, gameSettings.timeLimit * gameConst.timerDelay);
   }
 }
 
 function nextQuestion() {
   questionNumber += 1;
   document.querySelector('.answer-popup').classList.add('hide');
-  if ((cardNumber * 10 - 1) >= questionNumber) {
-    if (cardNumber <= 12) {
+  if ((cardNumber * gameConst.amountOfQuestions - 1) >= questionNumber) {
+    if (cardNumber <= gameConst.amountOfRounds) {
       showAristsQuestion(questionNumber);
     } else {
       showPicturesQuestion(questionNumber);
@@ -244,7 +249,7 @@ function nextQuestion() {
 
 function endBlitz() {
   let maxScore = JSON.parse(localStorage.getItem('blitz-max')) || 0;
-  timeLeft = 30;
+  timeLeft = gameConst.blitzTimeLimit;
   gameSettings.timerInfo.textContent = '00:00';
   clearInterval(timerInterval);
   clearTimeout(questionTimeOut);
@@ -272,7 +277,7 @@ function showBlitzQuestion(time) {
     timeLeft = 0;
   }
   if (timeLeft !== 0) {
-    timeLeft = time || 30;
+    timeLeft = time || gameConst.blitzTimeLimit;
   }
   clearInterval(timerInterval);
   clearTimeout(questionTimeOut);
@@ -283,15 +288,15 @@ function showBlitzQuestion(time) {
       gameSettings.timerInfo.classList.add('last-seconds');
     }
     gameSettings.timerInfo.textContent = `00:${(timeLeft.toString()).padStart(2, '0')}`;
-  }, 1000);
-  questionTimeOut = setTimeout(() => endBlitz(), timeLeft * 1000);
+  }, gameConst.timerDelay);
+  questionTimeOut = setTimeout(() => endBlitz(), timeLeft * gameConst.timerDelay);
   document.querySelector('.blitz-mode').classList.add('slide-bottom');
   document.querySelector('.page-name').style.opacity = '1';
   document.querySelectorAll('.answer.blitz').forEach((item) => {
     item.classList.remove('correct');
     item.classList.remove('wrong');
   });
-  const currentQuestion = images[MiscFunctions.getRandomNum(240)];
+  const currentQuestion = images[MiscFunctions.getRandomNum(gameConst.amountOfImages)];
   correctAnswer = Math.random() < 0.5;
   const img = new Image();
   img.src = MiscFunctions.getImageURL(currentQuestion.imageNum);
@@ -301,9 +306,9 @@ function showBlitzQuestion(time) {
   if (correctAnswer) {
     document.querySelector('.page-name').innerHTML = `Эту картину нарисовал <br>${currentQuestion.author}?`;
   } else {
-    let randomIndex = MiscFunctions.getRandomNum(240);
+    let randomIndex = MiscFunctions.getRandomNum(gameConst.amountOfImages);
     while (currentQuestion.imageNum === randomIndex) {
-      randomIndex = MiscFunctions.getRandomNum(240);
+      randomIndex = MiscFunctions.getRandomNum(gameConst.amountOfImages);
     }
     const anotherQuestion = images[randomIndex];
     document.querySelector('.page-name').innerHTML = `Эту картину нарисовал <br>${anotherQuestion.author}?`;
@@ -311,7 +316,7 @@ function showBlitzQuestion(time) {
 }
 
 function blitzNext(elem) {
-  let answer = elem.target.innerHTML;
+  let answer = elem.target.textContent;
   answer = (answer === 'Да');
   if (answer === correctAnswer) {
     elem.target.classList.add('correct');
@@ -341,8 +346,8 @@ function initGame(flag, card) {
       showBlitzQuestion();
     });
   } else {
-    cardNumber = flag ? card : (+card + 12);
-    questionNumber = (cardNumber - 1) * 10;
+    cardNumber = flag ? card : (+card + gameConst.amountOfRounds);
+    questionNumber = (cardNumber - 1) * gameConst.amountOfQuestions;
     roundResults = [];
     answerIndicators.forEach((item) => {
       item.classList.remove('correct');
@@ -381,10 +386,10 @@ function displayScore(flag, elem) {
   images.then((res) => {
     const results = JSON.parse(localStorage.getItem('attempted')) || [];
     let cardIndex = elem.querySelector('.category-number').innerHTML;
-    cardIndex = flag ? cardIndex : (+cardIndex + 12);
-    let temp = (cardIndex - 1) * 10;
+    cardIndex = flag ? cardIndex : (+cardIndex + gameConst.amountOfRounds);
+    let temp = (cardIndex - 1) * gameConst.amountOfQuestions;
     const catName = elem.querySelector('.category-name').innerHTML;
-    const cards = res.slice(temp, temp + 10);
+    const cards = res.slice(temp, temp + gameConst.amountOfQuestions);
     document.querySelectorAll('.score-card').forEach((item, questionIndex) => {
       item.number = cardIndex;
       const img = new Image();
@@ -401,7 +406,7 @@ function displayScore(flag, elem) {
           item.querySelector('.score-image').classList.remove('played');
         }
       }
-      setTimeout(() => { item.classList.add('jump-up'); }, questionIndex * 70);
+      setTimeout(() => { item.classList.add('jump-up'); }, questionIndex * gameConst.cardAnimationDelay);
       temp += 1;
     });
   });

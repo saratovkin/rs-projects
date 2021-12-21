@@ -1,6 +1,11 @@
+const defaultTimeLimit = 25;
+const defaultRangeValue = 3;
+const rangeLength = 100;
+const amountOfTimeLimits = 5;
+
 class GameSettings {
   constructor() {
-    this.timeLimit = +localStorage.getItem('timeLimit') || 25;
+    this.timeLimit = +localStorage.getItem('timeLimit') || defaultTimeLimit;
     this.timeMode = JSON.parse(localStorage.getItem('timeMode')) || false;
     this.timeBar = document.getElementById('time-bar');
     this.timerInfo = document.querySelector('.pagination-timer');
@@ -20,12 +25,12 @@ class GameSettings {
   }
 
   displayTimeInterval() {
-    document.getElementById('time-sub').style.width = `${this.timeBar.value * 20}%`;
+    document.getElementById('time-sub').style.width = `${(this.timeBar.value * rangeLength) / amountOfTimeLimits}%`;
     document.getElementById('time-selected').textContent = this.timeLimit;
   }
 
   setTimeInterval() {
-    this.timeLimit = (+this.timeBar.value + 1) * 5;
+    this.timeLimit = (+this.timeBar.value + 1) * amountOfTimeLimits;
     this.displayTimeInterval();
   }
 
@@ -35,7 +40,7 @@ class GameSettings {
   }
 
   initGameSettings() {
-    this.timeBar.value = this.timeLimit / 5 - 1;
+    this.timeBar.value = this.timeLimit / amountOfTimeLimits - 1;
     this.displayTimeInterval();
     document.getElementById('time-checkbox').checked = this.timeMode;
     this.showTimeMode();
@@ -43,7 +48,7 @@ class GameSettings {
   }
 
   setDefault() {
-    this.timeBar.value = 3;
+    this.timeBar.value = defaultRangeValue;
     this.timeMode = false;
     this.initGameSettings();
   }

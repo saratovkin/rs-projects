@@ -1,5 +1,9 @@
 import SoundUrls from './soundUrls';
 
+const defaultVolume = 0.8;
+const defaultMusicVolume = 0.2;
+const rangeLength = 100;
+
 class AudioEffects {
   constructor() {
     this.audioParams = {
@@ -9,13 +13,13 @@ class AudioEffects {
       tempMusicVolume: 0,
       isAudioEnabled: true,
     };
-    this.audioParams.volume = localStorage.getItem('volume') || 0.8;
-    this.audioParams.musicVolume = localStorage.getItem('music-volume') || 0.2;
+    this.audioParams.volume = localStorage.getItem('volume') || defaultVolume;
+    this.audioParams.musicVolume = localStorage.getItem('music-volume') || defaultMusicVolume;
     this.audioParams.isAudioEnabled = true;
     this.volumeBar = document.getElementById('volume-bar');
     this.musicBar = document.getElementById('music-bar');
-    this.volumeBar.value = this.audioParams.volume * 100;
-    this.musicBar.value = this.audioParams.musicVolume * 100;
+    this.volumeBar.value = this.audioParams.volume * rangeLength;
+    this.musicBar.value = this.audioParams.musicVolume * rangeLength;
   }
 
   displayVolume() {
@@ -32,7 +36,7 @@ class AudioEffects {
   }
 
   getVolume() {
-    this.audioParams.volume = this.volumeBar.value / 100;
+    this.audioParams.volume = this.volumeBar.value / rangeLength;
     if (this.audioParams.volume === 0) {
       document.querySelector('.mute-icon').classList.add('mute');
     } else {
@@ -75,7 +79,7 @@ class AudioEffects {
   }
 
   getMusicVolume() {
-    this.audioParams.musicVolume = this.musicBar.value / 100;
+    this.audioParams.musicVolume = this.musicBar.value / rangeLength;
     if (this.audioParams.musicVolume === 0) {
       document.querySelector('.note-icon').classList.add('mute');
     } else {
@@ -95,8 +99,8 @@ class AudioEffects {
   }
 
   saveAudioSettings() {
-    localStorage.setItem('volume', this.volumeBar.value / 100);
-    localStorage.setItem('music-volume', this.musicBar.value / 100);
+    localStorage.setItem('volume', this.volumeBar.value / rangeLength);
+    localStorage.setItem('music-volume', this.musicBar.value / rangeLength);
   }
 
   initAudioSettings() {
@@ -110,10 +114,10 @@ class AudioEffects {
   }
 
   setDefault() {
-    this.audioParams.volume = 0.8;
-    this.audioParams.musicVolume = 0.2;
-    this.volumeBar.value = 80;
-    this.musicBar.value = 20;
+    this.audioParams.volume = defaultVolume;
+    this.audioParams.musicVolume = defaultMusicVolume;
+    this.volumeBar.value = defaultVolume * rangeLength;
+    this.musicBar.value = defaultMusicVolume * rangeLength;
     this.initAudioSettings();
   }
 }

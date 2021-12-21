@@ -1,16 +1,19 @@
 import MiscFunctions from './misc';
+import gameConst from './gameConst';
 
 class View {
   static displayPreviews() {
     let index = 0;
     document.querySelectorAll('.category').forEach((item) => {
-      item.querySelector('.category-number').innerHTML = (index >= 120) ? ((index - 120) / 10 + 1) : (index / 10 + 1);
+      item.querySelector('.category-number').innerHTML = (index >= gameConst.amountOfImages / 2)
+        ? ((index - gameConst.amountOfImages / 2) / gameConst.amountOfQuestions + 1)
+        : (index / gameConst.amountOfQuestions + 1);
       const img = new Image();
       img.src = MiscFunctions.getImageURL(index);
       img.onload = () => {
         item.querySelector('.category-img').style.backgroundImage = `url(${img.src})`;
       };
-      index += 10;
+      index += gameConst.amountOfQuestions;
     });
     document.querySelector('.category.blitz').querySelector('.category-number').innerHTML = 'Blitz';
   }
@@ -53,7 +56,7 @@ class View {
   static animateCategories(category) {
     document.querySelector('.pagination').classList.add('slide-left');
     document.querySelectorAll(`.category${category}`).forEach((item, index) => {
-      setTimeout(() => { item.classList.add('jump-up'); }, index * 70);
+      setTimeout(() => { item.classList.add('jump-up'); }, index * gameConst.cardAnimationDelay);
     });
   }
 
