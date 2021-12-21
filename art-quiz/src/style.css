@@ -309,9 +309,17 @@ header {
   background-image: url(./assets/svg/settings/unmute.svg);
 }
 
+.mute-icon.mute {
+  background-image: url(./assets/svg/settings/mute.svg);
+}
+
 .note-icon {
   background-image: url(./assets/svg/settings/music-icon.svg);
 }
+.note-icon.mute {
+  background-image: url(./assets/svg/settings/music-mute-icon.svg);
+}
+
 
 .mute-icon:hover,
 .note-icon:hover {
@@ -970,28 +978,6 @@ input[type=range]::-webkit-slider-thumb {
 
 .hide {
   display: none;
-}
-
-.footer-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  opacity: 0;
-}
-
-.footer-container.fade {
-  animation: fade 1.5s forwards;
-}
-
-.footer-container a {
-  text-decoration: none;
-  color: #30537a;
-  transition: .5s;
-}
-
-.footer-container a:hover {
-  transform: scale(1.1);
 }
 
 @media (max-width: 1024px) {
