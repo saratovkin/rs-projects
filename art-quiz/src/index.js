@@ -143,7 +143,7 @@ function showAristsQuestion(qNum) {
   document.querySelector('.artists-mode').classList.remove('blocked');
   document.querySelector('.artists-mode').classList.add('slide-bottom');
   document.querySelector('.page-name').innerHTML = 'Кто автор данной картины?';
-  document.querySelector('.page-name').style.opacity = '1';
+  document.querySelector('.page-name').classList.remove('transparent');
   const currentQuestion = images[qNum];
   showQuestionInfo(true, currentQuestion);
   correctAnswer = currentQuestion;
@@ -190,7 +190,7 @@ function showPicturesQuestion(qNum) {
   document.querySelector('.pictures-mode').classList.add('slide-bottom');
   document.querySelector('.pictures-mode').classList.remove('blocked');
   document.querySelector('.page-name').innerHTML = `Какую картину нарисовал ${currentQuestion.author}?`;
-  document.querySelector('.page-name').style.opacity = '1';
+  document.querySelector('.page-name').classList.remove('transparent');
   showQuestionInfo(false, currentQuestion);
   correctAnswer = currentQuestion;
   authors.push(correctAnswer.author);
@@ -291,7 +291,7 @@ function showBlitzQuestion(time) {
   }, gameConst.timerDelay);
   questionTimeOut = setTimeout(() => endBlitz(), timeLeft * gameConst.timerDelay);
   document.querySelector('.blitz-mode').classList.add('slide-bottom');
-  document.querySelector('.page-name').style.opacity = '1';
+  document.querySelector('.page-name').classList.remove('transparent');
   document.querySelectorAll('.answer.blitz').forEach((item) => {
     item.classList.remove('correct');
     item.classList.remove('wrong');
@@ -337,7 +337,7 @@ function initGame(flag, card) {
   document.querySelector('.final-text').textContent = 'Вы ответили на все вопросы!';
   images = loader.getImageData();
   document.querySelector('.page-name').textContent = '';
-  document.querySelector('.page-name').style.opacity = '0';
+  document.querySelector('.page-name').classList.add('transparent');
   document.querySelector('.popup-next').classList.remove('hide');
   answersCounter = 0;
   if (!flag && !card) {
@@ -371,7 +371,7 @@ function endGame(elem) {
   gameSettings.timerInfo.classList.remove('last-seconds');
   gameSettings.timerInfo.innerHTML = '';
   document.querySelector('.page-name').innerHTML = '';
-  document.querySelector('.page-name').style.opacity = '0';
+  document.querySelector('.page-name').classList.add('transparent');
   clearInterval(timerInterval);
   clearTimeout(questionTimeOut);
   View.clearAnimations();

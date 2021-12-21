@@ -21,13 +21,13 @@ class MiscFunctions {
     return `https://raw.githubusercontent.com/irinainina/image-data/master/img/${index}.jpg`;
   }
 
-  static toggleBlock(elem) {
-    elem.currentTarget.show.forEach((item) => {
+  static toggleBlock(e) {
+    e.currentTarget.show.forEach((item) => {
       document.querySelectorAll((item)).forEach((obj) => {
         obj.classList.remove('hide');
       });
     });
-    elem.currentTarget.hide.forEach((item) => {
+    e.currentTarget.hide.forEach((item) => {
       document.querySelectorAll(item).forEach((obj) => {
         obj.classList.add('hide');
       });
