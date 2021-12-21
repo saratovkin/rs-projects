@@ -94,13 +94,6 @@ class AudioEffects {
     this.getMusicVolume();
   }
 
-  setDefault() {
-    this.audioParams.volume = 0.8;
-    this.audioParams.musicVolume = 0.2;
-    this.volumeBar.value = 80;
-    this.musicBar.value = 20;
-  }
-
   saveAudioSettings() {
     localStorage.setItem('volume', this.volumeBar.value / 100);
     localStorage.setItem('music-volume', this.musicBar.value / 100);
@@ -109,14 +102,19 @@ class AudioEffects {
   initAudioSettings() {
     this.getVolume();
     this.getMusicVolume();
-  }
-
-  initAudioListeners() {
     this.musicBar.addEventListener('input', () => { this.getMusicVolume(); });
     this.volumeBar.addEventListener('input', () => { this.changeVolume(); });
     document.querySelector('.mute-icon').addEventListener('click', () => { this.muteEffects(); });
     document.querySelector('.note-icon').addEventListener('click', () => { this.muteMusic(); });
     document.addEventListener('click', () => { this.playBgMusic(); });
+  }
+
+  setDefault() {
+    this.audioParams.volume = 0.8;
+    this.audioParams.musicVolume = 0.2;
+    this.volumeBar.value = 80;
+    this.musicBar.value = 20;
+    this.initAudioSettings();
   }
 }
 

@@ -2,6 +2,7 @@ import MiscFunctions from './components/misc';
 import AudioEffects from './components/settings/audioEffects';
 import SoundUrls from './components/settings/soundUrls';
 import GameSettings from './components/settings/gameSettings';
+import Settings from './components/settings/settings';
 
 const artistsBtn = document.getElementById('artists-mode');
 const picturesBtn = document.getElementById('pictures-mode');
@@ -36,6 +37,7 @@ let answersCounter;
 
 let audioEffects;
 let gameSettings;
+let settings;
 
 function displayPreviews() {
   let index = 0;
@@ -432,7 +434,7 @@ function showMainPage() {
   buttons[0].classList.add('slide-left');
   buttons[1].classList.add('slide-from-top');
   buttons[2].classList.add('slide-right');
-  gameSettings.settingsBtn.classList.add('slide-bottom');
+  settings.settingsBtn.classList.add('slide-bottom');
 }
 
 function endGame(elem) {
@@ -485,11 +487,6 @@ function displayScore(flag, elem) {
 
 function showPictureInfo(elem) {
   elem.target.classList.toggle('clicked');
-}
-
-function setDefault() {
-  gameSettings.setDefault();
-  audioEffects.setDefault();
 }
 
 artistsBtn.show = ['.categories-page.artists', '.pagination'];
@@ -580,8 +577,6 @@ blitzPage.addEventListener('click', (elem) => {
 });
 
 popupBtn.addEventListener('click', nextQuestion);
-document.getElementById('time-mode').addEventListener('click', () => { gameSettings.toggleTimeMode(); });
-document.getElementById('default-btn').addEventListener('click', setDefault);
 document.querySelector('.answers').addEventListener('click', checkAnswer);
 document.querySelector('.picture-answers').addEventListener('click', checkAnswer);
 document.querySelector('.blitz-answers').addEventListener('click', blitzNext);
@@ -593,8 +588,8 @@ document.querySelectorAll('.score-image').forEach((item) => {
 window.addEventListener('load', () => {
   audioEffects = new AudioEffects();
   gameSettings = new GameSettings();
-  audioEffects.initAudioListeners();
-  gameSettings.initGameListeners();
+  settings = new Settings(audioEffects, gameSettings);
+  settings.initGameListeners();
   displayPreviews();
   displayAttemptedCategory();
   showMainPage();
