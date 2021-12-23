@@ -1,0 +1,161 @@
+.tree-parameters,
+.toy-selector {
+  width: 25%;
+  height: calc(100vh - 200px);
+  max-height: 800px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 25px;
+}
+
+.view-option {
+  width: calc(100% - 20px);
+  min-width: 250px;
+  margin: 0 auto;
+  margin-left: 10px;
+  color: #fff;
+  background: #2c7272;
+  border-radius: 10px;
+  padding: 5px;
+  padding-bottom: 15px;
+  box-sizing: border-box;
+}
+
+.section-name {
+  font-family: 'Lora';
+  font-weight: 500;
+}
+
+.fx-buttons {
+  width: calc(100% - 20px);
+  min-width: 250px;
+  margin: 0 auto;
+  margin-left: 10px;
+  color: #fff;
+  background: #2c7272;
+  border-radius: 10px;
+  padding: 15px 5px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-around;
+}
+
+.snow-button,
+.sound-button {
+  width: 40px;
+  height: 40px;
+  background-position: center;
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: filter .2s;
+}
+
+.snow-button {
+  background-image: url('./assets/svg/snowflake.svg');
+}
+
+.sound-button {
+  background-image: url('./assets/svg/audio.svg');
+}
+
+.snow-button.clicked {
+  filter: invert(55%) sepia(11%) saturate(767%) hue-rotate(9deg) brightness(91%) contrast(86%);
+}
+
+.sound-button.clicked {
+  background-image: url('./assets/svg/mute.svg');
+}
+
+.snow-button:hover,
+.sound-button:hover {
+  filter: brightness(.8);
+}
+
+.tree-picker,
+.bg-picker,
+.garland-picker {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 5px;
+  gap: 5px;
+}
+
+.garland-picker {
+  align-items: center;
+}
+
+.tree-option,
+.bg-option {
+  width: 40px;
+  height: 40px;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform .2s;
+  border: 3px solid #fb5756;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.tree-option {
+  width: 80px;
+  height: 80px;
+  background-size: 80px 80px;
+  background-color: #fff;
+}
+
+.bg-option {
+  width: 50px;
+  height: 50px;
+  background-size: 50px 50px;
+}
+
+.tree-option:hover,
+.bg-option:hover {
+  transform: scale(1.1);
+}
+
+.garland-option {
+  width: 16px;
+  height: 16px;
+  border-radius: 16px;
+  border: 1px solid #fff;
+}
+
+.garland-option.multi {
+  background: linear-gradient(to right, orange , yellow, green, cyan, blue, violet);
+}
+
+.garland-option.red {
+  background-color: #fd0000;
+}
+
+.garland-option.green {
+  background-color: #08aa05;
+}
+
+.garland-option.blue {
+  background-color: #2299eb;
+}
+
+.garland-option.yellow {
+  background-color: #fdd700;
+}
+
+.garland-button {
+  width: 40px;
+  height: 40px;
+  background-color: #fb5756;
+  border: none;
+  color: #fff;
+  border-radius: 10px;
+  transition: background-color .2s;
+  cursor: pointer;
+}
+
+.garland-button:hover {
+  background-color: #d94d4c;
+}
+

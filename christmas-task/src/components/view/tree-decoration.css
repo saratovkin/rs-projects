@@ -1,0 +1,39 @@
+.tree-page {
+  width: calc(100% - 20px);
+  height: calc(100vh - 200px);
+  max-width: 1280px;
+  max-height: 800px;
+  display: flex;
+  flex-wrap: nowrap;
+  column-gap: 10px;
+
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.tree-container,
+.tree-image {
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: background-image .2s ease-in-out;
+}
+
+.tree-container {
+  width: 50%;
+  max-height: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('./assets/bg/1.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 5px;
+}
+
+.tree-image {
+  height: calc(100% - 50px);
+  width: calc(100% - 100px);
+  background-image: url('./assets/tree/1.png');
+  background-size: contain;
+}

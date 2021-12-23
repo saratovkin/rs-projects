@@ -30,7 +30,7 @@
 
   </header>
   <main class=main>
-    <div class="main-container">
+    <div class="toys-page">
       <aside class="filter-options">
         <input type="search" class="search" placeholder="Поиск" autofocus="autofocus" autocomplete="off">
         <div class="filter-option">
@@ -65,8 +65,8 @@
             <option value="year-desc">По году приобретения по убыванию</option>
           </select>
           <div class="reset-buttons">
-          <button class="reset-filter">Сбросить Фильтры</button>
-          <button class="reset-fav">Сбросить Избранное</button>
+            <button class="reset-filter">Сбросить Фильтры</button>
+            <button class="reset-fav">Сбросить Избранное</button>
           </div>
         </div>
       </aside>
@@ -96,6 +96,49 @@
         </template>
       </div>
     </div>
+    <div class="tree-page">
+      <aside class="tree-parameters">
+        <div class="fx-buttons">
+          <div class="sound-button"></div>
+          <div class="snow-button"></div>
+        </div>
+        <div class="view-option">
+          <p class="section-name">Выбери елку</p>
+          <div class="tree-picker"></div>
+        </div>
+        <div class="view-option">
+          <p class="section-name">Выбери фон</p>
+          <div class="bg-picker"></div>
+        </div>
+        <div class="view-option">
+          <p class="section-name">Гирлянда</p>
+          <div class="garland-picker">
+            <div class="garland-option multi"></div>
+            <div class="garland-option red"></div>
+            <div class="garland-option yellow"></div>
+            <div class="garland-option green"></div>
+            <div class="garland-option blue"></div>
+            <button class="garland-button">+</button>
+          </div>
+        </div>
+      </aside>
+      <div class="tree-container bg-image">
+        <div class="tree-image"></div>
+      </div>
+      <aside class="toy-selector">
+        <div class="view-option">
+          <p class="section-name">Игрушки</p>
+          <div class="toys-picker">
+          
+          </div>
+        </div>
+        <div class="view-option">
+          <p class="section-name">Вы нарядили</p>
+          <div class="decorated-trees"></div>
+        </div>
+      </aside>
+    </div>
+
   </main>
   <footer class="footer">
     <div class="footer-container">
@@ -105,4 +148,5 @@
     </div>
   </footer>
 </body>
+
 </html>
