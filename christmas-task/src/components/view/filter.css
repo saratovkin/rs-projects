@@ -165,9 +165,16 @@
   cursor: pointer;
 }
 
-.reset-filter {
-  width: 100px;
-  height: 30px;
+.reset-buttons {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 10px;
+}
+
+.reset-filter,
+.reset-fav {
+  width: 150px;
+  height: 40px;
   margin: 10px 0;
   background-color: #fb5756;
   border: none;
@@ -178,7 +185,8 @@
 }
 
 .sort-select:hover,
-.reset-filter:hover {
+.reset-filter:hover,
+.reset-fav:hover {
   background-color: #d94d4c;
 }
 

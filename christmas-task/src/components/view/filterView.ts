@@ -13,6 +13,9 @@ class FilterView {
         node.classList.remove('clicked');
       });
     });
+  }
+
+  public static showDefaultSort(): void {
     (document.querySelector('.sort-select') as HTMLSelectElement).selectedIndex = 0;
   }
 

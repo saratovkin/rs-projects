@@ -24,7 +24,7 @@ class savedSettings {
     localStorage.setItem('condition', JSON.stringify(condition));
   }
 
-  public setDefault(): void {
+  public setDefaultFilter(): void {
     this.savedCondition = {
       count: [constValues.minCount, constValues.maxCount],
       year: [constValues.minYear, constValues.maxYear],
@@ -32,9 +32,15 @@ class savedSettings {
       color: [],
       size: [],
       favorite: false,
-      sortType: 'name',
-      searchKey: '',
+      sortType: this.savedCondition.sortType,
+      searchKey: this.savedCondition.searchKey,
     };
+    savedSettings.setCondition(this.savedCondition);
+  }
+
+  public setDefaultFav(): void {
+    this.savedCondition.sortType = 'name';
+    this.savedCondition.searchKey = '';
     savedSettings.setCondition(this.savedCondition);
     savedSettings.setFavToys([]);
   }

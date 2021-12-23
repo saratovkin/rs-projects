@@ -179,8 +179,6 @@ class Filter {
   }
 
   private clearFilters(): void {
-    FilterView.showDefaultFilters();
-    this.dataView.clearFavToys();
     this.slider.countSlider!.noUiSlider!.reset();
     this.slider.yearSlider!.noUiSlider!.reset();
     this.condition = {
@@ -190,12 +188,21 @@ class Filter {
       color: [],
       size: [],
       favorite: false,
-      sortType: 'name',
-      searchKey: '',
+      sortType: this.condition.sortType,
+      searchKey: this.condition.searchKey,
     };
-    this.SavedSettings.setDefault();
+    FilterView.showDefaultFilters();
+    this.SavedSettings.setDefaultFilter();
     this.showFiltered();
-    (document.querySelector('.search') as HTMLInputElement).value = '';
+  }
+
+  private clearFavToys(): void {
+    this.dataView.clearFavToys();
+    this.condition.sortType = 'name';
+    this.condition.searchKey = '';
+    FilterView.showDefaultSort();
+    this.SavedSettings.setDefaultFav();
+    this.showFiltered();
   }
 
   private showFilterValues(): void {
@@ -221,6 +228,7 @@ class Filter {
     });
     document.querySelector('.sort-select')?.addEventListener('change', (e: Event) => this.setSortType(e));
     document.querySelector('.reset-filter')?.addEventListener('click', () => this.clearFilters());
+    document.querySelector('.reset-fav')?.addEventListener('click', () => this.clearFavToys());
     document.querySelector('.search')?.addEventListener('input', (e) => this.setSearchKey(e));
   }
 
