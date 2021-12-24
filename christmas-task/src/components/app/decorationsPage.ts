@@ -1,8 +1,6 @@
 import AppController from '../controller/controller';
 import Filter from './filter';
 import IToy from '../interfaces/IToy';
-import ToysView from '../view/toysView';
-import TreeView from '../view/treeView';
 
 class decorationsPage {
   private controller: AppController;
@@ -17,9 +15,6 @@ class decorationsPage {
   public async start(): Promise<void> {
     this.data = await this.controller.getData();
     const filter = new Filter();
-    const toys = new ToysView(this.data);
-    toys.showToys();
-    TreeView.initBtns();
     filter.setData(this.data);
     filter.start();
   }

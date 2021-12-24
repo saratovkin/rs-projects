@@ -20,13 +20,13 @@ class Filter {
 
   private dataView: DataView;
 
-  private SavedSettings: SavedSettings;
+  private savedSettings: SavedSettings;
 
   public constructor() {
     this.slider = new Slider();
     this.dataView = new DataView();
-    this.SavedSettings = new SavedSettings();
-    this.condition = this.SavedSettings.savedCondition;
+    this.savedSettings = new SavedSettings();
+    this.condition = this.savedSettings.savedCondition;
     this.data = [];
     this.filteredData = [];
   }
@@ -34,6 +34,7 @@ class Filter {
   public setData(data: IToy[]): void {
     this.data = data;
     this.filteredData = this.data;
+    this.dataView.setToys(this.data);
   }
 
   private compareFunc(toy: IToy): boolean {
@@ -112,10 +113,10 @@ class Filter {
   private setShape(type: string, e: Event): void {
     const param = (e.target as HTMLElement).getAttribute('filter');
     if (param) {
-      this.updateCondition(type, param);
+      this.updateCondition(type, param as string);
       (e.target as HTMLElement).classList.toggle('clicked');
+      this.showFiltered();
     }
-    this.showFiltered();
   }
 
   private static showSliderRanges(type: string, param: string[]): void {
@@ -192,7 +193,7 @@ class Filter {
       searchKey: this.condition.searchKey,
     };
     FilterView.showDefaultFilters();
-    this.SavedSettings.setDefaultFilter();
+    this.savedSettings.setDefaultFilter();
     this.showFiltered();
   }
 
@@ -201,7 +202,7 @@ class Filter {
     this.condition.sortType = 'name';
     this.condition.searchKey = '';
     FilterView.showDefaultSort();
-    this.SavedSettings.setDefaultFav();
+    this.savedSettings.setDefaultFav();
     this.showFiltered();
   }
 
