@@ -1,6 +1,6 @@
 .tree-parameters,
 .toy-selector {
-  width: 25%;
+  width: 30%;
   height: calc(100vh - 200px);
   max-height: 800px;
   display: flex;
@@ -52,11 +52,11 @@
 }
 
 .snow-button {
-  background-image: url('./assets/svg/snowflake.svg');
+  background-image: url("/assets/svg/snowflake.svg");
 }
 
 .sound-button {
-  background-image: url('./assets/svg/audio.svg');
+  background-image: url("/assets/svg/audio.svg");
 }
 
 .snow-button.clicked {
@@ -64,7 +64,7 @@
 }
 
 .sound-button.clicked {
-  background-image: url('./assets/svg/mute.svg');
+  background-image: url("/assets/svg/mute.svg");
 }
 
 .snow-button:hover,
@@ -78,8 +78,9 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding: 0 5px;
-  gap: 5px;
+  gap: 15px;
+  width: calc(100% - 20px);
+  margin: 0 auto;
 }
 
 .garland-picker {

@@ -1,13 +1,15 @@
 .toys-picker {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
   gap: 5px;
-  margin: 0 15px;
+  width: calc(100% - 20px);
+  margin: 0 auto;
 }
 
 .toy-option {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 50px 50px;
@@ -20,12 +22,28 @@
   position: relative;
 }
 
+.toy-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
 .toy-counter {
   position: absolute;
   top: 0;
   right: 0;
-  width: 5px;
-  height: 5px;
-  font-size: 5px;
-  background-color: #2c7272;
+  width: 15px;
+  height: 15px;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  border-radius: 15px;
+  background-color: #fb5756;
+}
+
+.toy-option:hover {
+  transform: scale(1.1);
 }
