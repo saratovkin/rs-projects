@@ -30,7 +30,7 @@
 
   </header>
   <main class=main>
-    <div class="toys-page">
+    <div class="toys-page hide">
       <aside class="filter-options">
         <input type="search" class="search" placeholder="Поиск" autofocus="autofocus" autocomplete="off">
         <div class="filter-option">
@@ -96,7 +96,7 @@
         </template>
       </div>
     </div>
-    <div class="tree-page hide">
+    <div class="tree-page">
       <aside class="tree-parameters">
         <div class="fx-buttons">
           <div class="sound-button"></div>
@@ -123,13 +123,17 @@
         </div>
       </aside>
       <div class="tree-container bg-image">
-        <div class="tree-image"></div>
+        <div class="tree-image">
+          <svg class="tree-droppable" height="200" width="300">
+            <path class="test-path" d='M150 0 L75 200 L225 200 Z' fill="transparent" />
+          </svg>
+        </div>
       </div>
       <aside class="toy-selector">
         <div class="view-option">
           <p class="section-name">Игрушки</p>
           <div class="toys-picker">
-          
+
           </div>
         </div>
         <div class="view-option">

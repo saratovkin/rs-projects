@@ -14,7 +14,7 @@
 .tree-image {
   background-repeat: no-repeat;
   background-position: center;
-  transition: background-image .2s ease-in-out;
+  /* transition: background-image .2s ease-in-out; */
 }
 
 .tree-container {
@@ -31,12 +31,18 @@
 }
 
 .tree-image {
-  height: calc(100% - 50px);
-  width: calc(100% - 100px);
+  width: 400px;
+  height: 100%;
   background-image: url("/assets/tree/1.png");
   background-size: contain;
+  position: relative;
 }
 
-.hide {
-  display: none;
+.tree-droppable {
+  position: absolute;
+  top: 32%;
+  left: 50%;
+  transform: translate(-50%, 0) scale(3.3, 2.8);
+  position: absolute;
+  /* pointer-events: none; */
 }

@@ -15,30 +15,22 @@ class ToysView {
     toyCounter.textContent = toy.count;
     toyElem.appendChild(toyCounter);
     toyElem.appendChild(toyImg);
-    ToysView.getToyAmount(toyImg);
+    ToysView.moveToy(toyImg);
     document.querySelector('.toys-picker')?.appendChild(toyElem);
   }
 
-  public static getToyAmount(toyImg: HTMLPictureElement) {
-    let counter: string = toyImg.getAttribute('data-count') as string;
-    counter = (+counter - 1).toString();
-    if (+counter > 1) {
-      // toyImg = toyImg.cloneNode(false) as HTMLImageElement;
-
-      toyImg.ondragstart = function () {
-        return false;
-      };
-      toyImg.setAttribute('data-count', counter);
-      // toyImg.parentElement!.querySelector('.toy-counter')!.textContent = counter;
-      ToysView.moveToy(toyImg);
-    }
-  }
-
-  public static moveToy(toyImg: HTMLPictureElement) {
+  //TODO fix count bug
+  public static moveToy(img: HTMLImageElement) {
+    const toyImg: HTMLImageElement = img;
+    const toyCounter: HTMLDivElement = img.parentNode?.querySelector('.toy-counter') as HTMLDivElement;
+    const droppableArea: HTMLElement = document.querySelector('.test-path') as HTMLElement;
+    let droppableFlag: boolean = false;
+    let toyCount: number;
+    let toyClone: HTMLImageElement;
+    toyImg.ondragstart = function () {
+      return false;
+    };
     toyImg.onmousedown = function (event) {
-      toyImg.style.position = 'absolute';
-      document.body.append(toyImg);
-      moveAt(event.pageX, event.pageY);
       function moveAt(pageX: number, pageY: number) {
         toyImg.style.left = pageX - toyImg.offsetWidth / 2 + 'px';
         toyImg.style.top = pageY - toyImg.offsetHeight / 2 + 'px';
@@ -46,11 +38,48 @@ class ToysView {
       function onMouseMove(event: MouseEvent) {
         moveAt(event.pageX, event.pageY);
       }
+      toyCount = +(toyImg.getAttribute('data-count') as string);
+      if (toyCount > 1) {
+        toyCount -= 1;
+        toyCounter.textContent = toyCount.toString();
+        toyImg.setAttribute('data-count', '0');
+        toyClone = toyImg.cloneNode(true) as HTMLImageElement;
+        toyClone.setAttribute('data-count', toyCount.toString());
+        toyImg.parentNode?.appendChild(toyClone);
+        ToysView.moveToy(toyClone);
+      }
+      if (toyCount === 1) {
+        toyCount = 0;
+        toyCounter.textContent = toyCount.toString();
+      }
+      toyImg.style.position = 'absolute';
+      document.body.append(toyImg);
+      moveAt(event.pageX, event.pageY);
+      toyImg.style.position = 'absolute';
+      document.body.append(toyImg);
+      moveAt(event.pageX, event.pageY);
       document.addEventListener('mousemove', onMouseMove);
+      console.log(toyImg);
       toyImg.onmouseup = function () {
-        document.removeEventListener('mousemove', onMouseMove);
-        toyImg.onmouseup = null;
+        if (droppableFlag) {
+          document.removeEventListener('mousemove', onMouseMove);
+          toyImg.onmouseup = null;
+        } else {
+          toyCount += 1;
+          toyCounter.textContent = (toyCount).toString();
+          toyImg.remove();
+        }
       };
+    };
+    toyImg.onmousemove = function (event) {
+      toyImg.hidden = true;
+      let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+      toyImg.hidden = false;
+      if (elemBelow === droppableArea) {
+        droppableFlag = true;
+      } else {
+        droppableFlag = false;
+      }
     };
   }
 
