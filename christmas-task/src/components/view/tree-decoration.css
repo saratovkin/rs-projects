@@ -22,7 +22,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("/assets/bg/1.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -32,7 +31,6 @@
 .tree-image {
   width: 400px;
   height: 700px;
-  background-image: url("/assets/tree/1.png");
   background-size: contain;
   position: relative;
 }
