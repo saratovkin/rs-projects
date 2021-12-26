@@ -1,5 +1,5 @@
 import './style.css';
-import App from './components/app/decorationsPage';
+import App from './components/app/toysPage';
 
 const app: App = new App();
 app.start();

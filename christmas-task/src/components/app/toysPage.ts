@@ -2,7 +2,7 @@ import AppController from '../controller/controller';
 import Filter from './filter';
 import IToy from '../interfaces/IToy';
 
-class decorationsPage {
+class toysPage {
   private controller: AppController;
 
   public data: IToy[];
@@ -20,4 +20,4 @@ class decorationsPage {
   }
 }
 
-export default decorationsPage;
+export default toysPage;

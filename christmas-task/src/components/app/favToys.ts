@@ -1,15 +1,15 @@
-import SavedSettings from './savedSettings';
+import SavedFilters from './savedFilters';
 
 const favLimit = 20;
 
 class FavToys {
   public favList: string[];
 
-  private savedSettings: SavedSettings;
+  private savedFilters: SavedFilters;
 
   constructor() {
-    this.savedSettings = new SavedSettings();
-    this.favList = this.savedSettings.favList;
+    this.savedFilters = new SavedFilters();
+    this.favList = this.savedFilters.favList;
     this.updateCounter();
   }
 
@@ -24,7 +24,7 @@ class FavToys {
     } else {
       FavToys.showAlertMessage(((e.target as HTMLElement).parentNode));
     }
-    SavedSettings.setFavToys(this.favList);
+    SavedFilters.setFavToys(this.favList);
     this.updateCounter();
   }
 

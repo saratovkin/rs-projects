@@ -1,7 +1,7 @@
 import ICondition from '../interfaces/ICondition';
 import constValues from '../misc/constValues';
 
-class savedSettings {
+class savedFilters {
   public savedCondition: ICondition;
 
   public favList: string[];
@@ -35,14 +35,14 @@ class savedSettings {
       sortType: this.savedCondition.sortType,
       searchKey: this.savedCondition.searchKey,
     };
-    savedSettings.setCondition(this.savedCondition);
+    savedFilters.setCondition(this.savedCondition);
   }
 
   public setDefaultFav(): void {
     this.savedCondition.sortType = 'name';
     this.savedCondition.searchKey = '';
-    savedSettings.setCondition(this.savedCondition);
-    savedSettings.setFavToys([]);
+    savedFilters.setCondition(this.savedCondition);
+    savedFilters.setFavToys([]);
   }
 
   static setFavToys(favList: string[]): void {
@@ -50,4 +50,4 @@ class savedSettings {
   }
 }
 
-export default savedSettings;
+export default savedFilters;

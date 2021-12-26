@@ -4,7 +4,7 @@ import constValues from '../misc/constValues';
 import Slider from '../nouislider/sliderInit';
 import FilterView from '../view/filterView';
 import DataView from '../view/dataView';
-import SavedSettings from './savedSettings';
+import SavedSettings from './savedFilters';
 
 import IToy from '../interfaces/IToy';
 import ICondition from '../interfaces/ICondition';
