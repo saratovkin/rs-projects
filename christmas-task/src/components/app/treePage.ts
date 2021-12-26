@@ -50,7 +50,6 @@ class TreePage {
     TreeView.initBtns();
     this.effects.initEffectsButtons();
     document.querySelector('.garland-picker')?.addEventListener('click', (e) => { this.effects.initLightLine(e) });
-
   }
 }
 

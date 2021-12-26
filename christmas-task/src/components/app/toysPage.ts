@@ -2,7 +2,7 @@ import AppController from '../controller/controller';
 import Filter from './filter';
 import IToy from '../interfaces/IToy';
 
-class toysPage {
+class ToysPage {
   private controller: AppController;
 
   public data: IToy[];
@@ -12,7 +12,7 @@ class toysPage {
     this.data = [];
   }
 
-  public async start(): Promise<void> {
+  public async initToysPage(): Promise<void> {
     this.data = await this.controller.getData();
     const filter = new Filter();
     filter.setData(this.data);
@@ -20,4 +20,4 @@ class toysPage {
   }
 }
 
-export default toysPage;
+export default ToysPage;
