@@ -60,18 +60,22 @@
   background-image: url("/assets/svg/audio.svg");
 }
 
-.snow-button.clicked {
-  filter: invert(55%) sepia(11%) saturate(767%) hue-rotate(9deg) brightness(91%) contrast(86%);
-}
-
+.snow-button.clicked,
 .sound-button.clicked {
-  background-image: url("/assets/svg/mute.svg");
+  filter: invert(57%) sepia(55%) saturate(5342%) hue-rotate(330deg) brightness(103%) contrast(96%);
 }
 
 .snow-button:hover,
 .sound-button:hover {
   filter: brightness(.8);
 }
+
+.snow-button.clicked:hover,
+.sound-button.clicked:hover {
+  filter: invert(57%) sepia(55%) saturate(5342%) hue-rotate(330deg) brightness(75%) contrast(96%);
+
+}
+
 
 .tree-picker,
 .bg-picker,
@@ -124,6 +128,12 @@
   height: 16px;
   border-radius: 16px;
   border: 1px solid #fff;
+  cursor: pointer;
+  transition: transform .2s;
+}
+
+.garland-option:hover {
+  transform: scale(1.2);
 }
 
 .garland-option.multi {

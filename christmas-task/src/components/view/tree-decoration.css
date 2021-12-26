@@ -14,7 +14,7 @@
 .tree-image {
   background-repeat: no-repeat;
   background-position: center;
-  /* transition: background-image .2s ease-in-out; */
+ position: relative;
 }
 
 .tree-container {
@@ -44,5 +44,4 @@
   left: 50%;
   transform: translate(-50%, 0) scale(3.3, 2.8);
   position: absolute;
-  /* pointer-events: none; */
 }
