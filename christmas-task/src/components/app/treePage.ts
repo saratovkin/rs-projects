@@ -1,6 +1,7 @@
 import IToy from '../interfaces/IToy';
 import ToysView from '../view/toysView';
 import TreeView from '../view/treeView';
+import Effects from '../view/effects';
 
 class TreePage {
   private toys: IToy[];
@@ -9,11 +10,15 @@ class TreePage {
 
   private favToys: IToy[];
 
+  private effects: Effects;
+
   constructor() {
     this.toys = [];
     this.favList = [];
     this.favToys = [];
     TreeView.initBtns();
+    this.effects = new Effects();
+    this.effects.initEffectsButtons();
   }
 
   public setToys(toys: IToy[]): void {
