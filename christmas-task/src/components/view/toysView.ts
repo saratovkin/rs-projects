@@ -20,6 +20,7 @@ class ToysView {
   }
 
   //TODO fix count bug
+  // if enough time refactor as separate class
   public static moveToy(img: HTMLImageElement) {
     const toyImg: HTMLImageElement = img;
     const toyCounter: HTMLDivElement = img.parentNode?.querySelector('.toy-counter') as HTMLDivElement;
@@ -39,18 +40,19 @@ class ToysView {
         moveAt(event.pageX, event.pageY);
       }
       toyCount = +(toyImg.getAttribute('data-count') as string);
+      console.log(toyCount);
+      console.log(toyCounter.textContent);
+      if (toyCount >= +(toyCounter.textContent as string)) {
+        toyCounter.textContent = (toyCount - 1).toString();
+      }
       if (toyCount > 1) {
-        toyCount -= 1;
-        toyCounter.textContent = toyCount.toString();
-        toyImg.setAttribute('data-count', '0');
+        toyCount = +(toyCounter.textContent as string);
+        toyImg.setAttribute('data-count', '1');
         toyClone = toyImg.cloneNode(true) as HTMLImageElement;
+        console.log(toyCount);
         toyClone.setAttribute('data-count', toyCount.toString());
         toyImg.parentNode?.appendChild(toyClone);
         ToysView.moveToy(toyClone);
-      }
-      if (toyCount === 1) {
-        toyCount = 0;
-        toyCounter.textContent = toyCount.toString();
       }
       toyImg.style.position = 'absolute';
       document.body.append(toyImg);
@@ -59,14 +61,12 @@ class ToysView {
       document.body.append(toyImg);
       moveAt(event.pageX, event.pageY);
       document.addEventListener('mousemove', onMouseMove);
-      console.log(toyImg);
       toyImg.onmouseup = function () {
         if (droppableFlag) {
           document.removeEventListener('mousemove', onMouseMove);
           toyImg.onmouseup = null;
         } else {
-          toyCount += 1;
-          toyCounter.textContent = (toyCount).toString();
+          toyCounter.textContent = (+(toyCounter.textContent as string) + 1).toString();
           toyImg.remove();
         }
       };
