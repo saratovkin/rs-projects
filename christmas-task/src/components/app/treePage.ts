@@ -46,8 +46,16 @@ class TreePage {
     ToysView.showToys(this.favToys);
   }
 
+  public showSavedParams() {
+    const savedBg: string = localStorage.getItem('bg-image') || 'url("/assets/bg/1.jpg")';
+    const savedTree: string = localStorage.getItem('tree-image') || 'url("/assets/tree/1.png")';
+    (document.querySelector('.bg-image') as HTMLElement).style.backgroundImage = savedBg;
+    (document.querySelector('.tree-image') as HTMLElement).style.backgroundImage = savedTree;
+  }
+
   public initTreePage() {
     TreeView.initBtns();
+    this.showSavedParams();
     this.effects.initEffectsButtons();
     document.querySelector('.garland-picker')?.addEventListener('click', (e) => { this.effects.initLightLine(e) });
   }

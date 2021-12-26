@@ -15,6 +15,7 @@ class TreeView {
 
   private static changeBg(e: Event, type: string) {
     const url = (e.target as HTMLElement).style.backgroundImage;
+    localStorage.setItem(`${type}-image`, url);
     (document.querySelector(`.${type}-image`) as HTMLElement).style.backgroundImage = url;
   }
 

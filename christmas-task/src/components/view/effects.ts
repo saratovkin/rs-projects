@@ -1,3 +1,4 @@
+import { throws } from 'assert';
 import './snowflakes.css';
 
 const treeLightStep: number = 10;
@@ -6,11 +7,21 @@ const treeLightWidth: number = 10;
 class Effects {
   private audio: HTMLAudioElement;
 
+  private snowFlag: boolean;
+
+  private audioFlag: boolean;
+
+  private lightsFlag: boolean;
+
   constructor() {
+    this.snowFlag = JSON.parse(localStorage.getItem('snowFlag') as string) || false;
+    this.audioFlag = JSON.parse(localStorage.getItem('audioFlag') as string) || false;
+    this.lightsFlag = JSON.parse(localStorage.getItem('lightsFlag') as string) || false;
     this.audio = new Audio('audio/audio.mp3');
   }
 
   private toggleSnow(): void {
+    localStorage.setItem('snowFlag', JSON.stringify(!this.snowFlag));
     (document.getElementById('snow-container') as HTMLElement).classList.toggle('hide');
     (document.getElementById('snow-button') as HTMLElement).classList.toggle('clicked');
   }
@@ -19,8 +30,10 @@ class Effects {
     (document.getElementById('music-button') as HTMLElement).classList.toggle('clicked');
     if (this.audio.paused) {
       this.audio.play();
+      localStorage.setItem('audioFlag', JSON.stringify(true));
     } else {
       this.audio.pause();
+      localStorage.setItem('audioFlag', JSON.stringify(false));
       this.audio.currentTime = 0;
     }
   }
@@ -30,22 +43,37 @@ class Effects {
   }
 
   private initSnowButton(): void {
-    (document.getElementById('snow-button') as HTMLElement).addEventListener('click', this.toggleSnow);
+    (document.getElementById('snow-button') as HTMLElement).addEventListener('click', () => { this.toggleSnow(); });
   }
 
   public initEffectsButtons() {
     this.initMusicButton();
     this.initSnowButton();
+    this.setDefaultSettings();
+  }
+
+  private setDefaultSettings() {
+    if (this.audioFlag) {
+      (document.getElementById('music-button') as HTMLElement).classList.add('clicked');
+      document.addEventListener('click', () => { this.audio.play(); }, { once: true });
+    }
+    if (this.snowFlag) {
+      (document.getElementById('snow-container') as HTMLElement).classList.remove('hide');
+      (document.getElementById('snow-button') as HTMLElement).classList.add('clicked');
+    }
+    if (this.lightsFlag) {
+      this.createLights(localStorage.getItem('lights-color') as string);
+    }
   }
 
   private createLightLine(index: number, color: string): void {
     const lightLine: HTMLDivElement = document.createElement('div');
+    localStorage.setItem('lights-color', color);
     lightLine.className = 'light-line';
     lightLine.style.top = `${(treeLightStep * index)}%`;
     lightLine.style.width = `${(treeLightWidth * index)}%`;
     for (let i = 0; i < index + 1; i += 1) {
       const light: HTMLDivElement = this.createSingleLight(color);
-
       light.style.transform = `translate(0, ${4 * Math.sqrt(i * 10)}px)`;
       lightLine.append(light);
     }
@@ -77,12 +105,15 @@ class Effects {
   }
 
   public removeLights() {
+    localStorage.setItem('lightsFlag', JSON.stringify(false));
     document.querySelector('.garland-button')?.classList.add('hide');
     (document.querySelector('.tree-lights') as HTMLElement).textContent = '';
   }
 
   private createLights(color: string) {
     this.removeLights();
+    document.querySelector('.garland-button')?.addEventListener('click', this.removeLights);
+    localStorage.setItem('lightsFlag', JSON.stringify(true));
     document.querySelector('.garland-button')?.classList.remove('hide');
     for (let i = 2; i <= 8; i += 1) {
       this.createLightLine(i, color);
@@ -94,7 +125,6 @@ class Effects {
     if (color != 'hide') {
       this.createLights(color);
     }
-    document.querySelector('.garland-button')?.addEventListener('click', this.removeLights);
   }
 }
 
