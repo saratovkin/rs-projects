@@ -20,11 +20,11 @@
   font-size: 60px;
   line-height: 60px;
   text-align: center;
+  font-family: 'Lora';
+  font-weight: 500;
 }
 
 .page-title.alt {
-  font-family: 'Lora';
-  font-weight: 500;
   color: #fb5756;
 }
 
@@ -42,4 +42,8 @@
 
 .start-button:hover {
   background-color: #d94d4c;
+}
+
+.hide {
+  display: none;
 }

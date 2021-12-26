@@ -6,8 +6,7 @@
   display: flex;
   flex-wrap: nowrap;
   column-gap: 10px;
-  margin: 0 auto;
-  margin-top: 50px;
+  margin: 50px auto;
 }
 
 .tree-container,
@@ -27,7 +26,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .tree-image {
