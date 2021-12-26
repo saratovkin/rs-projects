@@ -1,17 +1,15 @@
 import './tree-decoration.css';
 import './tree-parameters.css';
 
+const bgOptionsAmount: number = 10;
+const treeOptionsAmount: number = 6;
+
 class TreeView {
   private static createOption(type: string, index: number, ext: string): void {
     const btn = document.createElement('div');
     btn.classList.add(`${type}-option`);
     btn.style.backgroundImage = `url('./assets/${type}/${index}.${ext}')`;
-    if (type === 'tree') {
-      btn.addEventListener('click', (e) => { TreeView.changeBg(e, type); });
-    }
-    if (type === 'bg') {
-      btn.addEventListener('click', (e) => { TreeView.changeBg(e, type); });
-    }
+    btn.addEventListener('click', (e) => { TreeView.changeBg(e, type); });
     document.querySelector(`.${type}-picker`)!.appendChild(btn);
   }
 
@@ -21,13 +19,13 @@ class TreeView {
   }
 
   private static createBgBtns(): void {
-    for (let i = 1; i <= 10; i += 1) {
+    for (let i = 1; i <= bgOptionsAmount; i += 1) {
       TreeView.createOption('bg', i, 'jpg');
     }
   }
 
   private static createTreeBtns(): void {
-    for (let i = 1; i <= 6; i += 1) {
+    for (let i = 1; i <= treeOptionsAmount; i += 1) {
       TreeView.createOption('tree', i, 'png');
     }
   }

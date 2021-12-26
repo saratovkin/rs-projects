@@ -16,9 +16,8 @@ class TreePage {
     this.toys = [];
     this.favList = [];
     this.favToys = [];
-    TreeView.initBtns();
     this.effects = new Effects();
-    this.effects.initEffectsButtons();
+    this.initTreePage();
   }
 
   public setToys(toys: IToy[]): void {
@@ -45,6 +44,13 @@ class TreePage {
     this.favToys = [];
     this.getFavToys();
     ToysView.showToys(this.favToys);
+  }
+
+  public initTreePage() {
+    TreeView.initBtns();
+    this.effects.initEffectsButtons();
+    document.querySelector('.garland-picker')?.addEventListener('click', (e) => { this.effects.initLightLine(e) });
+
   }
 }
 

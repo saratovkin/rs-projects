@@ -156,8 +156,15 @@
   background-color: #fdd700;
 }
 
+.garland-switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .garland-button {
-  width: 40px;
+  margin-top: 15px;
+  width: 100px;
   height: 40px;
   background-color: #fb5756;
   border: none;

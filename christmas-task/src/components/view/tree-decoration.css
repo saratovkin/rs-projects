@@ -32,7 +32,7 @@
 
 .tree-image {
   width: 400px;
-  height: 100%;
+  height: 700px;
   background-image: url("/assets/tree/1.png");
   background-size: contain;
   position: relative;
@@ -44,4 +44,77 @@
   left: 50%;
   transform: translate(-50%, 0) scale(3.3, 2.8);
   position: absolute;
+}
+
+.tree-lights {
+  position: absolute;
+  width: 100%;
+  top: 40px;
+  height: calc(100% - 100px);
+  pointer-events: none;
+}
+
+.light-line {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.light {
+  background-color: #ff0000;
+  width: 5px;
+  height: 5px;
+  border-radius: 10px;
+  animation-name: flickerRed;
+  animation-iteration-count: infinite;
+  animation-duration: .5s;
+  opacity: 1;
+  filter: brightness(200%) ;
+}
+
+.light:nth-child(2n+1){
+  animation-duration: 1s;
+}
+
+.light:nth-child(3n+2){
+  animation-duration: .8s;
+}
+.light:nth-child(7n+1){
+  animation-duration: .6s;
+}
+
+@keyframes flickerRed {
+  0%   { box-shadow: none; }
+  50%  { box-shadow: 0px 0px 5px 10px rgba(255, 0, 0, 0.2);
+  }
+  100% { box-shadow: none;  }
+}
+
+@keyframes flickerYellow {
+  0%   { box-shadow: none; }
+  50%  { box-shadow: 0px 0px 5px 10px rgba(238, 255, 0, 0.2);
+  }
+  100% { box-shadow: none;  }
+}
+
+@keyframes flickerGreen {
+  0%   { box-shadow: none; }
+  50%  { box-shadow: 0px 0px 5px 10px rgba(0, 255, 136, 0.2);
+  }
+  100% { box-shadow: none;  }
+}
+
+@keyframes flickerBlue {
+  0%   { box-shadow: none; }
+  50%  { box-shadow: 0px 0px 5px 10px rgba(0, 89, 255, 0.2);
+  }
+  100% { box-shadow: none;  }
+}
+
+.hide {
+  display: none;
 }

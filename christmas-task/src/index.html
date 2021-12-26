@@ -17,9 +17,12 @@
   <header class="header">
     <div class="header-container">
       <div class="header-nav">
-        <span class="name">Игрушки</span>
+        <span class="page">Главная</span>
+        <span class="page">Игрушки</span>
+        <span class="page clicked">Елка</span>
       </div>
-      <div class="header-name">
+      <div class="misc-container">
+        <input type="search" class="search" placeholder="Поиск" autofocus="autofocus" autocomplete="off">
         <div class="fav-counter">
           <span class="fav-count">
             0
@@ -30,9 +33,13 @@
 
   </header>
   <main class=main>
+    <div class="main-page">
+      <div class="main-page-container">
+        
+      </div>
+    </div>
     <div class="toys-page hide">
       <aside class="filter-options">
-        <input type="search" class="search" placeholder="Поиск" autofocus="autofocus" autocomplete="off">
         <div class="filter-option">
           <p>Фильтры по значению</p>
         </div>
@@ -96,7 +103,7 @@
         </template>
       </div>
     </div>
-    <div class="tree-page">
+    <div class="tree-page hide">
       <aside class="tree-parameters">
         <div class="fx-buttons">
           <div class="sound-button" id="music-button"></div>
@@ -118,7 +125,9 @@
             <div class="garland-option yellow"></div>
             <div class="garland-option green"></div>
             <div class="garland-option blue"></div>
-            <button class="garland-button">+</button>
+          </div>
+          <div class="garland-switch">
+            <button class="garland-button hide">Отключить</button>
           </div>
         </div>
       </aside>
@@ -132,6 +141,8 @@
           <svg class="tree-droppable" height="200" width="300">
             <path class="test-path" d='M150 0 L75 200 L225 200 Z' fill="transparent" />
           </svg>
+          <div class="tree-lights">
+          </div>
         </div>
       </div>
       <aside class="toy-selector">
