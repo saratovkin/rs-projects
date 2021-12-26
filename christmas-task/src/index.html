@@ -17,12 +17,12 @@
   <header class="header">
     <div class="header-container">
       <div class="header-nav">
-        <span class="page clicked">Главная</span>
-        <span class="page">Игрушки</span>
-        <span class="page">Елка</span>
+        <span class="page clicked" id="main-button">Главная</span>
+        <span class="page" id="toys-button">Игрушки</span>
+        <span class="page" id="tree-button">Елка</span>
       </div>
       <div class="misc-container">
-        <input type="search" class="search" placeholder="Поиск" autofocus="autofocus" autocomplete="off">
+        <input type="search" class="search" placeholder="Поиск" autocomplete="off">
         <div class="fav-counter">
           <span class="fav-count">
             0
@@ -38,7 +38,7 @@
         <p class="page-title">Новогодняя игра</p>
         <p class="page-title alt">"Наряди Елку"</p>
       </div>
-      <button class="start-button">Начать</button>
+      <button class="start-button" id="start-button">Начать</button>
     </div>
     <div class="toys-page hide">
       <aside class="filter-options">
@@ -107,10 +107,6 @@
     </div>
     <div class="tree-page hide">
       <aside class="tree-parameters">
-        <div class="fx-buttons">
-          <div class="sound-button" id="music-button"></div>
-          <div class="snow-button" id="snow-button"></div>
-        </div>
         <div class="view-option">
           <p class="section-name">Выбери елку</p>
           <div class="tree-picker"></div>
@@ -148,15 +144,15 @@
         </div>
       </div>
       <aside class="toy-selector">
+        <div class="fx-buttons">
+          <div class="sound-button" id="music-button"></div>
+          <div class="snow-button" id="snow-button"></div>
+        </div>
         <div class="view-option">
           <p class="section-name">Игрушки</p>
           <div class="toys-picker">
 
           </div>
-        </div>
-        <div class="view-option">
-          <p class="section-name">Вы нарядили</p>
-          <div class="decorated-trees"></div>
         </div>
       </aside>
     </div>
