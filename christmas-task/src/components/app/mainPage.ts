@@ -1,11 +1,11 @@
-import './main-page.css'
+import './main-page.css';
 
 class MainPage {
   private mainBtn: HTMLElement;
 
   private toysBtn: HTMLElement;
 
-  private treeBtn: HTMLElement
+  private treeBtn: HTMLElement;
 
   private startBtn: HTMLElement;
 

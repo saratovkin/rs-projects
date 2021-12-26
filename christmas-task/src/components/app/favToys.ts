@@ -28,10 +28,10 @@ class FavToys {
     this.updateCounter();
   }
 
-  private static showAlertMessage(node: ParentNode | null): void {
+  private static showAlertMessage(node: Node | null): void {
     if (node !== null) {
-      node.querySelector('.fav-limit')?.classList.remove('hide');
-      setTimeout(() => node.querySelector('.fav-limit')?.classList.add('hide'), 1500);
+      (node as HTMLElement).querySelector('.fav-limit')?.classList.remove('hide');
+      setTimeout(() => (node as HTMLElement).querySelector('.fav-limit')?.classList.add('hide'), 1500);
     }
   }
 

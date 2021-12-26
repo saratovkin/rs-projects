@@ -1,8 +1,7 @@
-import { throws } from 'assert';
 import './snowflakes.css';
 
-const treeLightStep: number = 10;
-const treeLightWidth: number = 10;
+const treeLightStep = 10;
+const treeLightWidth = 10;
 
 class Effects {
   private audio: HTMLAudioElement;
@@ -62,40 +61,40 @@ class Effects {
       (document.getElementById('snow-button') as HTMLElement).classList.add('clicked');
     }
     if (this.lightsFlag) {
-      this.createLights(localStorage.getItem('lights-color') as string);
+      Effects.createLights(localStorage.getItem('lights-color') as string);
     }
   }
 
-  private createLightLine(index: number, color: string): void {
+  private static createLightLine(index: number, color: string): void {
     const lightLine: HTMLDivElement = document.createElement('div');
     localStorage.setItem('lights-color', color);
     lightLine.className = 'light-line';
     lightLine.style.top = `${(treeLightStep * index)}%`;
     lightLine.style.width = `${(treeLightWidth * index)}%`;
     for (let i = 0; i < index + 1; i += 1) {
-      const light: HTMLDivElement = this.createSingleLight(color);
+      const light: HTMLDivElement = Effects.createSingleLight(color);
       light.style.transform = `translate(0, ${4 * Math.sqrt(i * 10)}px)`;
       lightLine.append(light);
     }
     for (let i = index + 1; i < (index * 2 + 1); i += 1) {
-      const light: HTMLDivElement = this.createSingleLight(color);
+      const light: HTMLDivElement = Effects.createSingleLight(color);
       light.style.transform = `translate(0, ${4 * Math.sqrt((index * 2 - i) * 10)}px)`;
       lightLine.append(light);
     }
     document.querySelector('.tree-lights')?.appendChild(lightLine);
   }
 
-  private getRandomColor(): string {
+  private static getRandomColor(): string {
     const colors: string[] = ['red', 'green', 'yellow', 'blue'];
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
-  private createSingleLight(color: string): HTMLDivElement {
+  private static createSingleLight(color: string): HTMLDivElement {
     const light: HTMLDivElement = document.createElement('div');
     light.className = 'light';
     if (color === 'multi') {
-      const tempColor = this.getRandomColor();
-      light.style.background = tempColor
+      const tempColor = Effects.getRandomColor();
+      light.style.background = tempColor;
       light.style.animationName = `flicker${tempColor.charAt(0).toUpperCase() + tempColor.slice(1)}`;
     } else {
       light.style.background = color;
@@ -104,26 +103,26 @@ class Effects {
     return light;
   }
 
-  public removeLights() {
+  public static removeLights() {
     localStorage.setItem('lightsFlag', JSON.stringify(false));
     document.querySelector('.garland-button')?.classList.add('hide');
     (document.querySelector('.tree-lights') as HTMLElement).textContent = '';
   }
 
-  private createLights(color: string) {
-    this.removeLights();
-    document.querySelector('.garland-button')?.addEventListener('click', this.removeLights);
+  private static createLights(color: string) {
+    Effects.removeLights();
+    document.querySelector('.garland-button')?.addEventListener('click', Effects.removeLights);
     localStorage.setItem('lightsFlag', JSON.stringify(true));
     document.querySelector('.garland-button')?.classList.remove('hide');
     for (let i = 2; i <= 8; i += 1) {
-      this.createLightLine(i, color);
+      Effects.createLightLine(i, color);
     }
   }
 
-  public initLightLine(e: Event): void {
+  public static initLightLine(e: Event): void {
     const color: string = (e.target as HTMLElement).className.split(' ')[1];
-    if (color != 'hide') {
-      this.createLights(color);
+    if (color !== 'hide') {
+      Effects.createLights(color);
     }
   }
 }

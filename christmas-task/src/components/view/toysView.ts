@@ -19,13 +19,13 @@ class ToysView {
     document.querySelector('.toys-picker')?.appendChild(toyElem);
   }
 
-  //TODO fix count bug
+  // TODO fix count bug
   // if enough time refactor as separate class
   public static moveToy(img: HTMLImageElement) {
     const toyImg: HTMLImageElement = img;
     const toyCounter: HTMLDivElement = img.parentNode?.querySelector('.toy-counter') as HTMLDivElement;
     const droppableArea: HTMLElement = document.querySelector('.test-path') as HTMLElement;
-    let droppableFlag: boolean = false;
+    let droppableFlag = false;
     let toyCount: number;
     let toyClone: HTMLImageElement;
     toyImg.ondragstart = function () {
@@ -33,15 +33,13 @@ class ToysView {
     };
     toyImg.onmousedown = function (event) {
       function moveAt(pageX: number, pageY: number) {
-        toyImg.style.left = pageX - toyImg.offsetWidth / 2 + 'px';
-        toyImg.style.top = pageY - toyImg.offsetHeight / 2 + 'px';
+        toyImg.style.left = `${pageX - toyImg.offsetWidth / 2}px`;
+        toyImg.style.top = `${pageY - toyImg.offsetHeight / 2}px`;
       }
-      function onMouseMove(event: MouseEvent) {
-        moveAt(event.pageX, event.pageY);
+      function onMouseMove(e: MouseEvent) {
+        moveAt(e.pageX, e.pageY);
       }
       toyCount = +(toyImg.getAttribute('data-count') as string);
-      console.log(toyCount);
-      console.log(toyCounter.textContent);
       if (toyCount >= +(toyCounter.textContent as string)) {
         toyCounter.textContent = (toyCount - 1).toString();
       }
@@ -49,7 +47,6 @@ class ToysView {
         toyCount = +(toyCounter.textContent as string);
         toyImg.setAttribute('data-count', '1');
         toyClone = toyImg.cloneNode(true) as HTMLImageElement;
-        console.log(toyCount);
         toyClone.setAttribute('data-count', toyCount.toString());
         toyImg.parentNode?.appendChild(toyClone);
         ToysView.moveToy(toyClone);
@@ -73,7 +70,7 @@ class ToysView {
     };
     toyImg.onmousemove = function (event) {
       toyImg.hidden = true;
-      let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+      const elemBelow = document.elementFromPoint(event.clientX, event.clientY);
       toyImg.hidden = false;
       if (elemBelow === droppableArea) {
         droppableFlag = true;

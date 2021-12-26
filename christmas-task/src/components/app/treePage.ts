@@ -46,7 +46,7 @@ class TreePage {
     ToysView.showToys(this.favToys);
   }
 
-  public showSavedParams() {
+  public static showSavedParams() {
     const savedBg: string = localStorage.getItem('bg-image') || 'url("/assets/bg/1.jpg")';
     const savedTree: string = localStorage.getItem('tree-image') || 'url("/assets/tree/1.png")';
     (document.querySelector('.bg-image') as HTMLElement).style.backgroundImage = savedBg;
@@ -55,9 +55,9 @@ class TreePage {
 
   public initTreePage() {
     TreeView.initBtns();
-    this.showSavedParams();
+    TreePage.showSavedParams();
     this.effects.initEffectsButtons();
-    document.querySelector('.garland-picker')?.addEventListener('click', (e) => { this.effects.initLightLine(e) });
+    document.querySelector('.garland-picker')?.addEventListener('click', (e) => { Effects.initLightLine(e); });
   }
 }
 

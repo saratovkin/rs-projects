@@ -1,8 +1,8 @@
 import './tree-decoration.css';
 import './tree-parameters.css';
 
-const bgOptionsAmount: number = 10;
-const treeOptionsAmount: number = 6;
+const bgOptionsAmount = 10;
+const treeOptionsAmount = 6;
 
 class TreeView {
   private static createOption(type: string, index: number, ext: string): void {
