@@ -84,7 +84,7 @@
 .garland-picker,
 .toys-picker {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 10px;
   width: calc(100% - 20px);
@@ -92,6 +92,7 @@
 }
 
 .garland-picker {
+  justify-content: space-between;
   align-items: center;
 }
 
