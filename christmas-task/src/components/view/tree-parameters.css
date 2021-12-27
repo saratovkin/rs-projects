@@ -222,4 +222,7 @@
   .drop-zone {
     transform: scale(0.6) translate(8%, 35%);
   }
+  .tree-lights {
+    height: calc(100% - 150px);
+  }
 }
