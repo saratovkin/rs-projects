@@ -41,8 +41,8 @@ class ToyMove {
     });
     toyClone.addEventListener('mousedown', (event) => {
       function moveAt(pageX: number, pageY: number) {
-        toyClone.style.left = `${pageX - toyClone.offsetWidth / 2}px`;
-        toyClone.style.top = `${pageY - toyClone.offsetHeight / 2}px`;
+        toyClone.style.left = `${((pageX - toyClone.offsetWidth / 2) / window.innerWidth) * 100}%`;
+        toyClone.style.top = `${((pageY - toyClone.offsetHeight / 2) / window.innerHeight) * 100}%`;
       }
       function onMouseMove(e: MouseEvent) {
         moveAt(e.pageX, e.pageY);
