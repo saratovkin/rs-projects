@@ -14,6 +14,7 @@
 </head>
 
 <body>
+  <div class="toys-container"></div>
   <header class="header">
     <div class="header-container">
       <div class="header-nav">
@@ -30,7 +31,6 @@
         </div>
       </div>
     </div>
-
   </header>
   <main class=main>
     <div class="main-page">
@@ -137,10 +137,9 @@
         </div>
         <div class="tree-image">
           <svg class="tree-droppable" height="200" width="300">
-            <path class="test-path" d='M150 0 L75 200 L225 200 Z' fill="transparent" />
+            <path class="drop-zone" d='M150 0 L75 200 L225 200 Z' fill="transparent" />
           </svg>
-          <div class="tree-lights">
-          </div>
+          <div class="tree-lights"></div>
         </div>
       </div>
       <aside class="toy-selector">
@@ -151,8 +150,10 @@
         <div class="view-option">
           <p class="section-name">Игрушки</p>
           <div class="toys-picker">
-
           </div>
+        </div>
+        <div class="view-option single-button">
+          <button class="default-button">Сбросить настройки</button>
         </div>
       </aside>
     </div>
