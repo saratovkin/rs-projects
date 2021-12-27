@@ -9,11 +9,17 @@ class MainPage {
 
   private startBtn: HTMLElement;
 
+  private searchInput: HTMLInputElement;
+
+  private favCounter: HTMLElement;
+
   public constructor() {
     this.mainBtn = document.getElementById('main-button') as HTMLElement;
     this.toysBtn = document.getElementById('toys-button') as HTMLElement;
     this.treeBtn = document.getElementById('tree-button') as HTMLElement;
     this.startBtn = document.getElementById('start-button') as HTMLElement;
+    this.searchInput = document.querySelector('.search') as HTMLInputElement;
+    this.favCounter = document.querySelector('.fav-counter') as HTMLElement;
   }
 
   private showMainPage(): void {
@@ -24,6 +30,8 @@ class MainPage {
     this.mainBtn.classList.add('clicked');
     this.toysBtn.classList.remove('clicked');
     this.treeBtn.classList.remove('clicked');
+    this.searchInput.classList.add('hide');
+    this.favCounter.classList.add('hide');
   }
 
   private showToysPage(): void {
@@ -34,7 +42,9 @@ class MainPage {
     this.mainBtn.classList.remove('clicked');
     this.toysBtn.classList.add('clicked');
     this.treeBtn.classList.remove('clicked');
-    (document.querySelector('.search') as HTMLInputElement).focus();
+    this.searchInput.classList.remove('hide');
+    this.searchInput.focus();
+    this.favCounter.classList.remove('hide');
   }
 
   private showTreePage(): void {
@@ -45,6 +55,8 @@ class MainPage {
     this.mainBtn.classList.remove('clicked');
     this.toysBtn.classList.remove('clicked');
     this.treeBtn.classList.add('clicked');
+    this.searchInput.classList.add('hide');
+    this.favCounter.classList.remove('hide');
   }
 
   public initNavigation() {
@@ -52,6 +64,7 @@ class MainPage {
     this.toysBtn.addEventListener('click', () => { this.showToysPage(); });
     this.treeBtn.addEventListener('click', () => { this.showTreePage(); });
     this.startBtn.addEventListener('click', () => { this.showToysPage(); });
+    this.searchInput.addEventListener('input', () => { this.showToysPage(); });
   }
 }
 
