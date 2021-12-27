@@ -47,8 +47,8 @@ class TreePage {
   }
 
   public static showSavedParams() {
-    const savedBg: string = localStorage.getItem('bg-image') || 'url("/assets/bg/1.jpg")';
-    const savedTree: string = localStorage.getItem('tree-image') || 'url("/assets/tree/1.png")';
+    const savedBg: string = localStorage.getItem('bg-image') || 'url("bg/1.jpg")';
+    const savedTree: string = localStorage.getItem('tree-image') || 'url("tree/1.png")';
     (document.querySelector('.bg-image') as HTMLElement).style.backgroundImage = savedBg;
     (document.querySelector('.tree-image') as HTMLElement).style.backgroundImage = savedTree;
   }
