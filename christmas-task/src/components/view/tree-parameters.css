@@ -1,14 +1,11 @@
 .tree-parameters,
 .toy-selector {
   width: 30%;
-  height: calc(100vh - 200px);
-  max-height: 800px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   row-gap: 15px;
   z-index: 2;
-  margin-bottom: 50px;
 }
 
 .view-option {
