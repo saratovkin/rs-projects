@@ -6,6 +6,10 @@
   height: 100vh;
 }
 
+.toys-picker {
+  user-select: none; 
+}
+
 .toy-option {
   width: 70px;
   height: 70px;
