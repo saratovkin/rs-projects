@@ -5,8 +5,10 @@
   max-height: 800px;
   display: flex;
   flex-direction: column;
-  row-gap: 25px;
+  justify-content: flex-start;
+  row-gap: 15px;
   z-index: 2;
+  margin-bottom: 50px;
 }
 
 .view-option {
@@ -25,6 +27,7 @@
 .section-name {
   font-family: 'Lora';
   font-weight: 500;
+  text-align: center;
 }
 
 .fx-buttons {
@@ -76,14 +79,14 @@
 
 }
 
-
 .tree-picker,
 .bg-picker,
-.garland-picker {
+.garland-picker,
+.toys-picker {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 10px;
   width: calc(100% - 20px);
   margin: 0 auto;
 }
@@ -162,7 +165,8 @@
   align-items: center;
 }
 
-.garland-button {
+.garland-button,
+.default-button {
   margin-top: 15px;
   width: 100px;
   height: 40px;
@@ -174,7 +178,48 @@
   cursor: pointer;
 }
 
-.garland-button:hover {
+.view-option.single-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.default-button {
+  width: 200px;
+}
+
+.garland-button:hover,
+.default-button:hover {
   background-color: #d94d4c;
 }
 
+@media (max-width:1000px) {
+  .tree-option,
+  .toy-option{
+    width: 50px;
+    height: 50px;
+    background-size: 50px 50px;
+  }
+  .toy-image {
+    width: 35px;
+    height: 35px;
+  }
+  .bg-option {
+    width: 35px;
+    height: 35px;
+  }
+  .view-option,
+  .fx-buttons {
+    min-width: 200px;
+  }
+  .tree-droppable {
+    width: 200px;
+  }
+  .tree-image {
+    width: 250px;
+    height: 600px;
+  }
+  .drop-zone {
+    transform: scale(0.6) translate(8%, 35%);
+  }
+}

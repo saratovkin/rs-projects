@@ -7,6 +7,10 @@
   overflow-y: scroll;
 }
 
+.filter-options::-webkit-scrollbar {
+  display: none;
+}
+
 .filter-option,
 .search-option {
   width: calc(100% - 20px);

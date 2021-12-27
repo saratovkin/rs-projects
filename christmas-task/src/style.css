@@ -19,7 +19,7 @@ body {
 }
 
 .header-container {
-  width: calc(100% - 20px);
+  width: calc(100% - 60px);
   height: 100%;
   max-width: 1400px;
   margin: 0 auto;
@@ -31,12 +31,11 @@ body {
 }
 
 .header-nav {
-  width: calc(100% - 20px);
+  width: 300px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 30%;
-  min-width: 250px;
+
 }
 
 .misc-container {
@@ -73,7 +72,7 @@ body {
 }
 
 .toys-page {
-  width: calc(100% - 20px);
+  width: calc(100% - 40px);
   display: flex;
   width: 100%;
   max-width: 1400px;
