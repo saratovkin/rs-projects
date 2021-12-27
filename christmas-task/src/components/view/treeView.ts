@@ -8,7 +8,7 @@ class TreeView {
   private static createOption(type: string, index: number, ext: string): void {
     const btn = document.createElement('div');
     btn.classList.add(`${type}-option`);
-    btn.style.backgroundImage = `url('./assets/${type}/${index}.${ext}')`;
+    btn.style.backgroundImage = `url('${type}/${index}.${ext}')`;
     btn.addEventListener('click', (e) => { TreeView.changeBg(e, type); });
     document.querySelector(`.${type}-picker`)!.appendChild(btn);
   }
