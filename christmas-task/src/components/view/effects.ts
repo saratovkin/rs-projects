@@ -45,13 +45,18 @@ class Effects {
     (document.getElementById('snow-button') as HTMLElement).addEventListener('click', () => { this.toggleSnow(); });
   }
 
+  private initDefaultButton(): void {
+    (document.getElementById('default-tree') as HTMLElement).addEventListener('click', () => { this.setDefaultSetings(); });
+  }
+
   public initEffectsButtons() {
     this.initMusicButton();
     this.initSnowButton();
-    this.setDefaultSettings();
+    this.initDefaultButton();
+    this.setSavedSettings();
   }
 
-  private setDefaultSettings() {
+  private setSavedSettings() {
     if (this.audioFlag) {
       (document.getElementById('music-button') as HTMLElement).classList.add('clicked');
       document.addEventListener('click', () => { this.audio.play(); }, { once: true });
@@ -63,6 +68,22 @@ class Effects {
     if (this.lightsFlag) {
       Effects.createLights(localStorage.getItem('lights-color') as string);
     }
+  }
+
+  private setDefaultSetings() {
+    localStorage.removeItem('snowFlag');
+    localStorage.removeItem('audioFlag');
+    localStorage.removeItem('lightsFlag');
+    localStorage.removeItem('bg-image');
+    localStorage.removeItem('tree-image');
+    (document.getElementById('music-button') as HTMLElement).classList.remove('clicked');
+    (document.getElementById('snow-container') as HTMLElement).classList.add('hide');
+    (document.getElementById('snow-button') as HTMLElement).classList.remove('clicked');
+    this.audio.pause();
+    this.audio.currentTime = 0;
+    Effects.removeLights();
+    (document.querySelector('.bg-image') as HTMLElement).style.backgroundImage = 'url("bg/1.jpg")';
+    (document.querySelector('.tree-image') as HTMLElement).style.backgroundImage = 'url("tree/1.png")';
   }
 
   private static createLightLine(index: number, color: string): void {
@@ -121,7 +142,7 @@ class Effects {
 
   public static initLightLine(e: Event): void {
     const color: string = (e.target as HTMLElement).className.split(' ')[1];
-    if (color !== 'hide') {
+    if (color && color !== 'hide') {
       Effects.createLights(color);
     }
   }
