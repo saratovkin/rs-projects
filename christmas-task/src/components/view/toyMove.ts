@@ -26,7 +26,7 @@ class ToyMove {
     const { toyImg, toyContainer, toyCounter } = this;
     const toyClone: HTMLImageElement = this.toyImg.cloneNode(true) as HTMLImageElement;
     this.toyImg.parentNode?.appendChild(toyClone);
-    toyClone.ondragstart = function () {
+    toyClone.ondragstart = function removeDefaultDrag() {
       return false;
     };
     toyClone.addEventListener('mousemove', (event) => {

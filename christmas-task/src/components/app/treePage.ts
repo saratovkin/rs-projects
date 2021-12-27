@@ -52,7 +52,7 @@ class TreePage {
     (document.querySelector('.bg-image') as HTMLElement).style.backgroundImage = savedBg;
     (document.querySelector('.tree-image') as HTMLElement).style.backgroundImage = savedTree;
   }
-  
+
   public initTreePage() {
     TreeView.initBtns();
     TreePage.showSavedParams();
