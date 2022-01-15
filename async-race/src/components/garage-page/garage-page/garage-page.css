@@ -9,9 +9,6 @@
   display: flex;
   column-gap: 15px;
   align-items: stretch;
-}
-
-.car-params:first-child {
   margin-bottom: 15px;
 }
 

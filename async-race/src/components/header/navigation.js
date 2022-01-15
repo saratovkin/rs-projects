@@ -1,10 +1,16 @@
 import React from "react";
 
-const Navigation = () => (
-  <div className="page-navigation">
-    <button>Garage</button>
-    <button>Winners</button>
-  </div>
-);
+import NavBtn from "./nav-btn";
+
+class Navigation extends React.Component {
+  render() {
+    return (
+      <div className="page-navigation">
+        <NavBtn name='garage' />
+        <NavBtn name='winners' />
+      </div>
+    );
+  }
+}
 
 export default Navigation;
