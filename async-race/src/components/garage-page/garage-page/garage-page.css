@@ -10,6 +10,7 @@
   column-gap: 15px;
   align-items: stretch;
   margin-bottom: 15px;
+  width: 300px;
 }
 
 .car-params input[type="color"] {

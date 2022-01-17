@@ -3,11 +3,11 @@ import React from 'react';
 class CarSpecs extends React.Component {
 
   render() {
-    const { name, color } = this.props;
+    const { id, name, color } = this.props;
     return (
       <li className="car-item">
-        <div className="car-buttons"> 
-          <button>Select</button>
+        <div className="car-buttons">
+          <button onClick={() => this.props.onCarSelected(id)}>Select</button>
           <button onClick={this.props.onCarDeleted}>Remove</button>
           <span className="car-name">{name}</span>
         </div>

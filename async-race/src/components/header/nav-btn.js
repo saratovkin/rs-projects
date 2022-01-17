@@ -2,29 +2,11 @@ import React from "react";
 
 class NavBtn extends React.Component {
 
-  state = {
-    active: false,
-  };
-
-  onNavClick = () => {
-    this.setState(({active}) => {
-      return {
-        active: !active,
-      };
-    });
-  };
-
   render() {
-    const { active } = this.state;
-    let className = 'nav-button';
-    if (active) {
-      className += ' active';
-    }
     return (
       <span
-        className={className}
-        onClick={this.onNavClick}
-      >
+        className={this.props.className}
+        onClick={() => this.props.changePage(this.props.name)}>
         {this.props.name}
       </span>
     );

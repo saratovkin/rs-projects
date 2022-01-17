@@ -65,5 +65,5 @@
 }
 
 .nav-button.active::after {
-  background-color: #fff;
+  background-color: #bd162c;
 }
