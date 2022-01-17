@@ -5,22 +5,23 @@ html{
 body {
   margin: 0;
   padding: 0;
+  width: 100vw;
 }
 
-.root-page {
+.main-container {
   width: 100vw;
   height: 100vh;
   margin: 0;
   padding: 0;
 }
 
-.root-page,
-.root-page input,
-.root-page button {
+.main-container,
+.main-container input,
+.main-container button {
   font-family: 'Be Vietnam Pro';
   font-weight: 200;
 }
 
-.root-page input {
+.main-container input {
   outline: none;
 }

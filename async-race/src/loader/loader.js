@@ -2,6 +2,8 @@ class Loader {
 
   baseUrl = 'http://127.0.0.1:3000';
 
+  // TODO merge all request methods into one
+
   async getData(url) {
     const res = await fetch(`${this.baseUrl}${url}`);
     if (!res.ok) {
@@ -39,7 +41,6 @@ class Loader {
     });
     return await response.json();
   }
-
 
   getAllCars() {
     return this.getData('/garage');

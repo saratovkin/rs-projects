@@ -2,11 +2,11 @@ import './cars-table.css';
 
 import React from "react";
 
-import CarItem from '../car-item/car-item';
+import CarContainer from '../car-container/car-container';
 
 const CarTable = ({ cars, onCarDeleted, onCarSelected }) => (
   <div className="cars-table">
-    <CarItem
+    <CarContainer
       cars={cars}
       onCarDeleted={onCarDeleted}
       onCarSelected={onCarSelected} />

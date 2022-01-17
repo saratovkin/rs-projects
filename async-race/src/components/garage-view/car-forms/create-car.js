@@ -25,7 +25,7 @@ class CreateCar extends React.Component {
 
   render() {
     return (
-      <form className="car-params"
+      <form className="car-form"
         onSubmit={this.onSubmit}>
         <input type='text'
           placeholder='Car Model'

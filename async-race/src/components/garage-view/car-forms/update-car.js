@@ -1,3 +1,4 @@
+import './car-forms.css';
 import React from 'react';
 
 class UpdateCar extends React.Component {
@@ -9,7 +10,7 @@ class UpdateCar extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    const {name, color } = this.state;
+    const { name, color } = this.state;
     this.props.onCarUpdated(name, color);
     this.setState({
       name: '',
@@ -25,7 +26,7 @@ class UpdateCar extends React.Component {
 
   render() {
     return (
-      <form className="car-params"
+      <form className="car-form"
         onSubmit={this.onSubmit}>
         <input type='text'
           placeholder='Car Model'

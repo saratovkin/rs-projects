@@ -1,10 +1,9 @@
 import './garage-view.css';
-
 import React from "react";
 
 import CarsCounter from '../cars-counter/cars-counter';
-import CreateCar from '../create-car/create-car';
-import UpdateCar from '../update-car/update-car';
+import CreateCar from '../car-forms/create-car';
+import UpdateCar from '../car-forms/update-car';
 import GarageControls from '../garage-controls/garage-controls';
 import CarTable from '../cars-table/cars-table';
 import CarsPagination from '../cars-pagination/cars-pagination';
@@ -37,7 +36,7 @@ class GarageView extends React.Component {
       onCarAdded, onCarUpdated,
       onCountUpdated, onCarsGenerated, onCarSelected } = this.props;
     return (
-      <div className="garage-page">
+      <div className="garage-view">
         <CarsCounter onCountUpdated={onCountUpdated} />
         <PageNumber pageNum={this.state.pageNum} />
         <CreateCar onCarAdded={onCarAdded} />
