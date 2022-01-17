@@ -6,8 +6,8 @@ class NavBtn extends React.Component {
     return (
       <span
         className={this.props.className}
-        onClick={() => this.props.changePage(this.props.name)}>
-        {this.props.name}
+        onClick={() => this.props.changeView(this.props.view)}>
+        {this.props.view}
       </span>
     );
   }

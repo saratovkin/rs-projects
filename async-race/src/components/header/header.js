@@ -13,8 +13,8 @@ class Header extends React.Component {
             <div className="page-icon"></div>
             <h1 className="page-name">Async Race</h1>
           </div>
-          <Navigation page={this.props.page}
-            changePage={this.props.changePage} />
+          <Navigation view={this.props.view}
+            changeView={this.props.changeView} />
         </div>
       </header>
     );

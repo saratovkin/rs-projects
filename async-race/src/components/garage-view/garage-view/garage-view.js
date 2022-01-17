@@ -1,4 +1,4 @@
-import './garage-page.css';
+import './garage-view.css';
 
 import React from "react";
 
@@ -8,22 +8,28 @@ import UpdateCar from '../update-car/update-car';
 import GarageControls from '../garage-controls/garage-controls';
 import CarTable from '../cars-table/cars-table';
 import CarsPagination from '../cars-pagination/cars-pagination';
+import PageNumber from '../page-number/page-number';
 
-
-class GaragePage extends React.Component {
+class GarageView extends React.Component {
 
   state = {
-    carPage: 1,
+    pageNum: 0,
   }
 
   getDisplayedCars() {
-    const page = this.state.carPage;
-    const carsOnPage = this.props.cars.slice(page, page + 7);
+    const idx = this.state.pageNum * 7;
+    const carsOnPage = this.props.cars.slice(idx, idx + 7);
     return carsOnPage;
   }
 
   getAmountOfPages() {
-    return Math.floor(this.props.cars.length / 7);
+    return Math.ceil(this.props.cars.length / 7);
+  }
+
+  setPage = (pageNum) => {
+    this.setState(() => {
+      return { pageNum: pageNum };
+    })
   }
 
   render() {
@@ -33,6 +39,7 @@ class GaragePage extends React.Component {
     return (
       <div className="garage-page">
         <CarsCounter onCountUpdated={onCountUpdated} />
+        <PageNumber pageNum={this.state.pageNum} />
         <CreateCar onCarAdded={onCarAdded} />
         <UpdateCar onCarUpdated={onCarUpdated} />
         <GarageControls onCarsGenerated={onCarsGenerated} />
@@ -40,10 +47,13 @@ class GaragePage extends React.Component {
           cars={this.getDisplayedCars()}
           onCarDeleted={onCarDeleted}
           onCarSelected={onCarSelected} />
-        <CarsPagination pagesAmount={this.getAmountOfPages()} />
+        <CarsPagination
+          pagesAmount={this.getAmountOfPages()}
+          onPageChange={this.setPage}
+          pageNum={this.state.pageNum} />
       </div>
     );
   }
 }
 
-export default GaragePage;
+export default GarageView;

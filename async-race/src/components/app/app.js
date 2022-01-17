@@ -3,7 +3,7 @@ import './app.css';
 import React from "react";
 
 import Header from '../header/header';
-import GaragePage from '../garage-page/garage-page/garage-page'
+import GarageView from '../garage-view/garage-view/garage-view'
 import Footer from '../footer/footer';
 
 import CarGenerator from '../../misc/carGenerator';
@@ -15,8 +15,9 @@ class App extends React.Component {
 
   state = {
     cars: [],
-    page: 'garage',
+    view: 'garage',
     currentCar: null,
+
   }
 
   constructor() {
@@ -75,31 +76,32 @@ class App extends React.Component {
     return this.state.cars.length;
   };
 
-  changePage = (page) => {
+  changeView = (view) => {
     this.setState((prev) => {
       let newState = { ...prev };
-      newState.page = page;
+      newState.view = view;
       return newState;
     });
   };
 
-  currentPage = () => {
-    return this.state.page === 'garage';
+  currentView = () => {
+    return this.state.view === 'garage';
   };
 
+  // rename GaragePage to GarageView
   render() {
     return (
       <div className="root-page" >
-        <Header page={this.state.page}
-          changePage={this.changePage} />
-        {this.currentPage() ? <GaragePage
+        <Header view={this.state.view}
+          changeView={this.changeView} />
+        {this.currentView() ? <GarageView
           cars={this.state.cars}
           onCarDeleted={this.deleteCar}
           onCarAdded={this.addCar}
           onCarUpdated={this.updateCar}
           onCountUpdated={this.updateCount}
           onCarsGenerated={this.generateCars}
-          onCarSelected={this.selectCar} /> : <p>Winners page</p>}
+          onCarSelected={this.selectCar} /> : <p>Winners view</p>}
         <Footer />
       </div>
     )

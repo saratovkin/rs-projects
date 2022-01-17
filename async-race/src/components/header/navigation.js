@@ -4,17 +4,17 @@ import NavBtn from "./nav-btn";
 
 class Navigation extends React.Component {
 
-  pages = ['garage', 'winners'];
+  views = ['garage', 'winners'];
 
   render() {
-    const navBtns = this.pages.map((name) => {
-      const isActive = this.props.page === name;
+    const navBtns = this.views.map((view) => {
+      const isActive = this.props.view === view;
       const className = isActive ? 'nav-button active' : 'nav-button';
       return (
-        <NavBtn name={name}
+        <NavBtn view={view}
           className={className}
-          changePage={this.props.changePage}
-          key={name} />
+          changeView={this.props.changeView}
+          key={view} />
       )
     });
     return (
