@@ -34,18 +34,22 @@ class GarageView extends React.Component {
   render() {
     const { onCarDeleted,
       onCarAdded, onCarUpdated,
-      onCountUpdated, onCarsGenerated, onCarSelected } = this.props;
+      onCountUpdated, onCarsGenerated,
+      onCarSelected, onRaceToggle, isRaceStarted } = this.props;
     return (
       <div className="garage-view">
         <CarsCounter onCountUpdated={onCountUpdated} />
         <PageNumber pageNum={this.state.pageNum} />
         <CreateCar onCarAdded={onCarAdded} />
         <UpdateCar onCarUpdated={onCarUpdated} />
-        <GarageControls onCarsGenerated={onCarsGenerated} />
+        <GarageControls
+          onRaceToggle={onRaceToggle}
+          onCarsGenerated={onCarsGenerated} />
         <CarTable
           cars={this.getDisplayedCars()}
           onCarDeleted={onCarDeleted}
-          onCarSelected={onCarSelected} />
+          onCarSelected={onCarSelected}
+          isRaceStarted={isRaceStarted} />
         <CarsPagination
           pagesAmount={this.getAmountOfPages()}
           onPageChange={this.setPage}

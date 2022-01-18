@@ -4,12 +4,13 @@ import React from "react";
 
 import CarContainer from '../car-container/car-container';
 
-const CarTable = ({ cars, onCarDeleted, onCarSelected }) => (
+const CarTable = ({ cars, onCarDeleted, onCarSelected,isRaceStarted }) => (
   <div className="cars-table">
     <CarContainer
       cars={cars}
       onCarDeleted={onCarDeleted}
-      onCarSelected={onCarSelected} />
+      onCarSelected={onCarSelected}
+      isRaceStarted={isRaceStarted} />
   </div>
 );
 

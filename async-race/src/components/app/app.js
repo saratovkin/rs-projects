@@ -19,6 +19,7 @@ class App extends React.Component {
     view: 'garage',
     currentCar: null,
     garagePage: 0,
+    isRaceStarted: false,
   }
 
   constructor() {
@@ -85,6 +86,12 @@ class App extends React.Component {
     });
   };
 
+  toggleRace = (flag) => {
+    this.setState(() => {
+      return { isRaceStarted: flag };
+    });
+  }
+
   currentView = () => {
     return this.state.view === 'garage';
   };
@@ -97,7 +104,9 @@ class App extends React.Component {
       onCarUpdated={this.updateCar}
       onCountUpdated={this.updateCount}
       onCarsGenerated={this.generateCars}
-      onCarSelected={this.selectCar} />;
+      onCarSelected={this.selectCar}
+      onRaceToggle={this.toggleRace}
+      isRaceStarted={this.state.isRaceStarted} />
     const winnersView = <WinnersView />
     const view = this.state.view === 'garage' ? garageView : winnersView;
     return (

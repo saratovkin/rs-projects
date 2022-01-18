@@ -42,6 +42,16 @@ class Loader {
     return await response.json();
   }
 
+  async patchData(url, id, status) {
+    const qParam = { id, status };
+    const path = new URL(`${this.baseUrl}${url}`);
+    path.search = new URLSearchParams(qParam).toString();
+    const response = await fetch(path, {
+      method: 'PATCH',
+    });
+    return await response.json();
+  }
+
   getAllCars() {
     return this.getData('/garage');
   }
@@ -55,7 +65,7 @@ class Loader {
   }
 
   deleteCar(id) {
-    return this.deleteData(`/garage/${id}`);;
+    return this.deleteData(`/garage/${id}`);
   }
 
   updateCar(id, name, color) {
@@ -63,12 +73,16 @@ class Loader {
     return this.putData(`/garage/${id}`, { name: name, color: color });
   }
 
+  toggleEngine(id, status) {
+    return this.patchData(`/engine`, id, status);
+  }
+
   getAllWinners() {
-    return this.getData('/winners');;
+    return this.getData('/winners');
   }
 
   getWinnerById(id) {
-    return this.getData(`/winners/${id}`);;
+    return this.getData(`/winners/${id}`);
   }
 }
 
