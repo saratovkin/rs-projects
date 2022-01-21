@@ -5,9 +5,12 @@ import CarsCounter from '../cars-counter/cars-counter';
 import CreateCar from '../car-forms/create-car';
 import UpdateCar from '../car-forms/update-car';
 import GarageControls from '../garage-controls/garage-controls';
-import CarTable from '../cars-table/cars-table';
+import CarsTable from '../cars-table/cars-table';
 import CarsPagination from '../cars-pagination/cars-pagination';
 import PageNumber from '../page-number/page-number';
+import WinnerAlert from '../winner-alert/winner-alert';
+
+const elementsPerPage = 7;
 
 class GarageView extends React.Component {
 
@@ -16,43 +19,52 @@ class GarageView extends React.Component {
   }
 
   getDisplayedCars() {
-    const idx = this.state.pageNum * 7;
-    const carsOnPage = this.props.cars.slice(idx, idx + 7);
+    const idx = this.state.pageNum * elementsPerPage;
+    const carsOnPage = this.props.cars.slice(idx, idx + elementsPerPage);
     return carsOnPage;
   }
 
   getAmountOfPages() {
-    return Math.ceil(this.props.cars.length / 7);
+    return Math.ceil(this.props.cars.length / elementsPerPage);
   }
 
   setPage = (pageNum) => {
     this.setState(() => {
       return { pageNum: pageNum };
-    })
+    });
   }
 
   render() {
-    const { onCarDeleted,
-      onCarAdded, onCarUpdated,
-      onCountUpdated, onCarsGenerated,
-      onCarSelected, onRaceToggle, isRaceStarted } = this.props;
+    const { onCarsGenerated, winner,
+      onCarDeleted, onCarAdded,
+      onCarUpdated, onCarFinished,
+      onCarSelected, onCountUpdated,
+      onRaceStart, onRaceReset,
+      isRaceStarted, isRaceReset } = this.props;
+    const alert = winner ? <WinnerAlert winner={winner} /> : null;
+    
     return (
       <div className="garage-view">
+        {alert}
         <CarsCounter onCountUpdated={onCountUpdated} />
         <PageNumber pageNum={this.state.pageNum} />
         <CreateCar onCarAdded={onCarAdded} />
         <UpdateCar onCarUpdated={onCarUpdated} />
         <GarageControls
-          onRaceToggle={onRaceToggle}
+          onRaceStart={onRaceStart}
+          onRaceReset={onRaceReset}
           onCarsGenerated={onCarsGenerated} />
-        <CarTable
+        <CarsTable
           cars={this.getDisplayedCars()}
           onCarDeleted={onCarDeleted}
           onCarSelected={onCarSelected}
-          isRaceStarted={isRaceStarted} />
+          onCarFinished={onCarFinished}
+          isRaceStarted={isRaceStarted}
+          isRaceReset={isRaceReset} />
         <CarsPagination
           pagesAmount={this.getAmountOfPages()}
           onPageChange={this.setPage}
+          onRaceReset={onRaceReset}
           pageNum={this.state.pageNum} />
       </div>
     );

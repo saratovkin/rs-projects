@@ -5,51 +5,70 @@ class Loader {
   // TODO merge all request methods into one
 
   async getData(url) {
-    const res = await fetch(`${this.baseUrl}${url}`);
-    if (!res.ok) {
-      throw new Error(`url not found ${url}`)
+    try {
+      const res = await fetch(`${this.baseUrl}${url}`);
+      if (!res.ok) {
+        throw new Error(`url not found ${url}`)
+      }
+      return await res.json();
+    } catch (e) {
+      return null;
     }
-    const data = await res.json();
-    return data;
   }
 
   async postData(url, content) {
-    const response = await fetch(`${this.baseUrl}${url}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(content),
-    });
-    return await response.json();
+    try {
+      const response = await fetch(`${this.baseUrl}${url}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(content),
+      });
+      return await response.json();
+    } catch (e) {
+      return null;
+    }
   }
 
   async deleteData(url) {
-    const response = await fetch(`${this.baseUrl}${url}`, {
-      method: 'DELETE',
-    });
-    return await response.json();
+    try {
+      const response = await fetch(`${this.baseUrl}${url}`, {
+        method: 'DELETE',
+      });
+      return await response.json();
+    } catch (e) {
+      return null;
+    }
   }
 
   async putData(url, content) {
-    const response = await fetch(`${this.baseUrl}${url}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(content),
-    });
-    return await response.json();
+    try {
+      const response = await fetch(`${this.baseUrl}${url}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(content),
+      });
+      return await response.json();
+    } catch (e) {
+      return null;
+    }
   }
 
   async patchData(url, id, status) {
-    const qParam = { id, status };
-    const path = new URL(`${this.baseUrl}${url}`);
-    path.search = new URLSearchParams(qParam).toString();
-    const response = await fetch(path, {
-      method: 'PATCH',
-    });
-    return await response.json();
+    try {
+      const qParam = { id, status };
+      const path = new URL(`${this.baseUrl}${url}`);
+      path.search = new URLSearchParams(qParam).toString();
+      const response = await fetch(path, {
+        method: 'PATCH',
+      });
+      return response.ok ? await response.json() : '';
+    } catch (e) {
+      return null;
+    }
   }
 
   getAllCars() {
@@ -69,12 +88,15 @@ class Loader {
   }
 
   updateCar(id, name, color) {
-    console.log(id, name, color);
     return this.putData(`/garage/${id}`, { name: name, color: color });
   }
 
   toggleEngine(id, status) {
     return this.patchData(`/engine`, id, status);
+  }
+
+  toggleDriveMode(id) {
+    return this.patchData(`/engine`, id, 'drive');
   }
 
   getAllWinners() {
@@ -83,6 +105,18 @@ class Loader {
 
   getWinnerById(id) {
     return this.getData(`/winners/${id}`);
+  }
+
+  createWinner(id, wins, time) {
+    return this.postData('/winners', { id: id, wins: wins, time: time });
+  }
+
+  deleteWinner(id) {
+    return this.deleteData(`/winners/${id}`);
+  }
+
+  updateWinner(id, wins, time) {
+    return this.putData(`/winners/${id}`, { wins: wins, time: time });
   }
 }
 

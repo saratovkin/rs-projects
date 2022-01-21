@@ -1,5 +1,6 @@
 .winners-view {
-  margin: 0 auto;
-  text-align: center;
-  height: 80vh;
+  width: calc(100% - 15px);
+  max-width: 1280px;
+  margin: 30px auto;
+  min-height: calc(100vh - 280px);
 }

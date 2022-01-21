@@ -4,14 +4,24 @@ import React from "react";
 
 import CarContainer from '../car-container/car-container';
 
-const CarTable = ({ cars, onCarDeleted, onCarSelected,isRaceStarted }) => (
-  <div className="cars-table">
-    <CarContainer
-      cars={cars}
-      onCarDeleted={onCarDeleted}
-      onCarSelected={onCarSelected}
-      isRaceStarted={isRaceStarted} />
-  </div>
-);
 
-export default CarTable;
+class CarsTable extends React.Component {
+
+  render() {
+    const { cars, onCarDeleted, onCarSelected, isRaceStarted, isRaceReset, onCarFinished } = this.props;
+    return (
+      <div className="cars-table">
+        <CarContainer
+          cars={cars}
+          onCarDeleted={onCarDeleted}
+          onCarSelected={onCarSelected}
+          onCarFinished={onCarFinished}
+          isRaceStarted={isRaceStarted}
+          isRaceReset={isRaceReset}
+        />
+      </div>
+    );
+  }
+}
+
+export default CarsTable;

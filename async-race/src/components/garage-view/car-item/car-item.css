@@ -37,6 +37,12 @@
   cursor: pointer;
 }
 
+.blocked {
+  border: 2px solid #d3d3d3;
+  color: #d3d3d3;
+  pointer-events: none;
+}
+
 .car-buttons button:hover {
   background-color: #d3d3d3;
 }
@@ -50,6 +56,26 @@
   width: 100px;
   height: 50px;
   margin-left: 0;
+  z-index: 2;
+}
+
+.fire-icon {
+  position: absolute;
+  left: 0;
+  z-index: 0;
+  margin-bottom: 15px;
+}
+
+.fire-icon path{
+  fill: transparent;
+}
+
+.car-icon.broken path {
+  fill: transparent;
+}
+
+.fire-icon.visible path {
+  fill: tomato;
 }
 
 @keyframes rideCar {
@@ -64,5 +90,4 @@
   animation-name: rideCar;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-  animation-duration: 5s;
 }
