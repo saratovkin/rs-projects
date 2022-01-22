@@ -1,5 +1,4 @@
 class Loader {
-
   baseUrl = 'http://127.0.0.1:3000';
 
   // TODO merge all request methods into one
@@ -8,7 +7,7 @@ class Loader {
     try {
       const res = await fetch(`${this.baseUrl}${url}`);
       if (!res.ok) {
-        throw new Error(`url not found ${url}`)
+        throw new Error(`url not found ${url}`);
       }
       return await res.json();
     } catch (e) {
@@ -21,7 +20,7 @@ class Loader {
       const response = await fetch(`${this.baseUrl}${url}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(content),
       });
@@ -47,7 +46,7 @@ class Loader {
       const response = await fetch(`${this.baseUrl}${url}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(content),
       });
@@ -80,7 +79,7 @@ class Loader {
   }
 
   createCar(name, color) {
-    return this.postData('/garage', { name: name, color: color });
+    return this.postData('/garage', { name, color });
   }
 
   deleteCar(id) {
@@ -88,15 +87,15 @@ class Loader {
   }
 
   updateCar(id, name, color) {
-    return this.putData(`/garage/${id}`, { name: name, color: color });
+    return this.putData(`/garage/${id}`, { name, color });
   }
 
   toggleEngine(id, status) {
-    return this.patchData(`/engine`, id, status);
+    return this.patchData('/engine', id, status);
   }
 
   toggleDriveMode(id) {
-    return this.patchData(`/engine`, id, 'drive');
+    return this.patchData('/engine', id, 'drive');
   }
 
   getAllWinners() {
@@ -108,7 +107,7 @@ class Loader {
   }
 
   createWinner(id, wins, time) {
-    return this.postData('/winners', { id: id, wins: wins, time: time });
+    return this.postData('/winners', { id, wins, time });
   }
 
   deleteWinner(id) {
@@ -116,7 +115,7 @@ class Loader {
   }
 
   updateWinner(id, wins, time) {
-    return this.putData(`/winners/${id}`, { wins: wins, time: time });
+    return this.putData(`/winners/${id}`, { wins, time });
   }
 }
 

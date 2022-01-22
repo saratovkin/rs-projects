@@ -1,11 +1,10 @@
 import React from 'react';
 
 class CreateCar extends React.Component {
-
   state = {
     name: '',
     color: '#000000',
-  }
+  };
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -21,23 +20,29 @@ class CreateCar extends React.Component {
     this.setState({
       [key]: e.target.value,
     });
-  }
+  };
 
   render() {
     return (
-      <form className="car-form"
-        onSubmit={this.onSubmit}>
-        <input type='text'
-          placeholder='Car Model'
+      <form
+        className="car-form"
+        onSubmit={this.onSubmit}
+      >
+        <input
+          type="text"
+          placeholder="Car Model"
           value={this.state.name}
-          onChange={(e) => this.onInput('name', e)} />
-        <input type='color'
+          onChange={(e) => this.onInput('name', e)}
+        />
+        <input
+          type="color"
           value={this.state.color}
-          onChange={(e) => this.onInput('color', e)} />
+          onChange={(e) => this.onInput('color', e)}
+        />
         <button>Create</button>
       </form>
     );
-  };
+  }
 }
 
 export default CreateCar;

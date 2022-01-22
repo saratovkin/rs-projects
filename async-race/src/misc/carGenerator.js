@@ -1,8 +1,5 @@
-
-
 class CarGenerator {
-
-  static carModels = [
+  static models = [
     'Roadster',
     'S',
     'X',
@@ -55,7 +52,7 @@ class CarGenerator {
     'FX37',
   ];
 
-  static carBrands = [
+  static brands = [
     'Audi',
     'Alfa Romeo',
     'Alpina',
@@ -109,17 +106,17 @@ class CarGenerator {
 
   static getRandomHexColor() {
     return `#${(Math.random() * 0xfffff * 1000000).toString(16).slice(0, 6)}`;
-  };
+  }
 
   static generateCars() {
     const arr = [];
     for (let i = 0; i < 100; i += 1) {
-      let brand = CarGenerator.carBrands[Math.floor(Math.random() * CarGenerator.carBrands.length)];
-      let model = CarGenerator.carModels[Math.floor(Math.random() * CarGenerator.carModels.length)];
-      let color = CarGenerator.getRandomHexColor();
+      const brand = CarGenerator.brands[Math.floor(Math.random() * CarGenerator.brands.length)];
+      const model = CarGenerator.models[Math.floor(Math.random() * CarGenerator.models.length)];
+      const color = CarGenerator.getRandomHexColor();
       arr.push({
         name: `${brand} ${model}`,
-        color: color,
+        color,
       });
     }
     return arr;

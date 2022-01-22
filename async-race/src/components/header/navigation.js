@@ -1,9 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import NavBtn from "./nav-btn";
+import NavBtn from './nav-btn';
 
 class Navigation extends React.Component {
-
   views = ['garage', 'winners'];
 
   render() {
@@ -11,11 +10,13 @@ class Navigation extends React.Component {
       const isActive = this.props.view === view;
       const className = isActive ? 'nav-button active' : 'nav-button';
       return (
-        <NavBtn view={view}
+        <NavBtn
+          view={view}
           className={className}
           changeView={this.props.changeView}
-          key={view} />
-      )
+          key={view}
+        />
+      );
     });
     return (
       <div className="page-navigation">

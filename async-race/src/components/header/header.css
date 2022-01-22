@@ -47,6 +47,7 @@
   transition: background-color .3s;
   cursor: pointer;
   text-transform: capitalize;
+  outline: none;
 }
 
 .nav-button::after {

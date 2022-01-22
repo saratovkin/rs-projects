@@ -3,7 +3,7 @@ import React from 'react';
 
 class WinnerAlert extends React.Component {
   render() {
-    const winner = this.props.winner;
+    const { winner } = this.props;
     return (
       <div className="winner-alert">
         <span>{`Winner is ${winner.name}!`}</span>

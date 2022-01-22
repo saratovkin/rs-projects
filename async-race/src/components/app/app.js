@@ -1,6 +1,6 @@
 import './app.css';
 
-import React from "react";
+import React from 'react';
 
 import Header from '../header/header';
 import GarageView from '../garage-view/garage-view/garage-view';
@@ -14,33 +14,29 @@ const resetDelay = 2000;
 
 class App extends React.Component {
 
-  loader = new Loader();
-
-  state = {
-    cars: [],
-    winners: [],
-    winner: undefined,
-    view: 'garage',
-    currentCar: undefined,
-    garagePage: 0,
-    isRaceStarted: false,
-    isRaceReset: false,
-    isWinnerSaved: false,
-  }
-
   constructor() {
     super();
+    this.loader = new Loader();
+    this.state = {
+      cars: [],
+      winners: [],
+      winner: undefined,
+      view: 'garage',
+      currentCar: undefined,
+      garagePage: 0,
+      isRaceStarted: false,
+      isRaceReset: false,
+      isWinnerSaved: false,
+    };
     this.getCars();
     this.getWinners();
   }
 
   getCars = () => {
     this.loader.getAllCars().then((data) => {
-      this.setState(() => {
-        return { cars: data };
-      });
-    })
-  }
+      this.setState(() => ({ cars: data }));
+    });
+  };
 
   addCar = (name, color) => {
     this.loader.createCar(name, color).then((res) => {
@@ -49,12 +45,10 @@ class App extends React.Component {
         return { cars: newArr };
       });
     });
-  }
+  };
 
   selectCar = (id) => {
-    this.setState(() => {
-      return { currentCar: id };
-    });
+    this.setState(() => ({ currentCar: id }));
   };
 
   updateCar = (name, color) => {
@@ -66,7 +60,7 @@ class App extends React.Component {
         });
       });
     }
-  }
+  };
 
   deleteCar = (id) => {
     this.loader.deleteCar(id).then(() => {
@@ -75,116 +69,140 @@ class App extends React.Component {
         this.getWinners();
       });
     });
-  }
+  };
 
   generateCars = () => {
     const generatedCars = CarGenerator.generateCars();
     generatedCars.forEach((item) => {
       this.addCar(item.name, item.color);
-    })
-  }
-
-  updateCount = () => {
-    return this.state.cars.length;
+    });
   };
+
+  getWinners = () => {
+    const winners = [];
+    this.loader.getAllWinners().then((data) => {
+      data.forEach((winner) => {
+        this.loader.getCarById(winner.id).then((res) => {
+          winners.push({
+            id: res.id,
+            name: res.name,
+            color: res.color,
+            wins: winner.wins,
+            time: winner.time,
+          });
+        });
+      });
+      this.setState(() => ({
+        winners: winners,
+      }));
+    });
+  };
+
+  saveWinner = (winner) => {
+    if (!this.state.isWinnerSaved) {
+      this.loader.getWinnerById(winner.id).then((res) => {
+        const newWinner = winner;
+        if (res) {
+          this.loader.updateWinner(
+            winner.id,
+            res.wins + 1,
+            (+res.time > +winner.time) ? winner.time : res.time,
+          );
+          newWinner.wins = res.wins + 1;
+          newWinner.time = (+res.time > +winner.time) ? winner.time : res.time;
+          this.setState(({ winners }) => {
+            const idx = winners.findIndex((el) => el.id === newWinner.id);
+            return ({
+              isWinnerSaved: true,
+              winner: { name: winner.name, time: winner.time },
+              winners: [...winners.slice(0, idx), newWinner, ...winners.slice(idx + 1)]
+            })
+          });
+        } else {
+          this.loader.createWinner(winner.id, 1, winner.time);
+          newWinner.wins = 1;
+          this.setState(({ winners }) => ({
+            isWinnerSaved: true,
+            winner: { name: winner.name, time: winner.time },
+            winners: [...winners, newWinner]
+          }));
+        }
+      });
+    }
+  };
+
+  updateCount = () => this.state.cars.length;
 
   startRace = () => {
     if (!this.state.isRaceStarted) {
-      this.setState(() => {
-        return { isRaceStarted: true, isRaceReset: false };
-      });
+      this.setState(() => ({ isRaceStarted: true, isRaceReset: false }));
     }
     setTimeout(() => {
-      this.setState(() => {
-        return { isRaceStarted: false, isRaceReset: false };
-      });
+      this.setState(() => ({ isRaceStarted: false, isRaceReset: false }));
     }, resetDelay);
   };
 
   resetRace = () => {
     if (!this.state.isRaceReset) {
-      this.setState(() => {
-        return { isRaceStarted: false, isRaceReset: true, winner: undefined, isWinnerSaved: false };
-      });
+      this.setState(() => ({
+        isRaceStarted: false, isRaceReset: true, winner: undefined, isWinnerSaved: false,
+      }));
     }
   };
 
-  getWinners = () => {
-    this.loader.getAllWinners().then((data) => {
-      data.forEach((winner) => {
-        this.loader.getCarById(winner.id).then((res) => {
-          this.setState(({ winners }) => {
-            return {
-              winners: [...winners,
-              {
-                id: res.id,
-                name: res.name,
-                color: res.color,
-                wins: winner.wins,
-                time: winner.time,
-              }]
-            };
-          });
-        });
-      });
+  setGaragePage = (page) => {
+    this.setState(() => {
+      return { garagePage: page };
     });
   }
 
-  saveWinner = (winner) => {
-    if (!this.state.isWinnerSaved) {
-      this.loader.getWinnerById(winner.id).then((res) => {
-        if (res) {
-          this.loader.updateWinner(winner.id,
-            res.wins + 1,
-            (+res.time > +winner.time) ? winner.time : res.time);
-        } else {
-          this.loader.createWinner(winner.id, 1, winner.time);
-        }
-        this.setState(() => {
-          return { isWinnerSaved: true, winner: { name: winner.name, time: winner.time } };
-        });
-      });
-    }
-  };
-
   changeView = (view) => {
     this.setState((prev) => {
-      let newState = { ...prev };
+      const newState = { ...prev };
       newState.view = view;
       return newState;
     });
   };
 
   render() {
-    const garageView = <GarageView
-      cars={this.state.cars}
-      winner={this.state.winner}
-      onCarDeleted={this.deleteCar}
-      onCarAdded={this.addCar}
-      onCarUpdated={this.updateCar}
-      onCountUpdated={this.updateCount}
-      onCarsGenerated={this.generateCars}
-      onCarSelected={this.selectCar}
-      onCarFinished={this.saveWinner}
-      onRaceStart={this.startRace}
-      onRaceReset={this.resetRace}
-      isRaceStarted={this.state.isRaceStarted}
-      isRaceReset={this.state.isRaceReset} />
+    const garageView = (
+      <GarageView
+        cars={this.state.cars}
+        winner={this.state.winner}
+        garagePage={this.state.garagePage}
+        onPageChanged={this.setGaragePage}
+        onCarDeleted={this.deleteCar}
+        onCarAdded={this.addCar}
+        onCarUpdated={this.updateCar}
+        onCountUpdated={this.updateCount}
+        onCarsGenerated={this.generateCars}
+        onCarSelected={this.selectCar}
+        onCarFinished={this.saveWinner}
+        onRaceStart={this.startRace}
+        onRaceReset={this.resetRace}
+        isRaceStarted={this.state.isRaceStarted}
+        isRaceReset={this.state.isRaceReset}
+      />
+    );
 
-    const winnersView = <WinnersView
-      winners={this.state.winners}
-    />
+    const winnersView = (
+      <WinnersView
+        winners={this.state.winners}
+      />
+    );
     const view = this.state.view === 'garage' ? garageView : winnersView;
 
     return (
-      <div className="main-container" >
-        <Header view={this.state.view}
-          changeView={this.changeView} />
+      <div className="main-container">
+        <Header
+          view={this.state.view}
+          changeView={this.changeView}
+        />
         {view}
         <Footer />
       </div>
-    )
-  };
-};
+    );
+  }
+}
 
 export default App;

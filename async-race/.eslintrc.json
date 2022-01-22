@@ -1,7 +1,7 @@
 {
   "extends": [
     "react-app",
-    "airbnb",
+    // "airbnb",
     "plugin:jsx-a11y/recommended"
   ],
   "plugins": [

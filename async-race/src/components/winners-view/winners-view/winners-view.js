@@ -1,17 +1,20 @@
-import React from "react";
-import './winners-view.css'
+import React from 'react';
+import './winners-view.css';
 
-import WinnersCounter from "../winners-counter/winners-counter";
-import WinnersTable from "../winners-table/winners-table";
-import PageNumber from "../../garage-view/page-number/page-number";
-import CarsPagination from "../../garage-view/cars-pagination/cars-pagination";
+import WinnersCounter from '../winners-counter/winners-counter';
+import WinnersTable from '../winners-table/winners-table';
+import PageNumber from '../../page-number/page-number';
+import Pagination from '../../pagination/pagination';
 
 const elementsPerPage = 10;
 
 class WinnersView extends React.Component {
 
-  state = {
-    pageNum: 0,
+  constructor() {
+    super();
+    this.state = {
+      pageNum: 0,
+    };
   }
 
   getDisplayedWinners() {
@@ -25,10 +28,8 @@ class WinnersView extends React.Component {
   }
 
   setPage = (pageNum) => {
-    this.setState(() => {
-      return { pageNum: pageNum };
-    })
-  }
+    this.setState(() => ({ pageNum }));
+  };
 
   render() {
     return (
@@ -39,14 +40,15 @@ class WinnersView extends React.Component {
           winners={this.getDisplayedWinners()}
           pageNum={this.state.pageNum}
         />
-        <CarsPagination
-          onRaceReset={()=>{}}
+        <Pagination
+          onRaceReset={() => { }}
           pagesAmount={this.getAmountOfPages()}
-          onPageChange={this.setPage}
-          pageNum={this.state.pageNum} />
+          onPageChanged={this.setPage}
+          pageNum={this.state.pageNum}
+        />
       </div>
     );
-  };
+  }
 }
 
 export default WinnersView;

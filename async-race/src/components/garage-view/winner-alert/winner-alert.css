@@ -1,5 +1,6 @@
 .winner-alert {
   width: 40%;
+  min-width: 450px;
   height: 80px;
   padding: 5px;
   position: absolute;
