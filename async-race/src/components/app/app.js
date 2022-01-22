@@ -24,6 +24,7 @@ class App extends React.Component {
       view: 'garage',
       currentCar: undefined,
       garagePage: 0,
+      winnersPage: 0,
       isRaceStarted: false,
       isRaceReset: false,
       isWinnerSaved: false,
@@ -150,11 +151,15 @@ class App extends React.Component {
     }
   };
 
-  setGaragePage = (page) => {
+  setViewPage = (view, page) => {
     this.setState(() => {
-      return { garagePage: page };
+      if (view === 'garage') {
+        return { garagePage: page };
+      }
+      return { winnersPage: page };
+
     });
-  }
+  };
 
   changeView = (view) => {
     this.setState((prev) => {
@@ -169,8 +174,8 @@ class App extends React.Component {
       <GarageView
         cars={this.state.cars}
         winner={this.state.winner}
-        garagePage={this.state.garagePage}
-        onPageChanged={this.setGaragePage}
+        page={this.state.garagePage}
+        onPageChanged={this.setViewPage}
         onCarDeleted={this.deleteCar}
         onCarAdded={this.addCar}
         onCarUpdated={this.updateCar}
@@ -188,6 +193,8 @@ class App extends React.Component {
     const winnersView = (
       <WinnersView
         winners={this.state.winners}
+        page={this.state.winnersPage}
+        onPageChanged={this.setViewPage}
       />
     );
     const view = this.state.view === 'garage' ? garageView : winnersView;

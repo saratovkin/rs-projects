@@ -10,15 +10,8 @@ const elementsPerPage = 10;
 
 class WinnersView extends React.Component {
 
-  constructor() {
-    super();
-    this.state = {
-      pageNum: 0,
-    };
-  }
-
   getDisplayedWinners() {
-    const idx = this.state.pageNum * elementsPerPage;
+    const idx = this.props.page * elementsPerPage;
     const winnersOnPage = this.props.winners.slice(idx, idx + elementsPerPage);
     return winnersOnPage;
   }
@@ -28,23 +21,24 @@ class WinnersView extends React.Component {
   }
 
   setPage = (pageNum) => {
-    this.setState(() => ({ pageNum }));
-  };
+    this.props.onPageChanged('view', pageNum);
+  }
 
   render() {
+    const { page } = this.props;
     return (
       <div className="winners-view">
         <WinnersCounter count={this.props.winners.length} />
-        <PageNumber pageNum={this.state.pageNum} />
+        <PageNumber pageNum={page} />
         <WinnersTable
           winners={this.getDisplayedWinners()}
-          pageNum={this.state.pageNum}
+          pageNum={page}
         />
         <Pagination
           onRaceReset={() => { }}
           pagesAmount={this.getAmountOfPages()}
           onPageChanged={this.setPage}
-          pageNum={this.state.pageNum}
+          pageNum={page}
         />
       </div>
     );

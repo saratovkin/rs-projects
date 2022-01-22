@@ -15,7 +15,7 @@ const elementsPerPage = 7;
 class GarageView extends React.Component {
 
   getDisplayedCars() {
-    const idx = this.props.garagePage * elementsPerPage;
+    const idx = this.props.page * elementsPerPage;
     const carsOnPage = this.props.cars.slice(idx, idx + elementsPerPage);
     return carsOnPage;
   }
@@ -24,8 +24,12 @@ class GarageView extends React.Component {
     return Math.ceil(this.props.cars.length / elementsPerPage);
   }
 
+  setPage = (pageNum) => {
+    this.props.onPageChanged('garage', pageNum);
+  }
+
   render() {
-    const { garagePage, onPageChanged,
+    const { page,
       onCarsGenerated, winner,
       onCarDeleted, onCarAdded,
       onCarUpdated, onCarFinished,
@@ -40,7 +44,7 @@ class GarageView extends React.Component {
       <div className="garage-view">
         {alert}
         <CarsCounter onCountUpdated={onCountUpdated} />
-        <PageNumber pageNum={garagePage} />
+        <PageNumber pageNum={page} />
         <CreateCar onCarAdded={onCarAdded} />
         <UpdateCar onCarUpdated={onCarUpdated} />
         <GarageControls
@@ -58,9 +62,9 @@ class GarageView extends React.Component {
         />
         <Pagination
           pagesAmount={this.getAmountOfPages()}
-          onPageChanged={onPageChanged}
+          onPageChanged={this.setPage}
           onRaceReset={onRaceReset}
-          pageNum={garagePage}
+          pageNum={page}
         />
       </div>
     );
