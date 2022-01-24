@@ -98,10 +98,6 @@ class GarageView extends React.Component<Props, State>{
   }
 
   render() {
-    // Check if it works
-    if (this.props.isRaceStarted) {
-      this.clearResets();
-    }
     const { page, winner,
       currentName, currentColor,
       newName, newColor,
