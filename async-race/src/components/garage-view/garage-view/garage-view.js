@@ -14,9 +14,41 @@ const elementsPerPage = 7;
 
 class GarageView extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {
+      resets: 0,
+    }
+    this.carsAmount = 0;
+  }
+
+  awaitReset = () => {
+    this.setState(({ resets }) => {
+      const newResets = resets + 1;
+      return { resets: newResets };
+    });
+  };
+
+  clearResets = () => {
+    this.setState(() => {
+      return { resets: 0 };
+    });
+  };
+
+  isStartPossible = () => {
+    if (!this.props.isRaceStarted && !this.props.isRaceReset) {
+      return true;
+    }
+    if (this.props.isRaceReset && this.state.resets === this.carsAmount) {
+      return true;
+    }
+    return false;
+  }
+
   getDisplayedCars() {
     const idx = this.props.page * elementsPerPage;
     const carsOnPage = this.props.cars.slice(idx, idx + elementsPerPage);
+    this.carsAmount = carsOnPage.length;
     return carsOnPage;
   }
 
@@ -29,13 +61,19 @@ class GarageView extends React.Component {
   }
 
   render() {
-    const { page,
+    if (this.state.isRaceStarted) {
+      this.clearResets();
+    }
+    const { page, currentName,
+      currentColor, onSpecsInput,
       onCarsGenerated, winner,
       onCarDeleted, onCarAdded,
       onCarUpdated, onCarFinished,
       onCarSelected, onCountUpdated,
       onRaceStart, onRaceReset,
       isRaceStarted, isRaceReset,
+      isWinnerSaved, raceId
+
     } = this.props;
 
     const alert = winner ? <WinnerAlert winner={winner} /> : null;
@@ -46,19 +84,30 @@ class GarageView extends React.Component {
         <CarsCounter onCountUpdated={onCountUpdated} />
         <PageNumber pageNum={page} />
         <CreateCar onCarAdded={onCarAdded} />
-        <UpdateCar onCarUpdated={onCarUpdated} />
+        <UpdateCar
+          onSpecsInput={onSpecsInput}
+          onCarUpdated={onCarUpdated}
+          currentName={currentName}
+          currentColor={currentColor}
+        />
         <GarageControls
+          isRaceStarted={isRaceStarted}
+          isWinnerSaved={isWinnerSaved}
           onRaceStart={onRaceStart}
-          onRaceReset={onRaceReset}
+          onRaceReset={() => { onRaceReset(); this.clearResets(); }}
           onCarsGenerated={onCarsGenerated}
+          isStartPossible={this.isStartPossible()}
         />
         <CarsTable
           cars={this.getDisplayedCars()}
+          raceId={raceId}
           onCarDeleted={onCarDeleted}
           onCarSelected={onCarSelected}
           onCarFinished={onCarFinished}
+          onCarReset={this.awaitReset}
           isRaceStarted={isRaceStarted}
           isRaceReset={isRaceReset}
+          isWinnerSaved={isWinnerSaved}
         />
         <Pagination
           pagesAmount={this.getAmountOfPages()}

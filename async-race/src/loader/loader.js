@@ -1,15 +1,12 @@
 class Loader {
   baseUrl = 'http://127.0.0.1:3000';
 
-  // TODO merge all request methods into one
-
   async getData(url) {
     try {
-      const res = await fetch(`${this.baseUrl}${url}`);
-      if (!res.ok) {
-        throw new Error(`url not found ${url}`);
+      const response = await fetch(`${this.baseUrl}${url}`);
+      if (response.ok) {
+        return await response.json();
       }
-      return await res.json();
     } catch (e) {
       return null;
     }
@@ -24,7 +21,9 @@ class Loader {
         },
         body: JSON.stringify(content),
       });
-      return await response.json();
+      if (response.ok) {
+        return await response.json();
+      }
     } catch (e) {
       return null;
     }
@@ -35,7 +34,9 @@ class Loader {
       const response = await fetch(`${this.baseUrl}${url}`, {
         method: 'DELETE',
       });
-      return await response.json();
+      if (response.ok) {
+        return await response.json();
+      }
     } catch (e) {
       return null;
     }
@@ -50,13 +51,15 @@ class Loader {
         },
         body: JSON.stringify(content),
       });
-      return await response.json();
+      if (response.ok) {
+        return await response.json();
+      }
     } catch (e) {
       return null;
     }
   }
 
-  async patchData(url, id, status) {
+  async patchData(url, id, status, raceId) {
     try {
       const qParam = { id, status };
       const path = new URL(`${this.baseUrl}${url}`);
@@ -64,8 +67,14 @@ class Loader {
       const response = await fetch(path, {
         method: 'PATCH',
       });
-      return response.ok ? await response.json() : '';
-    } catch (e) {
+      if (response.ok) {
+        const res = await response.json();
+        res.raceId = raceId;
+        return res;
+      }
+      return { status: response.status, raceId: raceId };
+    }
+    catch (e) {
       return null;
     }
   }
@@ -90,12 +99,12 @@ class Loader {
     return this.putData(`/garage/${id}`, { name, color });
   }
 
-  toggleEngine(id, status) {
-    return this.patchData('/engine', id, status);
+  toggleEngine(id, status, raceId) {
+    return this.patchData('/engine', id, status, raceId);
   }
 
-  toggleDriveMode(id) {
-    return this.patchData('/engine', id, 'drive');
+  toggleDriveMode(id, raceId) {
+    return this.patchData('/engine', id, 'drive', raceId);
   }
 
   getAllWinners() {

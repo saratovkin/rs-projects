@@ -10,8 +10,6 @@ import Footer from '../footer/footer';
 import CarGenerator from '../../misc/carGenerator';
 import Loader from '../../loader/loader';
 
-const resetDelay = 2000;
-
 class App extends React.Component {
 
   constructor() {
@@ -23,8 +21,13 @@ class App extends React.Component {
       winner: undefined,
       view: 'garage',
       currentCar: undefined,
+      newCarName: '',
+      newCarColor: '#000000',
+      currentCarName: '',
+      currentCarColor: '#000000',
       garagePage: 0,
       winnersPage: 0,
+      raceId: 0,
       isRaceStarted: false,
       isRaceReset: false,
       isWinnerSaved: false,
@@ -99,8 +102,43 @@ class App extends React.Component {
     });
   };
 
+  updateCount = () => this.state.cars.length;
+
+  startRace = () => {
+    if (this.state.cars.length !== 0) {
+      this.setState(({ raceId }) => {
+        const newRaceId = raceId + 1;
+        return ({
+          raceId: newRaceId,
+          isRaceStarted: true,
+          isRaceReset: false,
+          isWinnerSaved: false,
+        });
+      });
+
+    }
+  };
+
+  resetRace = () => {
+    if (!this.state.isRaceReset && this.state.cars.length !== 0) {
+      this.setState(() => {
+        return ({
+          isRaceStarted: false,
+          isRaceReset: true,
+          winner: undefined,
+        });
+      });
+    }
+  };
+
   saveWinner = (winner) => {
     if (!this.state.isWinnerSaved) {
+      this.setState(() => {
+        return {
+          isWinnerSaved: true,
+          winner: { name: winner.name, time: winner.time },
+        }
+      });
       this.loader.getWinnerById(winner.id).then((res) => {
         const newWinner = winner;
         if (res) {
@@ -114,8 +152,6 @@ class App extends React.Component {
           this.setState(({ winners }) => {
             const idx = winners.findIndex((el) => el.id === newWinner.id);
             return ({
-              isWinnerSaved: true,
-              winner: { name: winner.name, time: winner.time },
               winners: [...winners.slice(0, idx), newWinner, ...winners.slice(idx + 1)]
             })
           });
@@ -123,31 +159,10 @@ class App extends React.Component {
           this.loader.createWinner(winner.id, 1, winner.time);
           newWinner.wins = 1;
           this.setState(({ winners }) => ({
-            isWinnerSaved: true,
-            winner: { name: winner.name, time: winner.time },
             winners: [...winners, newWinner]
           }));
         }
       });
-    }
-  };
-
-  updateCount = () => this.state.cars.length;
-
-  startRace = () => {
-    if (!this.state.isRaceStarted) {
-      this.setState(() => ({ isRaceStarted: true, isRaceReset: false }));
-    }
-    setTimeout(() => {
-      this.setState(() => ({ isRaceStarted: false, isRaceReset: false }));
-    }, resetDelay);
-  };
-
-  resetRace = () => {
-    if (!this.state.isRaceReset) {
-      this.setState(() => ({
-        isRaceStarted: false, isRaceReset: true, winner: undefined, isWinnerSaved: false,
-      }));
     }
   };
 
@@ -157,7 +172,6 @@ class App extends React.Component {
         return { garagePage: page };
       }
       return { winnersPage: page };
-
     });
   };
 
@@ -169,12 +183,25 @@ class App extends React.Component {
     });
   };
 
+  setSpecs = (key, value) => {
+    this.setState({
+      [`currentCar${key}`]: value,
+    });
+  };
+
   render() {
     const garageView = (
       <GarageView
         cars={this.state.cars}
+        raceId={this.state.raceId}
         winner={this.state.winner}
         page={this.state.garagePage}
+        currentName={this.state.currentCarName}
+        currentColor={this.state.currentCarColor}
+        isRaceStarted={this.state.isRaceStarted}
+        isRaceReset={this.state.isRaceReset}
+        isWinnerSaved={this.state.isWinnerSaved}
+        onSpecsInput={this.setSpecs}
         onPageChanged={this.setViewPage}
         onCarDeleted={this.deleteCar}
         onCarAdded={this.addCar}
@@ -185,8 +212,6 @@ class App extends React.Component {
         onCarFinished={this.saveWinner}
         onRaceStart={this.startRace}
         onRaceReset={this.resetRace}
-        isRaceStarted={this.state.isRaceStarted}
-        isRaceReset={this.state.isRaceReset}
       />
     );
 

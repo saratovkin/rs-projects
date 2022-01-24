@@ -4,11 +4,12 @@ import React from 'react';
 
 class GarageControls extends React.Component {
   render() {
-    const { onRaceStart, onRaceReset, onCarsGenerated } = this.props;
+    const { onRaceStart, onRaceReset, onCarsGenerated, isRaceStarted, isStartPossible } = this.props;
+
     return (
       <div className="garage-controls">
-        <button className="race-btn" onClick={() => { onRaceStart(); }}>Race</button>
-        <button className="race-btn" onClick={() => { onRaceReset(); }}>Reset</button>
+        <button className={isStartPossible ? 'race-btn' : 'race-btn blocked'} onClick={() => { onRaceStart(); }}>Race</button>
+        <button className={isRaceStarted ? 'race-btn' : 'race-btn blocked'} onClick={() => { onRaceReset(); }}>Reset</button>
         <button className="generate-btn" onClick={onCarsGenerated}>Generate Cars</button>
       </div>
     );

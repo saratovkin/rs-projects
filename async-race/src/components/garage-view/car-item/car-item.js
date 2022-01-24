@@ -4,45 +4,75 @@ import './car-item.css';
 
 const msToSeconds = 1000;
 const amountOfDigits = 2;
+const brokeStatus = 500;
 
 class CarItem extends React.Component {
-  state = {
-    isDriving: false,
-    animationDuration: 0,
-    startDelay: 0,
-    isBroken: false,
-    isFinished: false,
-  };
 
-  loader = new Loader();
+  constructor() {
+    super();
+    this.state = {
+      isEngineStarted: false,
+      isDriving: false,
+      isStopped: true,
+      isBroken: false,
+      animationDuration: undefined,
+      startDelay: undefined,
+    };
+    this.loader = new Loader();
+  }
 
   startCar = (id) => {
-    if (!this.state.isDriving) {
-      const startTime = Date.now();
-      this.loader.toggleEngine(id, 'started').then((res) => {
-        const endTime = Date.now();
-        const time = res.distance / res.velocity;
-        this.startDriveMode(id);
-        this.setState(() => ({ isDriving: true, animationDuration: time, startDelay: (endTime - startTime) }));
+    if (!this.props.isRaceStarted) {
+      this.setState(() => ({ isEngineStarted: true }));
+    }
+    const startTime = Date.now();
+    this.loader.toggleEngine(id, 'started', this.props.raceId).then((res) => {
+      const endTime = Date.now();
+      const time = res.distance / res.velocity;
+      this.setState(() => ({
+        isDriving: true,
+        isStopped: false,
+        isEngineStarted: true,
+        animationDuration: time,
+        startDelay: (endTime - startTime),
+      }));
+      this.startDriveMode(id);
+    });
+  };
+
+  startDriveMode = (id) => {
+    if (this.state.isEngineStarted) {
+      this.setState(() => ({ isEngineStarted: false }));
+      this.loader.toggleDriveMode(id, this.props.raceId).then((res) => {
+        if (res.success && res.raceId === this.props.raceId && this.props.isRaceStarted) {
+          this.props.onCarFinished({
+            id,
+            color: this.props.color,
+            name: this.props.name,
+            time: ((this.state.animationDuration + this.state.startDelay) / msToSeconds).toFixed(amountOfDigits),
+          });
+        }
+        if (res.status === brokeStatus && this.state.isDriving) {
+          this.setState(() => {
+            return { isBroken: true }
+          });
+        }
       });
     }
   };
 
-  startDriveMode = (id) => {
-    this.loader.toggleDriveMode(id).then((res) => {
-      if (res === '') {
-        this.setState(() => ({ isBroken: true }));
-      } else if (res.success) {
-        this.setState(() => ({ isFinished: true }));
-      }
-    });
-  };
-
   resetCar = (id) => {
-    if (this.state.isDriving) {
+    if (!this.state.isStopped) {
+      this.setState(() => ({ isStopped: true }));
       this.loader.toggleEngine(id, 'stopped').then(() => {
+        this.props.onCarReset();
         this.setState(() => ({
-          isDriving: false, animationDuration: 0, isBroken: false, isFinished: false,
+          isEngineStarted: false,
+          isDriving: false,
+          isStopped: true,
+          isBroken: false,
+          animationDuration: undefined,
+          startDelay: undefined,
         }));
       });
     }
@@ -50,28 +80,32 @@ class CarItem extends React.Component {
 
   render() {
     const {
-      color, id, name, isRaceStarted, isRaceReset, onCarSelected, onCarDeleted, onCarFinished,
+      id,
+      color,
+      name,
+      isRaceReset,
+      isRaceStarted,
+      onCarSelected,
+      onCarDeleted
     } = this.props;
     let carIconClassName = 'car-icon';
     let fireIconClassName = 'fire-icon';
 
-    if (isRaceStarted) {
+    if (isRaceStarted && !this.state.isDriving) {
       this.startCar(id);
     }
-    if (isRaceReset) {
+
+    if (isRaceReset && !this.state.isStopped) {
       this.resetCar(id);
     }
+
     if (this.state.isDriving) {
       carIconClassName += ' animated';
     }
+
     if (this.state.isBroken) {
       carIconClassName += ' broken';
       fireIconClassName += ' visible';
-    }
-    if (this.state.isFinished) {
-      onCarFinished({
-        id, color, name, time: ((this.state.animationDuration + this.state.startDelay) / msToSeconds).toFixed(amountOfDigits),
-      });
     }
 
     return (
@@ -83,13 +117,13 @@ class CarItem extends React.Component {
         </div>
         <div className="car-buttons">
           <button
-            className={this.state.isDriving ? 'blocked' : ''}
+            className={(this.state.isEngineStarted) ? 'blocked' : ''}
             onClick={() => this.startCar(id)}
           >
             Start
           </button>
           <button
-            className={this.state.isDriving ? '' : 'blocked'}
+            className={(this.state.isStopped) ? 'blocked' : ''}
             onClick={() => this.resetCar(id)}
           >
             Reset
