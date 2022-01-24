@@ -25,6 +25,8 @@ class App extends React.Component {
       newCarColor: '#000000',
       currentCarName: '',
       currentCarColor: '#000000',
+      sortType: 'wins',
+      sortDirection: 'Desc',
       garagePage: 0,
       winnersPage: 0,
       raceId: 0,
@@ -56,13 +58,14 @@ class App extends React.Component {
   };
 
   updateCar = (name, color) => {
-    if (this.state.currentCar !== null) {
+    if (this.state.currentCar !== undefined) {
       this.loader.updateCar(this.state.currentCar, name, color).then((res) => {
         this.setState(({ cars }) => {
           const idx = cars.findIndex((el) => el.id === res.id);
           return { cars: [...cars.slice(0, idx), res, ...cars.slice(idx + 1)], currentCar: null };
         });
       });
+      this.getWinners();
     }
   };
 
@@ -115,14 +118,15 @@ class App extends React.Component {
           isWinnerSaved: false,
         });
       });
-
     }
   };
 
   resetRace = () => {
     if (!this.state.isRaceReset && this.state.cars.length !== 0) {
-      this.setState(() => {
+      this.setState(({ raceId }) => {
+        const newRaceId = raceId + 1;
         return ({
+          raceId: newRaceId,
           isRaceStarted: false,
           isRaceReset: true,
           winner: undefined,
@@ -176,6 +180,7 @@ class App extends React.Component {
   };
 
   changeView = (view) => {
+    this.resetRace();
     this.setState((prev) => {
       const newState = { ...prev };
       newState.view = view;
@@ -186,6 +191,12 @@ class App extends React.Component {
   setSpecs = (key, value) => {
     this.setState({
       [`currentCar${key}`]: value,
+    });
+  };
+
+  setSortType = (newType) => {
+    this.setState(({ sortDirection }) => {
+      return { sortType: newType, sortDirection: sortDirection === 'Desc' ? 'Asc' : 'Desc' };
     });
   };
 
@@ -220,6 +231,9 @@ class App extends React.Component {
         winners={this.state.winners}
         page={this.state.winnersPage}
         onPageChanged={this.setViewPage}
+        onSortTypeSelected={this.setSortType}
+        sortType={this.state.sortType}
+        sortDirection={this.state.sortDirection}
       />
     );
     const view = this.state.view === 'garage' ? garageView : winnersView;

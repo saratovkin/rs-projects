@@ -22,27 +22,28 @@ class CarItem extends React.Component {
   }
 
   startCar = (id) => {
-    if (!this.props.isRaceStarted) {
-      this.setState(() => ({ isEngineStarted: true }));
+    if (!this.state.isEngineStarted) {
+      if (!this.props.isRaceStarted) {
+        this.setState(() => ({ isEngineStarted: true }));
+      }
+      const startTime = Date.now();
+      this.loader.toggleEngine(id, 'started', this.props.raceId).then((res) => {
+        const endTime = Date.now();
+        const time = res.distance / res.velocity;
+        this.setState(() => ({
+          isDriving: true,
+          isStopped: false,
+          isEngineStarted: true,
+          animationDuration: time,
+          startDelay: (endTime - startTime),
+        }));
+        this.startDriveMode(id);
+      });
     }
-    const startTime = Date.now();
-    this.loader.toggleEngine(id, 'started', this.props.raceId).then((res) => {
-      const endTime = Date.now();
-      const time = res.distance / res.velocity;
-      this.setState(() => ({
-        isDriving: true,
-        isStopped: false,
-        isEngineStarted: true,
-        animationDuration: time,
-        startDelay: (endTime - startTime),
-      }));
-      this.startDriveMode(id);
-    });
   };
 
   startDriveMode = (id) => {
-    if (this.state.isEngineStarted) {
-      this.setState(() => ({ isEngineStarted: false }));
+    if (!this.state.isStopped) {
       this.loader.toggleDriveMode(id, this.props.raceId).then((res) => {
         if (res.success && res.raceId === this.props.raceId && this.props.isRaceStarted) {
           this.props.onCarFinished({
@@ -65,7 +66,9 @@ class CarItem extends React.Component {
     if (!this.state.isStopped) {
       this.setState(() => ({ isStopped: true }));
       this.loader.toggleEngine(id, 'stopped').then(() => {
-        this.props.onCarReset();
+        if (this.props.isRaceReset) {
+          this.props.onCarReset();
+        }
         this.setState(() => ({
           isEngineStarted: false,
           isDriving: false,
@@ -83,26 +86,14 @@ class CarItem extends React.Component {
       id,
       color,
       name,
-      isRaceReset,
-      isRaceStarted,
       onCarSelected,
-      onCarDeleted
+      onCarDeleted,
     } = this.props;
     let carIconClassName = 'car-icon';
     let fireIconClassName = 'fire-icon';
-
-    if (isRaceStarted && !this.state.isDriving) {
-      this.startCar(id);
-    }
-
-    if (isRaceReset && !this.state.isStopped) {
-      this.resetCar(id);
-    }
-
     if (this.state.isDriving) {
       carIconClassName += ' animated';
     }
-
     if (this.state.isBroken) {
       carIconClassName += ' broken';
       fireIconClassName += ' visible';
@@ -151,6 +142,16 @@ class CarItem extends React.Component {
         </svg>
       </li>
     );
+  }
+
+  componentDidUpdate() {
+    const { id, isRaceStarted, isRaceReset } = this.props;
+    if (isRaceStarted) {
+      this.startCar(id);
+    }
+    if (isRaceReset) {
+      this.resetCar(id);
+    }
   }
 }
 
