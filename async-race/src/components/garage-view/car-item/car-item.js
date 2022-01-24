@@ -17,6 +17,7 @@ class CarItem extends React.Component {
       isBroken: false,
       animationDuration: undefined,
       startDelay: undefined,
+      isRacer: false,
     };
     this.loader = new Loader();
   }
@@ -25,6 +26,8 @@ class CarItem extends React.Component {
     if (!this.state.isEngineStarted) {
       if (!this.props.isRaceStarted) {
         this.setState(() => ({ isEngineStarted: true }));
+      } else {
+        this.setState(() => ({ isRacer: true }));
       }
       const startTime = Date.now();
       this.loader.toggleEngine(id, 'started', this.props.raceId).then((res) => {
@@ -45,12 +48,13 @@ class CarItem extends React.Component {
   startDriveMode = (id) => {
     if (!this.state.isStopped) {
       this.loader.toggleDriveMode(id, this.props.raceId).then((res) => {
-        if (res.success && res.raceId === this.props.raceId && this.props.isRaceStarted) {
+        if (res.success && res.raceId === this.props.raceId && this.state.isRacer) {
           this.props.onCarFinished({
             id,
             color: this.props.color,
             name: this.props.name,
             time: ((this.state.animationDuration + this.state.startDelay) / msToSeconds).toFixed(amountOfDigits),
+            raceId: res.raceId,
           });
         }
         if (res.status === brokeStatus && this.state.isDriving) {
@@ -66,7 +70,7 @@ class CarItem extends React.Component {
     if (!this.state.isStopped) {
       this.setState(() => ({ isStopped: true }));
       this.loader.toggleEngine(id, 'stopped').then(() => {
-        if (this.props.isRaceReset) {
+        if (this.state.isRacer) {
           this.props.onCarReset();
         }
         this.setState(() => ({
@@ -76,6 +80,7 @@ class CarItem extends React.Component {
           isBroken: false,
           animationDuration: undefined,
           startDelay: undefined,
+          isRacer: false,
         }));
       });
     }
@@ -102,13 +107,19 @@ class CarItem extends React.Component {
     return (
       <li className="car-item">
         <div className="car-buttons">
-          <button onClick={() => onCarSelected(id)}>Select</button>
-          <button onClick={onCarDeleted}>Remove</button>
+          <button
+            className={(this.state.isRacer) ? 'blocked' : ''}
+            onClick={() => onCarSelected(id)}
+          >Select</button>
+          <button
+            className={(this.state.isRacer) ? 'blocked' : ''}
+            onClick={onCarDeleted}
+          >Remove</button>
           <span className="car-name">{name}</span>
         </div>
         <div className="car-buttons">
           <button
-            className={(this.state.isEngineStarted) ? 'blocked' : ''}
+            className={(this.state.isEngineStarted || this.state.isRacer) ? 'blocked' : ''}
             onClick={() => this.startCar(id)}
           >
             Start
@@ -144,14 +155,18 @@ class CarItem extends React.Component {
     );
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { id, isRaceStarted, isRaceReset } = this.props;
-    if (isRaceStarted) {
+    if (!prevProps.isRaceStarted && isRaceStarted) {
       this.startCar(id);
     }
-    if (isRaceReset) {
+    if (isRaceReset && this.state.isRacer) {
       this.resetCar(id);
     }
+  }
+
+  componentWillUnmount() {
+    this.loader.toggleEngine(this.props.id, 'stopped');
   }
 }
 

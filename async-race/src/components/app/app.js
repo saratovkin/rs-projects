@@ -136,7 +136,7 @@ class App extends React.Component {
   };
 
   saveWinner = (winner) => {
-    if (!this.state.isWinnerSaved) {
+    if (!this.state.isWinnerSaved && this.state.raceId === winner.raceId) {
       this.setState(() => {
         return {
           isWinnerSaved: true,
@@ -236,6 +236,7 @@ class App extends React.Component {
         sortDirection={this.state.sortDirection}
       />
     );
+
     const view = this.state.view === 'garage' ? garageView : winnersView;
 
     return (

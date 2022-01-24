@@ -31,3 +31,12 @@
 .pag-btn.active {
   border: 1px solid #bd162c;
 }
+
+.pag-btn.blocked {
+  color: #d3d3d3;
+  pointer-events: none;
+}
+
+.pag-btn.active.blocked {
+  border: 1px solid #d3d3d3;
+}

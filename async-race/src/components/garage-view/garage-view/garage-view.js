@@ -36,6 +36,9 @@ class GarageView extends React.Component {
   };
 
   isStartPossible = () => {
+    if (this.props.cars.length === 0) {
+      return false;
+    }
     if (!this.props.isRaceStarted && !this.props.isRaceReset) {
       return true;
     }
@@ -94,7 +97,8 @@ class GarageView extends React.Component {
           isRaceStarted={isRaceStarted}
           isWinnerSaved={isWinnerSaved}
           onRaceStart={onRaceStart}
-          onRaceReset={() => { onRaceReset(); this.clearResets(); }}
+          onRaceStart={() => { onRaceStart(); this.clearResets(); }}
+          onRaceReset={onRaceReset}
           onCarsGenerated={onCarsGenerated}
           isStartPossible={this.isStartPossible()}
         />
@@ -113,10 +117,20 @@ class GarageView extends React.Component {
           pagesAmount={this.getAmountOfPages()}
           onPageChanged={this.setPage}
           onRaceReset={onRaceReset}
+          isRaceStarted={isRaceStarted}
+          isWinnerSaved={isWinnerSaved}
           pageNum={page}
         />
       </div>
     );
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.cars.length !== prevProps.cars.length) {
+      this.setState(() => {
+        return { resets: this.carsAmount };
+      });
+    }
   }
 }
 
