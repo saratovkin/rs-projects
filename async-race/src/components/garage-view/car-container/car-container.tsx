@@ -2,11 +2,28 @@ import React from 'react';
 import './car-container.css';
 
 import CarItem from '../car-item/car-item';
+import ICar from '../../../interfaces/ICar'
+import IWinner from '../../../interfaces/IWinner'
 
-class CarContainer extends React.Component {
+interface Props {
+  cars: ICar[],
+  onCarDeleted: (id: number) => void,
+  onCarSelected: (id: number) => void,
+  onCarFinished: (winner: IWinner) => void,
+  onCarReset: () => void,
+  isRaceStarted: boolean,
+  isRaceReset: boolean,
+  isWinnerSaved: boolean,
+  raceId: number,
+}
+
+interface State {
+}
+
+class CarContainer extends React.Component<Props, State> {
   render() {
     const {
-      cars, onCarDeleted, onCarUpdated, onCarSelected, onCarFinished, isRaceStarted, isRaceReset, onCarReset, isWinnerSaved, raceId
+      cars, onCarDeleted, onCarSelected, onCarFinished, onCarReset, isRaceStarted, isRaceReset, isWinnerSaved, raceId
     } = this.props;
     const carElements = cars.map((item) => {
       const { id } = item;
@@ -20,7 +37,6 @@ class CarContainer extends React.Component {
           isWinnerSaved={isWinnerSaved}
           onCarSelected={onCarSelected}
           onCarDeleted={() => onCarDeleted(id)}
-          onCarUpdated={() => onCarUpdated()}
           onCarFinished={onCarFinished}
           onCarReset={onCarReset}
         />

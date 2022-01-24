@@ -2,7 +2,7 @@ import React from 'react';
 
 import './header.css';
 
-import Navigation from './navigation.tsx';
+import Navigation from './navigation';
 
 
 interface State {

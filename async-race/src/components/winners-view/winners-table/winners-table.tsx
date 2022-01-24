@@ -1,10 +1,21 @@
+import React from 'react';
 import './winners-table.css';
 
-import React from 'react';
-
 import WinnersContainer from '../winners-container/winners-container';
+import IWinner from '../../../interfaces/IWinner';
 
-class WinnersTable extends React.Component {
+interface Props {
+  winners: IWinner[],
+  pageNum: number,
+  onSortTypeSelected: (newType: string) => void,
+  sortType: string,
+  sortDirection: string,
+}
+
+interface State {
+}
+
+class WinnersTable extends React.Component<Props, State> {
 
   render() {
     const { winners, pageNum, onSortTypeSelected, sortType, sortDirection } = this.props;

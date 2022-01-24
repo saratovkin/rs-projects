@@ -1,17 +1,16 @@
-import './app.css';
-
 import React from 'react';
+import './app.css';
 
 import ICar from '../../interfaces/ICar';
 import IWinner from '../../interfaces/IWinner';
 
-import Header from '../header/header.tsx';
+import Header from '../header/header';
 import GarageView from '../garage-view/garage-view/garage-view';
 import WinnersView from '../winners-view/winners-view/winners-view';
-import Footer from '../footer/footer.tsx';
+import Footer from '../footer/footer';
 
-import CarGenerator from '../../misc/carGenerator.tsx';
-import Loader from '../../loader/loader.tsx';
+import CarGenerator from '../../misc/carGenerator';
+import Loader from '../../loader/loader';
 
 interface Props {
 
@@ -20,9 +19,9 @@ interface Props {
 interface State {
   cars: ICar[],
   winners: IWinner[],
-  winner: IWinner,
+  winner: IWinner | undefined,
   view: string,
-  currentCar: number,
+  currentCar: number | undefined,
   newCarName: string,
   newCarColor: string,
   currentCarName: string,
@@ -90,7 +89,7 @@ class App extends React.Component<Props, State>  {
       this.loader.updateCar(this.state.currentCar, name, color).then((res: ICar) => {
         this.setState(({ cars }) => {
           const idx = cars.findIndex((el) => el.id === res.id);
-          return { cars: [...cars.slice(0, idx), res, ...cars.slice(idx + 1)], currentCar: null };
+          return { cars: [...cars.slice(0, idx), res, ...cars.slice(idx + 1)], currentCar: undefined };
         });
       });
       this.getWinners();
@@ -117,7 +116,7 @@ class App extends React.Component<Props, State>  {
     const winners = [] as IWinner[];
     this.loader.getAllWinners().then((data: IWinner[]) => {
       data.forEach((winner) => {
-        this.loader.getCarById(winner.id).then((res: ICar) => {
+        this.loader.getCarById(winner.id as number).then((res: ICar) => {
           winners.push({
             id: res.id,
             name: res.name,
@@ -171,11 +170,11 @@ class App extends React.Component<Props, State>  {
           winner: { name: winner.name, time: winner.time },
         }
       });
-      this.loader.getWinnerById(winner.id).then((res) => {
+      this.loader.getWinnerById(winner.id as number).then((res) => {
         const newWinner = winner;
         if (res) {
           this.loader.updateWinner(
-            winner.id,
+            winner.id as number,
             res.wins + 1,
             (+res.time > +winner.time) ? winner.time : res.time,
           );
@@ -188,7 +187,7 @@ class App extends React.Component<Props, State>  {
             })
           });
         } else {
-          this.loader.createWinner(winner.id, 1, winner.time);
+          this.loader.createWinner(winner.id as number, 1, winner.time);
           newWinner.wins = 1;
           this.setState(({ winners }) => ({
             winners: [...winners, newWinner]
@@ -211,12 +210,22 @@ class App extends React.Component<Props, State>  {
     this.setState(() => ({ view: view }));
   };
 
-  setSpecs = (key: string, value: string) => {
-    if (key === 'Name') {
-      this.setState(() => ({ currentCarName: value }));
+  setSpecs = (type: string, key: string, value: string) => {
+    if (type === 'current') {
+      if (key === 'Name') {
+        this.setState(() => ({ currentCarName: value }));
+      }
+      if (key === 'Color') {
+        this.setState(() => ({ currentCarColor: value }));
+      }
     }
-    if (key === 'Color') {
-      this.setState(() => ({ currentCarName: value }));
+    if (type === 'new') {
+      if (key === 'Name') {
+        this.setState(() => ({ newCarName: value }));
+      }
+      if (key === 'Color') {
+        this.setState(() => ({ newCarColor: value }));
+      }
     }
   };
 
@@ -235,6 +244,8 @@ class App extends React.Component<Props, State>  {
         page={this.state.garagePage}
         currentName={this.state.currentCarName}
         currentColor={this.state.currentCarColor}
+        newName={this.state.newCarName}
+        newColor={this.state.newCarColor}
         isRaceStarted={this.state.isRaceStarted}
         isRaceReset={this.state.isRaceReset}
         isWinnerSaved={this.state.isWinnerSaved}

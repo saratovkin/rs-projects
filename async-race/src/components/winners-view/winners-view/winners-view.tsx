@@ -6,16 +6,23 @@ import WinnersTable from '../winners-table/winners-table';
 import PageNumber from '../../page-number/page-number';
 import Pagination from '../../pagination/pagination';
 
+import IWinner from '../../../interfaces/IWinner';
+
+interface Props {
+  winners: IWinner[],
+  page: number,
+  onPageChanged: (view: string, page: number) => void,
+  onSortTypeSelected: (newType: string) => void,
+  sortType: string,
+  sortDirection: string,
+}
+
+interface State {
+}
+
 const elementsPerPage = 10;
 
-class WinnersView extends React.Component {
-
-  constructor() {
-    super();
-    this.state = {
-
-    }
-  }
+class WinnersView extends React.Component<Props, State> {
 
   getDisplayedWinners() {
     const idx = this.props.page * elementsPerPage;
@@ -27,11 +34,11 @@ class WinnersView extends React.Component {
     return Math.ceil(this.props.winners.length / elementsPerPage);
   }
 
-  setPage = (pageNum) => {
+  setPage = (pageNum: number) => {
     this.props.onPageChanged('view', pageNum);
   }
 
-  sortWinners = (winners) => {
+  sortWinners = (winners: IWinner[]) => {
     const arr = winners;
     const sortFunc = this.getSortFunc();
     return arr.sort(sortFunc);
@@ -40,20 +47,20 @@ class WinnersView extends React.Component {
   getSortFunc = () => {
     switch (this.props.sortType + this.props.sortDirection) {
       case 'timeAsc':
-        return function (a, b) { return (a.time - b.time) };
+        return function (a: IWinner, b: IWinner) { return (a.time - b.time) };
       case 'timeDesc':
-        return function (a, b) { return (b.time - a.time) };
+        return function (a: IWinner, b: IWinner) { return (b.time - a.time) };
       case 'winsAsc':
-        return function (a, b) { return (a.wins - b.wins) };
+        return function (a: IWinner, b: IWinner) { return ((a.wins as number) - (b.wins as number)) };
       case 'winsDesc':
-        return function (a, b) { return (b.wins - a.wins) };
+        return function (a: IWinner, b: IWinner) { return ((b.wins as number) - (a.wins as number)) };
       default:
-        return function (a, b) { return (a.time - b.time) };
+        return function (a: IWinner, b: IWinner) { return (a.time - b.time) };
     }
   }
 
   render() {
-    const { page, onSortTypeSelected, sortType, sortDirection } = this.props;
+    const { page, sortType, sortDirection, onSortTypeSelected } = this.props;
     return (
       <div className="winners-view">
         <WinnersCounter count={this.props.winners.length} />
@@ -66,10 +73,10 @@ class WinnersView extends React.Component {
           sortDirection={sortDirection}
         />
         <Pagination
-          onRaceReset={() => { }}
           pagesAmount={this.getAmountOfPages()}
-          onPageChanged={this.setPage}
           pageNum={page}
+          onRaceReset={() => { }}
+          onPageChanged={this.setPage}
         />
       </div>
     );

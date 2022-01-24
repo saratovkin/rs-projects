@@ -1,8 +1,18 @@
+import React from 'react';
 import './winners-item.css';
 
-import React from 'react';
+interface Props {
+  index: number,
+  color: string,
+  name: string,
+  wins: number,
+  time: number,
+}
 
-class WinnersItem extends React.Component {
+interface State {
+}
+
+class WinnersItem extends React.Component<Props, State> {
   render() {
     const {
       index, color, name, wins, time,

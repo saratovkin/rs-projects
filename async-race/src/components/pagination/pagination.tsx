@@ -1,7 +1,20 @@
 import React from 'react';
 import './pagination.css';
 
-class Pagination extends React.Component {
+interface Props {
+  pagesAmount: number,
+  pageNum: number,
+  isRaceStarted?: boolean,
+  isWinnerSaved?: boolean,
+  onRaceReset: () => void,
+  onPageChanged: (index: number) => void,
+}
+
+interface State {
+
+}
+
+class Pagination extends React.Component<Props, State> {
   render() {
     const {
       pagesAmount, onRaceReset, onPageChanged, pageNum, isRaceStarted, isWinnerSaved,
@@ -12,7 +25,7 @@ class Pagination extends React.Component {
         blockedClass = ' blocked';
       }
     }
-    const paginationButtons = Array(pagesAmount).fill(0).map((item, index) => (
+    const paginationButtons = Array(pagesAmount).fill(0).map((item: number, index: number) => (
       <span
         role="button"
         tabIndex={0}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import NavBtn from './nav-btn.tsx';
+import NavBtn from './nav-btn';
 
 interface State {
 

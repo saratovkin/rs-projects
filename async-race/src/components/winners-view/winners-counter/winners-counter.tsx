@@ -1,7 +1,15 @@
 import React from 'react';
 import './winners-counter.css';
 
-class WinnersCounter extends React.Component {
+interface Props {
+  count: number,
+}
+
+interface State {
+
+}
+
+class WinnersCounter extends React.Component<Props, State> {
   render() {
     return (
       <div className="winners-counter">

@@ -10,12 +10,46 @@ import WinnerAlert from '../winner-alert/winner-alert';
 import PageNumber from '../../page-number/page-number';
 import Pagination from '../../pagination/pagination';
 
+import ICar from '../../../interfaces/ICar';
+import IWinner from '../../../interfaces/IWinner';
+
 const elementsPerPage = 7;
 
-class GarageView extends React.Component {
+interface Props {
+  cars: ICar[],
+  page: number,
+  currentName: string,
+  currentColor: string,
+  newName: string,
+  newColor: string,
+  winner: IWinner | undefined,
+  onPageChanged: (view: string, page: number) => void,
+  onSpecsInput: (type: string, key: string, value: string) => void,
+  onCarsGenerated: () => void,
+  onCarDeleted: (id: number) => void,
+  onCarAdded: (name: string, color: string) => void,
+  onCarUpdated: (name: string, color: string) => void,
+  onCarFinished: (winner: IWinner) => void,
+  onCarSelected: (id: number) => void,
+  onCountUpdated: () => number,
+  onRaceStart: () => void,
+  onRaceReset: () => void,
+  isRaceStarted: boolean,
+  isRaceReset: boolean,
+  isWinnerSaved: boolean,
+  raceId: number
+}
 
-  constructor() {
-    super();
+interface State {
+  resets: number,
+}
+
+class GarageView extends React.Component<Props, State>{
+
+  public carsAmount: number;
+
+  constructor(props: Props) {
+    super(props);
     this.state = {
       resets: 0,
     }
@@ -59,24 +93,25 @@ class GarageView extends React.Component {
     return Math.ceil(this.props.cars.length / elementsPerPage);
   }
 
-  setPage = (pageNum) => {
+  setPage = (pageNum: number) => {
     this.props.onPageChanged('garage', pageNum);
   }
 
   render() {
-    if (this.state.isRaceStarted) {
+    // Check if it works
+    if (this.props.isRaceStarted) {
       this.clearResets();
     }
-    const { page, currentName,
-      currentColor, onSpecsInput,
-      onCarsGenerated, winner,
+    const { page, winner,
+      currentName, currentColor,
+      newName, newColor,
+      onSpecsInput, onCarsGenerated,
       onCarDeleted, onCarAdded,
       onCarUpdated, onCarFinished,
       onCarSelected, onCountUpdated,
       onRaceStart, onRaceReset,
       isRaceStarted, isRaceReset,
       isWinnerSaved, raceId
-
     } = this.props;
 
     const alert = winner ? <WinnerAlert winner={winner} /> : null;
@@ -84,48 +119,58 @@ class GarageView extends React.Component {
     return (
       <div className="garage-view">
         {alert}
-        <CarsCounter onCountUpdated={onCountUpdated} />
-        <PageNumber pageNum={page} />
-        <CreateCar onCarAdded={onCarAdded} />
-        <UpdateCar
+        <CarsCounter
+          onCountUpdated={onCountUpdated}
+        />
+        <PageNumber
+          pageNum={page}
+        />
+        <CreateCar
+          newName={newName}
+          newColor={newColor}
           onSpecsInput={onSpecsInput}
-          onCarUpdated={onCarUpdated}
+          onCarAdded={onCarAdded}
+        />
+        <UpdateCar
           currentName={currentName}
           currentColor={currentColor}
+          onSpecsInput={onSpecsInput}
+          onCarUpdated={onCarUpdated}
         />
         <GarageControls
           isRaceStarted={isRaceStarted}
           isWinnerSaved={isWinnerSaved}
-          onRaceStart={onRaceStart}
+          isStartPossible={this.isStartPossible()}
           onRaceStart={() => { onRaceStart(); this.clearResets(); }}
           onRaceReset={onRaceReset}
           onCarsGenerated={onCarsGenerated}
-          isStartPossible={this.isStartPossible()}
+
         />
         <CarsTable
-          cars={this.getDisplayedCars()}
           raceId={raceId}
+          isRaceStarted={isRaceStarted}
+          isRaceReset={isRaceReset}
+          isWinnerSaved={isWinnerSaved}
+          cars={this.getDisplayedCars()}
           onCarDeleted={onCarDeleted}
           onCarSelected={onCarSelected}
           onCarFinished={onCarFinished}
           onCarReset={this.awaitReset}
-          isRaceStarted={isRaceStarted}
-          isRaceReset={isRaceReset}
-          isWinnerSaved={isWinnerSaved}
+
         />
         <Pagination
+          pageNum={page}
+          isRaceStarted={isRaceStarted}
+          isWinnerSaved={isWinnerSaved}
           pagesAmount={this.getAmountOfPages()}
           onPageChanged={this.setPage}
           onRaceReset={onRaceReset}
-          isRaceStarted={isRaceStarted}
-          isWinnerSaved={isWinnerSaved}
-          pageNum={page}
         />
       </div>
     );
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     if (this.props.cars.length !== prevProps.cars.length) {
       this.setState(() => {
         return { resets: this.carsAmount };

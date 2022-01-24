@@ -1,7 +1,15 @@
 import React from 'react';
 import './page-number.css';
 
-class PageNumber extends React.Component {
+interface State {
+
+}
+
+interface Props {
+  pageNum: number,
+}
+
+class PageNumber extends React.Component<Props,State> {
   render() {
     return (
       <div className="page-number">

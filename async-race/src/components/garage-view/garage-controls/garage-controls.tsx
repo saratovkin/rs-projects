@@ -1,8 +1,19 @@
+import React from 'react';
 import './garage-controls.css';
 
-import React from 'react';
+interface Props {
+  onRaceStart: () => void,
+  onRaceReset: () => void,
+  onCarsGenerated: () => void,
+  isRaceStarted: boolean,
+  isStartPossible: boolean,
+  isWinnerSaved: boolean,
+}
 
-class GarageControls extends React.Component {
+interface State {
+}
+
+class GarageControls extends React.Component<Props, State> {
   render() {
     const { onRaceStart, onRaceReset, onCarsGenerated, isRaceStarted, isStartPossible } = this.props;
     return (

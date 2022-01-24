@@ -1,7 +1,14 @@
 import React from 'react';
 import './cars-counter.css';
 
-class CarsCounter extends React.Component {
+interface Props {
+  onCountUpdated: () => number,
+}
+
+interface State {
+}
+
+class CarsCounter extends React.Component<Props, State> {
   render() {
     return (
       <div className="cars-counter">
