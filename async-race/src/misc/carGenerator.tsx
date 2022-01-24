@@ -1,3 +1,8 @@
+interface ISpecs {
+  name: string,
+  color: string,
+}
+
 class CarGenerator {
   static models = [
     'Roadster',
@@ -109,7 +114,7 @@ class CarGenerator {
   }
 
   static generateCars() {
-    const arr = [];
+    const arr: ISpecs[] = [];
     for (let i = 0; i < 100; i += 1) {
       const brand = CarGenerator.brands[Math.floor(Math.random() * CarGenerator.brands.length)];
       const model = CarGenerator.models[Math.floor(Math.random() * CarGenerator.models.length)];

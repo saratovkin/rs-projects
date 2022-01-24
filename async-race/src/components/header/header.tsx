@@ -2,9 +2,19 @@ import React from 'react';
 
 import './header.css';
 
-import Navigation from './navigation';
+import Navigation from './navigation.tsx';
 
-class Header extends React.Component {
+
+interface State {
+
+}
+
+interface Props {
+  changeView: (view: string) => void,
+  view: string,
+}
+
+class Header extends React.Component<Props, State> {
   render() {
     return (
       <header className="header">

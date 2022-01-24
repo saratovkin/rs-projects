@@ -2,18 +2,46 @@ import './app.css';
 
 import React from 'react';
 
-import Header from '../header/header';
+import ICar from '../../interfaces/ICar';
+import IWinner from '../../interfaces/IWinner';
+
+import Header from '../header/header.tsx';
 import GarageView from '../garage-view/garage-view/garage-view';
 import WinnersView from '../winners-view/winners-view/winners-view';
-import Footer from '../footer/footer';
+import Footer from '../footer/footer.tsx';
 
-import CarGenerator from '../../misc/carGenerator';
-import Loader from '../../loader/loader';
+import CarGenerator from '../../misc/carGenerator.tsx';
+import Loader from '../../loader/loader.tsx';
 
-class App extends React.Component {
+interface Props {
 
-  constructor() {
-    super();
+}
+
+interface State {
+  cars: ICar[],
+  winners: IWinner[],
+  winner: IWinner,
+  view: string,
+  currentCar: number,
+  newCarName: string,
+  newCarColor: string,
+  currentCarName: string,
+  currentCarColor: string,
+  sortType: string,
+  sortDirection: string,
+  garagePage: number,
+  winnersPage: number,
+  raceId: number,
+  isRaceStarted: boolean,
+  isRaceReset: boolean,
+  isWinnerSaved: boolean,
+}
+
+
+class App extends React.Component<Props, State>  {
+  loader: Loader;
+  constructor(props: Props) {
+    super(props);
     this.loader = new Loader();
     this.state = {
       cars: [],
@@ -38,14 +66,14 @@ class App extends React.Component {
     this.getWinners();
   }
 
-  getCars = () => {
-    this.loader.getAllCars().then((data) => {
+  getCars = (): void => {
+    this.loader.getAllCars().then((data: ICar[]) => {
       this.setState(() => ({ cars: data }));
     });
   };
 
-  addCar = (name, color) => {
-    this.loader.createCar(name, color).then((res) => {
+  addCar = (name: string, color: string) => {
+    this.loader.createCar(name, color).then((res: ICar) => {
       this.setState(({ cars }) => {
         const newArr = [...cars, res];
         return { cars: newArr };
@@ -53,13 +81,13 @@ class App extends React.Component {
     });
   };
 
-  selectCar = (id) => {
+  selectCar = (id: number) => {
     this.setState(() => ({ currentCar: id }));
   };
 
-  updateCar = (name, color) => {
+  updateCar = (name: string, color: string) => {
     if (this.state.currentCar !== undefined) {
-      this.loader.updateCar(this.state.currentCar, name, color).then((res) => {
+      this.loader.updateCar(this.state.currentCar, name, color).then((res: ICar) => {
         this.setState(({ cars }) => {
           const idx = cars.findIndex((el) => el.id === res.id);
           return { cars: [...cars.slice(0, idx), res, ...cars.slice(idx + 1)], currentCar: null };
@@ -69,7 +97,7 @@ class App extends React.Component {
     }
   };
 
-  deleteCar = (id) => {
+  deleteCar = (id: number) => {
     this.loader.deleteCar(id).then(() => {
       this.loader.deleteWinner(id).then(() => {
         this.getCars();
@@ -86,10 +114,10 @@ class App extends React.Component {
   };
 
   getWinners = () => {
-    const winners = [];
-    this.loader.getAllWinners().then((data) => {
+    const winners = [] as IWinner[];
+    this.loader.getAllWinners().then((data: IWinner[]) => {
       data.forEach((winner) => {
-        this.loader.getCarById(winner.id).then((res) => {
+        this.loader.getCarById(winner.id).then((res: ICar) => {
           winners.push({
             id: res.id,
             name: res.name,
@@ -105,7 +133,7 @@ class App extends React.Component {
     });
   };
 
-  updateCount = () => this.state.cars.length;
+  updateCount = (): number => this.state.cars.length;
 
   startRace = () => {
     if (this.state.cars.length !== 0) {
@@ -135,7 +163,7 @@ class App extends React.Component {
     }
   };
 
-  saveWinner = (winner) => {
+  saveWinner = (winner: IWinner) => {
     if (!this.state.isWinnerSaved && this.state.raceId === winner.raceId) {
       this.setState(() => {
         return {
@@ -170,31 +198,29 @@ class App extends React.Component {
     }
   };
 
-  setViewPage = (view, page) => {
-    this.setState(() => {
-      if (view === 'garage') {
-        return { garagePage: page };
-      }
-      return { winnersPage: page };
-    });
+  setViewPage = (view: string, page: number) => {
+    if (view === 'garage') {
+      this.setState(() => ({ garagePage: page }));
+    } else {
+      this.setState(() => ({ winnersPage: page }));
+    }
   };
 
-  changeView = (view) => {
+  changeView = (view: string) => {
     this.resetRace();
-    this.setState((prev) => {
-      const newState = { ...prev };
-      newState.view = view;
-      return newState;
-    });
+    this.setState(() => ({ view: view }));
   };
 
-  setSpecs = (key, value) => {
-    this.setState({
-      [`currentCar${key}`]: value,
-    });
+  setSpecs = (key: string, value: string) => {
+    if (key === 'Name') {
+      this.setState(() => ({ currentCarName: value }));
+    }
+    if (key === 'Color') {
+      this.setState(() => ({ currentCarName: value }));
+    }
   };
 
-  setSortType = (newType) => {
+  setSortType = (newType: string) => {
     this.setState(({ sortDirection }) => {
       return { sortType: newType, sortDirection: sortDirection === 'Desc' ? 'Asc' : 'Desc' };
     });

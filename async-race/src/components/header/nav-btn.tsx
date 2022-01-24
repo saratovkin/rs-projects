@@ -1,6 +1,16 @@
 import React from 'react';
 
-class NavBtn extends React.Component {
+interface State {
+
+}
+
+interface Props {
+  changeView: (view: string) => void,
+  view: string,
+  className: string,
+}
+
+class NavBtn extends React.Component<Props, State> {
   render() {
     return (
       <span

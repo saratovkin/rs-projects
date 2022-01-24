@@ -1,7 +1,7 @@
 class Loader {
   baseUrl = 'http://127.0.0.1:3000';
 
-  async getData(url) {
+  async getData(url: string) {
     try {
       const response = await fetch(`${this.baseUrl}${url}`);
       if (response.ok) {
@@ -12,7 +12,7 @@ class Loader {
     }
   }
 
-  async postData(url, content) {
+  async postData<T>(url: string, content: T) {
     try {
       const response = await fetch(`${this.baseUrl}${url}`, {
         method: 'POST',
@@ -29,7 +29,7 @@ class Loader {
     }
   }
 
-  async deleteData(url) {
+  async deleteData(url: string) {
     try {
       const response = await fetch(`${this.baseUrl}${url}`, {
         method: 'DELETE',
@@ -42,7 +42,7 @@ class Loader {
     }
   }
 
-  async putData(url, content) {
+  async putData<T>(url: string, content: T) {
     try {
       const response = await fetch(`${this.baseUrl}${url}`, {
         method: 'PUT',
@@ -59,12 +59,12 @@ class Loader {
     }
   }
 
-  async patchData(url, id, status, raceId) {
+  async patchData(url: string, id: number, status: string, raceId: number) {
     try {
       const qParam = { id, status };
       const path = new URL(`${this.baseUrl}${url}`);
-      path.search = new URLSearchParams(qParam).toString();
-      const response = await fetch(path, {
+      path.search = new URLSearchParams(qParam as any).toString();
+      const response = await fetch(path as any, {
         method: 'PATCH',
       });
       if (response.ok) {
@@ -83,27 +83,27 @@ class Loader {
     return this.getData('/garage');
   }
 
-  getCarById(id) {
+  getCarById(id: number) {
     return this.getData(`/garage/${id}`);
   }
 
-  createCar(name, color) {
+  createCar(name: string, color: string) {
     return this.postData('/garage', { name, color });
   }
 
-  deleteCar(id) {
+  deleteCar(id: number) {
     return this.deleteData(`/garage/${id}`);
   }
 
-  updateCar(id, name, color) {
+  updateCar(id: number, name: string, color: string) {
     return this.putData(`/garage/${id}`, { name, color });
   }
 
-  toggleEngine(id, status, raceId) {
+  toggleEngine(id: number, status: string, raceId: number) {
     return this.patchData('/engine', id, status, raceId);
   }
 
-  toggleDriveMode(id, raceId) {
+  toggleDriveMode(id: number, raceId: number) {
     return this.patchData('/engine', id, 'drive', raceId);
   }
 
@@ -111,19 +111,19 @@ class Loader {
     return this.getData('/winners');
   }
 
-  getWinnerById(id) {
+  getWinnerById(id: number) {
     return this.getData(`/winners/${id}`);
   }
 
-  createWinner(id, wins, time) {
+  createWinner(id: number, wins: number, time: number) {
     return this.postData('/winners', { id, wins, time });
   }
 
-  deleteWinner(id) {
+  deleteWinner(id: number) {
     return this.deleteData(`/winners/${id}`);
   }
 
-  updateWinner(id, wins, time) {
+  updateWinner(id: number, wins: number, time: number) {
     return this.putData(`/winners/${id}`, { wins, time });
   }
 }

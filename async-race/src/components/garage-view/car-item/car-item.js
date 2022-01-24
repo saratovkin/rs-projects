@@ -1,5 +1,5 @@
 import React from 'react';
-import Loader from '../../../loader/loader';
+import Loader from '../../../loader/loader.tsx';
 import './car-item.css';
 
 const msToSeconds = 1000;
