@@ -87,10 +87,12 @@ class App extends React.Component<Props, State>  {
   updateCar = (name: string, color: string) => {
     if (this.state.currentCar !== undefined) {
       this.loader.updateCar(this.state.currentCar, name, color).then((res: ICar) => {
-        this.setState(({ cars }) => {
-          const idx = cars.findIndex((el) => el.id === res.id);
-          return { cars: [...cars.slice(0, idx), res, ...cars.slice(idx + 1)], currentCar: undefined };
-        });
+        if (res) {
+          this.setState(({ cars }) => {
+            const idx = cars.findIndex((el) => el.id === res.id);
+            return { cars: [...cars.slice(0, idx), res, ...cars.slice(idx + 1)], currentCar: undefined };
+          });
+        }
       });
       this.getWinners();
     }
