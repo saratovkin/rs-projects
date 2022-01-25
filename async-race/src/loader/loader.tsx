@@ -61,10 +61,7 @@ class Loader {
 
   async patchData(url: string, id: number, status: string, raceId: number) {
     try {
-      const qParam = { id, status };
-      const path = new URL(`${this.baseUrl}${url}`);
-      path.search = new URLSearchParams(qParam as any).toString();
-      const response = await fetch(path as any, {
+      const response = await fetch(`${this.baseUrl}${url}?id=${id}&status=${status}`, {
         method: 'PATCH',
       });
       if (response.ok) {
